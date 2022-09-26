@@ -1,1 +1,1 @@
-# fronted-web-applications
+# frontend-web-applications
