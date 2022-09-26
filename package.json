@@ -7,6 +7,7 @@
     "preview": "vite preview --port 4173"
   },
   "dependencies": {
+    "@vitejs/plugin-vue-jsx": "^2.0.1",
     "axios": "^0.27.2",
     "pinia": "^2.0.21",
     "primeflex": "^3.2.1",
