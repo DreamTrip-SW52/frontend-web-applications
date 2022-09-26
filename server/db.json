@@ -1,0 +1,172 @@
+{
+  "packages": [
+    {
+      "id": 1,
+      "name": "Nature Adventure",
+      "description": "Four hours from Lima is Rúpac, an archaeological complex in the heights, where at 5 a.m. there is a great show for the clouds that are clearing the coast. It is a unique landscape.",
+      "location": "Huaral",
+      "duration": "4 days",
+      "capacity": "30",
+      "disponibility": "24/7",
+      "accommodations": {
+        "details": "A unique experience to see the red sunset and a sunrise full of clouds.",
+        "services": ["WiFi", "Restaurant"],
+        "conditions": {
+          "schedule": {
+            "check-in": "10:00",
+            "check-out": "15:00"
+          }
+        },
+        "location": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d500752.6482146545!2d-77.36509933437503!3d-11.325202799999975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91063f2a1c794e93%3A0xef50cc8630d532e8!2sCOMPLEJO%20ARQUEOL%C3%93GICO%20DE%20RUPAC!5e0!3m2!1ses-419!2spe!4v1664149265135!5m2!1ses-419!2spe"
+      },
+      "transport": {
+        "about": {
+          "type": "Direct Fly",
+          "from": "LIMA",
+          "to": "CUZCO"
+        },
+        "details": [
+          {
+            "id": 1,
+            "type": "go",
+            "name": "Best Airline",
+            "price": 70,
+						"from": {
+							"tag": "Lima",
+							"abbr": "LIM"
+						},
+						"to": {
+							"tag": "Cuzco",
+							"abbr": "CUZ"
+						}
+          },
+          {
+            "id": 2,
+            "type": "back",
+            "name": "Best Airline",
+            "price": 50,
+						"from": {
+							"tag": "Lima",
+							"abbr": "LIM"
+						},
+						"to": {
+							"tag": "Cuzco",
+							"abbr": "CUZ"
+						}
+          }
+        ],
+        "price": 120
+      },
+      "tour": {
+        "details": "Are you a nature lover and you like camping? Well, this service is perfect for you. Camp in the 'Ciudadela de Fuego': Rupac, a wonderful archaeological complex 145 km north of Lima. This place is also known as the 'Machu Picchu of Lima' since it is located at more than 3,400 meters above sea level. You will enjoy the trekking visiting the buildings made of stones but that are still intact.",
+        "oustanding": ["Friendly guide", "Good tour", "Beatiful landscape"],
+        "it-includes": [],
+        "location": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d500752.6482146545!2d-77.36509933437503!3d-11.325202799999975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91063f2a1c794e93%3A0xef50cc8630d532e8!2sCOMPLEJO%20ARQUEOL%C3%93GICO%20DE%20RUPAC!5e0!3m2!1ses-419!2spe!4v1664149265135!5m2!1ses-419!2spe",
+        "meeting-point": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1259.2243251395607!2d-76.80517029852469!3d-11.325689129369632!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91063f4821150abf%3A0xad3be9e203e1ae6d!2sZona%20De%20Campamento%20-RupaC!5e0!3m2!1ses-419!2spe!4v1664149416280!5m2!1ses-419!2spe"
+      },
+      "images": [
+        {
+          "src": "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+          "alt": ""
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1606054534744-a3b13e35c574?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8dHJpcHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+          "alt": ""
+        }
+      ],
+      "reviews": [
+        {
+          "author": "Frank",
+          "date": "13/11/22",
+          "rating": 4,
+          "comment": "It is a good option if you want a trip out of the ordinary."
+        },
+        {
+          "author": "Pedro",
+          "date": "20/11/22",
+          "rating": 3,
+          "comment": "The hotel was very good, but the travel can be better."
+        },
+        {
+          "author": "Mariana",
+          "date": "23/11/22",
+          "rating": 5,
+          "comment": "This travel package it's amazing!"
+        }
+      ],
+      "total": 500
+    },
+    {
+      "id": 2,
+      "name": "Playa Caballeros",
+      "description": "One of the most beautiful beaches in Punta Hermosa. A good place to sunbathe, swim in the sea and relax listening to the waves.",
+      "location": "Lima",
+      "duration": "7 days",
+      "capacity": "10",
+      "disponibility": "24/7",
+      "accommodations": {
+        "details": "Playa Caballeros, presents some waves of the Reef-break type; In Caballeros it is possible to find some impressive waves that are characterized by being long and well formed, in addition to having a clear tubular section, which can reach up to 3 meters in height. It is known that, near the sea of Playa Caballeros, one of the most impressive waves of the Peruvian sea is formed, that one is known by the name of Pico Alto and they have the peculiarity of reaching 7 to 8 meters, on average. Playa Caballeros is also a recommended beach for those visitors who like fishing, which can be done from its rocks, which are located at both ends of the resort. The fertile sea of Caballeros allows the fishing of species such as the cheetah, among others.",
+        "services": ["WiFi", "Restaurant", "Room Service", "Bar"],
+        "conditions": {
+          "schedule": {
+            "check-in": "12:00",
+            "check-out": "17:00"
+          }
+        },
+        "location": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3897.783888405212!2d-76.83417318545537!3d-12.330327891278849!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105a29b88d2b815%3A0x1ca8f8d6a7df2b87!2sPlaya%20Caballeros!5e0!3m2!1ses-419!2spe!4v1664149502719!5m2!1ses-419!2spe"
+      },
+      "transport": {
+        "about": ["Direct", "Lima - Lima"],
+        "details": [
+          {
+            "name": "Fast Bus",
+            "price": 50
+          },
+          {
+            "name": "Fast Bus",
+            "price": 50
+          }
+        ],
+        "price": 100
+      },
+      "tour": {
+        "details": "",
+        "oustanding": [],
+        "it-includes": [],
+        "location": "",
+        "meeting-point": ""
+      },
+      "images": [
+        {
+          "src": "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+          "alt": ""
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1553076446-829d6dba2f0b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fHRyaXB8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+          "alt": ""
+        }
+      ],
+      "reviews": [
+        {
+          "author": "Jorge",
+          "date": "23/09/22",
+          "rating": 4,
+          "comment": "It is a good option if you want a trip out of the ordinary."
+        },
+        {
+          "author": "Mario",
+          "date": "15/09/22",
+          "rating": 4,
+          "comment": "The travel was very good, but the hotel can be better."
+        },
+        {
+          "author": "Rosa",
+          "date": "30/09/22",
+          "rating": 5,
+          "comment": "This travel package it's amazing!"
+        }
+      ],
+      "total": 400
+    }
+  ]
+}
