@@ -12,13 +12,13 @@
         <div class="mt-4 px-4">
           <h4 class="mb-2 tag">OUTSTANDING OF TOUR</h4>
           <ul class="grid" v-for="item in props?.source?.outstanding">
-            <li class="col-6">{{item}}</li>
+            <li class="col-6">{{ item }}</li>
           </ul>
         </div>
         <div class="mt-4 px-4">
           <h4 class="mb-2 tag">IT INCLUDES</h4>
           <ul class="grid" v-for="item in props?.source?.['it-includes']">
-            <li class="col-6">{{item}}</li>
+            <li class="col-6">{{ item }}</li>
           </ul>
         </div>
       </div>
@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import { onMounted, defineProps } from 'vue';
+import { onMounted } from "vue";
 
 const props = defineProps({
   source: {
@@ -76,7 +76,7 @@ onMounted(() => {});
 span {
   font-size: 24px;
   text-transform: uppercase;
-  font-weigth: light;
+  font-weight: light;
   margin-left: 10px;
 }
 
@@ -93,7 +93,7 @@ li {
 
 .tag {
   font-size: 18px;
-  font-weigth: medium;
+  font-weight: medium;
   color: #fff;
 }
 </style>

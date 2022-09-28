@@ -34,10 +34,10 @@
         <h4 class="mb-2">SCHEDULE</h4>
         <ul class="flex flex-column gap-2">
           <li>
-            Check in: {{ props?.source?.conditions?.schedule?.['check-in'] }}
+            Check in: {{ props?.source?.conditions?.schedule?.["check-in"] }}
           </li>
           <li>
-            Check out: {{ props?.source?.conditions?.schedule?.['check-out'] }}
+            Check out: {{ props?.source?.conditions?.schedule?.["check-out"] }}
           </li>
         </ul>
       </div>
@@ -63,7 +63,7 @@
 </template>
 
 <script setup>
-import { onMounted, defineProps } from 'vue';
+import { onMounted } from "vue";
 
 const props = defineProps({
   source: {
@@ -78,7 +78,7 @@ onMounted(() => {});
 span {
   font-size: 24px;
   text-transform: uppercase;
-  font-weigth: light;
+  font-weight: light;
   margin-left: 10px;
 }
 
