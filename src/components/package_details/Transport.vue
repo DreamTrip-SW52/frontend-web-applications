@@ -19,7 +19,7 @@
         <span>Flight Details</span>
       </div>
       <!-- cards -->
-      <div class="flex flex-column gap-3" >
+      <div class="flex flex-column gap-3">
         <!-- render the flight cards -->
         <FlightCard
           v-for="flight in props?.source?.details"
@@ -38,8 +38,8 @@
 </template>
 
 <script setup>
-import { onMounted, defineProps } from 'vue';
-import FlightCard from './FlightCard.vue';
+import { onMounted, ref } from "vue";
+import FlightCard from "./FlightCard.vue";
 
 const getTotal = () => {
   return props.source.details.reduce((acc, curr) => {
@@ -58,7 +58,7 @@ const props = defineProps({
 span {
   font-size: 24px;
   text-transform: uppercase;
-  font-weigth: light;
+  font-weight: light;
   margin-left: 10px;
 }
 i {
