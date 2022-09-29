@@ -66,38 +66,17 @@ import PackageCard from "../components/PackageCard.vue";
         <p class="content-filter-title">Sort by</p>
         <button class="option-button">Choose an option:</button>
       </div>
-      <PackageCard
-        nombre="Nature adventure"
-        descripcion=" Why not spend an extra night or two in Moscow
-                       and fully enjoy the Russian capital - visit the
-                       Armory Museum and Diamond Fund."
-        precio="S/. 900"
-        lugar="Place: Cancun"
-        duracion="Duration: 4 days"
-        img_url="https://www.cancunadventure.net/images/puntacancun-airview.jpg"
-      />
 
-      <PackageCard
-        nombre="Honeymoon"
-        descripcion="Why not spend an extra night or two in Moscow
-                       and fully enjoy the Russian capital - visit the
-                       Armory Museum and Diamond Fund."
-        precio="S/. 1,100"
-        lugar="Place: Machu Picchu"
-        duracion="Duration: 5 days"
-        img_url="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Before_Machu_Picchu.jpg/640px-Before_Machu_Picchu.jpg"
-      />
-
-      <PackageCard
-        nombre="Express holidays"
-        descripcion="Why not spend an extra night or two in Moscow
-                       and fully enjoy the Russian capital - visit the
-                       Armory Museum and Diamond Fund."
-        precio="S/. 700"
-        lugar="Place: Los Cabos"
-        duracion="Duration: 4 days"
-        img_url="https://assets.simpleviewinc.com/simpleview/image/upload/c_limit,h_1200,q_75,w_1200/v1/clients/loscabosmx/Arco_I9A0109_V2_0bb6b65a-6293-4918-a9dd-6e82822e1299.jpg"
-      />
+      <template v-for="myPackage in myDB['packages']">
+        <PackageCard
+          :nombre="myPackage.name"
+          :descripcion="myPackage.description"
+          :precio="myPackage.total"
+          :lugar="myPackage.location"
+          :duracion="myPackage.duration"
+          :img_url="myPackage.images[0].src"
+        />
+      </template>
     </div>
   </div>
 </template>
@@ -211,3 +190,15 @@ import PackageCard from "../components/PackageCard.vue";
   color: #ffffff;
 }
 </style>
+
+<script>
+import json from "../../server/db.json";
+
+export default {
+  data() {
+    return {
+      myDB: json,
+    };
+  },
+};
+</script>
