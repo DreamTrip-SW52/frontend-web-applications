@@ -42,21 +42,21 @@ import PackageCard from "../components/PackageCard.vue";
         <h3 class="title2">Categories</h3>
         <form class="forms">
           <input type="radio" value="Private" />
-          <label for="Private" class="textform">Private</label><br />
+          <label for="Private" class="textform">Standard</label><br />
           <input type="radio" value="Private" />
-          <label for="Private" class="textform">Private</label><br />
+          <label for="Private" class="textform">Specials</label><br />
           <input type="radio" value="Private" />
-          <label for="Private" class="textform">Private</label><br />
+          <label for="Private" class="textform">Itinerant trips</label><br />
           <input type="radio" value="Private" />
-          <label for="Private" class="textform">Private</label><br />
+          <label for="Private" class="textform">Stay trips</label><br />
           <input type="radio" value="Private" />
-          <label for="Private" class="textform">Private</label><br />
+          <label for="Private" class="textform">Generals</label><br />
           <input type="radio" value="Private" />
-          <label for="Private" class="textform">Private</label><br />
+          <label for="Private" class="textform">Specific</label><br />
           <input type="radio" value="Private" />
-          <label for="Private" class="textform">Private</label><br />
+          <label for="Private" class="textform">Local programs</label><br />
           <input type="radio" value="Private" />
-          <label for="Private" class="textform">Private</label><br />
+          <label for="Private" class="textform">Regional programs</label><br />
         </form>
       </div>
     </div>
@@ -67,10 +67,10 @@ import PackageCard from "../components/PackageCard.vue";
         <button class="option-button">Choose an option:</button>
       </div>
       <PackageCard
-        nombre="Aventura Natural"
-        descripcion=" Por qué no pasar una o dos noches extras en Moscú 
-                      y disfrutar plenamente de la capital rusa - visitar el 
-                      Museo de la Armería y el Fondo de los Diamantes."
+        nombre="Nature adventure"
+        descripcion=" Why not spend an extra night or two in Moscow
+                       and fully enjoy the Russian capital - visit the
+                       Armory Museum and Diamond Fund."
         precio="S/. 900"
         lugar="Place: Cancun"
         duracion="Duration: 4 days"
@@ -78,10 +78,10 @@ import PackageCard from "../components/PackageCard.vue";
       />
 
       <PackageCard
-        nombre="Luna de miel"
-        descripcion="Por qué no pasar una o dos noches extras en Moscú y 
-                   disfrutar plenamente de la capital rusa 
-                   - visitar el Museo de la Armería y el Fondo de los Diamantes."
+        nombre="Honeymoon"
+        descripcion="Why not spend an extra night or two in Moscow
+                       and fully enjoy the Russian capital - visit the
+                       Armory Museum and Diamond Fund."
         precio="S/. 1,100"
         lugar="Place: Machu Picchu"
         duracion="Duration: 5 days"
@@ -89,10 +89,10 @@ import PackageCard from "../components/PackageCard.vue";
       />
 
       <PackageCard
-        nombre="Vacaciones express"
-        descripcion="Por qué no pasar una o dos noches extras en Moscú y 
-                   disfrutar plenamente de la capital rusa 
-                   - visitar el Museo de la Armería y el Fondo de los Diamantes."
+        nombre="Express holidays"
+        descripcion="Why not spend an extra night or two in Moscow
+                       and fully enjoy the Russian capital - visit the
+                       Armory Museum and Diamond Fund."
         precio="S/. 700"
         lugar="Place: Los Cabos"
         duracion="Duration: 4 days"
