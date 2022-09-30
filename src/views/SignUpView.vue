@@ -1,4 +1,7 @@
 <template>
+  <div style="margin-bottom: 15px">
+    <img src="../assets/logo-bluedark.png" />
+  </div>
   <div class="signup">
     <div>
       <div class="title-log">Signup</div>
@@ -22,7 +25,7 @@
 
     <div>
       <router-link to="/login">
-        <button type="submit" form="form-signup" class="initial-button-log-in">
+        <button type="submit" form="form-signup" class="button-log-in">
           Create an Account
         </button>
       </router-link>
@@ -75,13 +78,13 @@
   opacity: 0.5;
 }
 
-.initial-button-log-in {
+.button-log-in {
   background-color: #fc4747;
   padding-left: 25px;
   padding-right: 25px;
   border: 0px;
   border-radius: 10px;
-  width: 336px;
+  width: 280px;
   height: 48px;
   font-size: 15px;
   font-weight: 300;
