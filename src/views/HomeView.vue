@@ -12,7 +12,7 @@ import PackageCard from "../components/PackageCard.vue";
       <h2 class="title1">Filters</h2>
       <div class="prices">
         <h3 class="title2">Price</h3>
-        <input type="range" min="300" max="10000" class="price-range" />
+        <input type="range" min="300" max="10000" class="filter-range" />
         <div class="pric-ran">
           <div>min</div>
           <div>max</div>
@@ -21,7 +21,7 @@ import PackageCard from "../components/PackageCard.vue";
 
       <div class="conftime">
         <h3 class="title2">Configuration Time</h3>
-        <input type="range" min="0" max="24" class="time-range" />
+        <input type="range" min="0" max="24" class="filter-range" />
         <div class="tim-ran">
           <div>immediate</div>
           <div>24h</div>
@@ -152,13 +152,7 @@ import PackageCard from "../components/PackageCard.vue";
   color: #ffffff;
 }
 
-.price-range {
-  height: 1px;
-  margin: 10px 0;
-  width: 80%;
-}
-
-.time-range {
+.filter-range {
   height: 1px;
   margin: 10px 0;
   width: 80%;
@@ -188,6 +182,26 @@ import PackageCard from "../components/PackageCard.vue";
 
 .textform {
   color: #ffffff;
+}
+
+.filter-range {
+  -webkit-appearance: none; /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 1px; /* Specified height */
+  background: #5a698f; /* Grey background */
+  outline: none; /* Remove outline */
+  -webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
+}
+
+.filter-range::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 18px; /* Set a specific slider handle width */
+  height: 18px; /* Slider handle height */
+  border-radius: 100%;
+  background: #fc4747; /* Green background */
+  cursor: pointer; /* Cursor on hover */
 }
 </style>
 
