@@ -1,12 +1,29 @@
+<script setup>
+import { RouterLink, RouterView, useRouter } from 'vue-router';
+import Navbar from './components/Navbar.vue';
+
+const router = useRouter();
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    const user = localStorage.getItem('user');
+
+    if (user || 1) {
+      next();
+    } else {
+      next('/login');
+    }
+  } else {
+    next();
+  }
+});
+</script>
+
 <template>
   <div id="app">
     <RouterView />
   </div>
 </template>
-
-<script setup>
-import { RouterLink, RouterView } from "vue-router";
-</script>
 
 <style scoped>
 .container {

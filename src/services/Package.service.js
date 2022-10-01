@@ -6,6 +6,13 @@ const getPackage = async (id) => {
   return packageData;
 };
 
+const getPackages = async () => {
+  const response = await fetch(URL);
+  const packagesData = await response.json();
+  return packagesData;
+};
+
 export const PackageService = {
   getPackage,
+	getPackages,
 };

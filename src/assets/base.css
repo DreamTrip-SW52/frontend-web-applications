@@ -1,4 +1,4 @@
-*{
+* {
   font-family: Outfit, Inter, Avenir, Helvetica, Arial, sans-serif;
 }
 
@@ -10,7 +10,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #10141E;
+  background-color: #10141e;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -57,7 +57,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #FC4747;
+  background-color: #fc4747;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -75,10 +75,10 @@ button:focus-visible {
 }
 
 #app {
-  max-width: 1280px;
+  max-width: 1800px;
+  display: flex;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
 }
 
 @media (prefers-color-scheme: light) {

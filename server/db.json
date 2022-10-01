@@ -10,7 +10,10 @@
       "disponibility": "24/7",
       "accommodations": {
         "details": "A unique experience to see the red sunset and a sunrise full of clouds.",
-        "services": ["WiFi", "Restaurant"],
+        "services": [
+          "WiFi",
+          "Restaurant"
+        ],
         "conditions": {
           "schedule": {
             "check-in": "10:00",
@@ -31,35 +34,39 @@
             "type": "go",
             "name": "Best Airline",
             "price": 70,
-						"from": {
-							"tag": "Lima",
-							"abbr": "LIM"
-						},
-						"to": {
-							"tag": "Cuzco",
-							"abbr": "CUZ"
-						}
+            "from": {
+              "tag": "Lima",
+              "abbr": "LIM"
+            },
+            "to": {
+              "tag": "Cuzco",
+              "abbr": "CUZ"
+            }
           },
           {
             "id": 2,
             "type": "back",
             "name": "Best Airline",
             "price": 50,
-						"from": {
-							"tag": "Lima",
-							"abbr": "LIM"
-						},
-						"to": {
-							"tag": "Cuzco",
-							"abbr": "CUZ"
-						}
+            "from": {
+              "tag": "Lima",
+              "abbr": "LIM"
+            },
+            "to": {
+              "tag": "Cuzco",
+              "abbr": "CUZ"
+            }
           }
         ],
         "price": 120
       },
       "tour": {
         "details": "Are you a nature lover and you like camping? Well, this service is perfect for you. Camp in the 'Ciudadela de Fuego': Rupac, a wonderful archaeological complex 145 km north of Lima. This place is also known as the 'Machu Picchu of Lima' since it is located at more than 3,400 meters above sea level. You will enjoy the trekking visiting the buildings made of stones but that are still intact.",
-        "oustanding": ["Friendly guide", "Good tour", "Beatiful landscape"],
+        "oustanding": [
+          "Friendly guide",
+          "Good tour",
+          "Beatiful landscape"
+        ],
         "it-includes": [],
         "location": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d500752.6482146545!2d-77.36509933437503!3d-11.325202799999975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91063f2a1c794e93%3A0xef50cc8630d532e8!2sCOMPLEJO%20ARQUEOL%C3%93GICO%20DE%20RUPAC!5e0!3m2!1ses-419!2spe!4v1664149265135!5m2!1ses-419!2spe",
         "meeting-point": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1259.2243251395607!2d-76.80517029852469!3d-11.325689129369632!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91063f4821150abf%3A0xad3be9e203e1ae6d!2sZona%20De%20Campamento%20-RupaC!5e0!3m2!1ses-419!2spe!4v1664149416280!5m2!1ses-419!2spe"
@@ -106,7 +113,12 @@
       "disponibility": "24/7",
       "accommodations": {
         "details": "Playa Caballeros, presents some waves of the Reef-break type; In Caballeros it is possible to find some impressive waves that are characterized by being long and well formed, in addition to having a clear tubular section, which can reach up to 3 meters in height. It is known that, near the sea of Playa Caballeros, one of the most impressive waves of the Peruvian sea is formed, that one is known by the name of Pico Alto and they have the peculiarity of reaching 7 to 8 meters, on average. Playa Caballeros is also a recommended beach for those visitors who like fishing, which can be done from its rocks, which are located at both ends of the resort. The fertile sea of Caballeros allows the fishing of species such as the cheetah, among others.",
-        "services": ["WiFi", "Restaurant", "Room Service", "Bar"],
+        "services": [
+          "WiFi",
+          "Restaurant",
+          "Room Service",
+          "Bar"
+        ],
         "conditions": {
           "schedule": {
             "check-in": "12:00",
@@ -116,7 +128,10 @@
         "location": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3897.783888405212!2d-76.83417318545537!3d-12.330327891278849!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105a29b88d2b815%3A0x1ca8f8d6a7df2b87!2sPlaya%20Caballeros!5e0!3m2!1ses-419!2spe!4v1664149502719!5m2!1ses-419!2spe"
       },
       "transport": {
-        "about": ["Direct", "Lima - Lima"],
+        "about": [
+          "Direct",
+          "Lima - Lima"
+        ],
         "details": [
           {
             "name": "Fast Bus",
@@ -167,6 +182,37 @@
         }
       ],
       "total": 400
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "",
+      "last-name": "",
+      "email": "",
+      "phone": "",
+      "type": "",
+      "password": ""
+    },
+    {
+      "email": "patrick@hotmail.com",
+      "password": "123",
+      "id": 6
+    },
+    {
+      "email": "patrick2@hotmail.com",
+      "password": "123",
+      "id": 7
+    },
+    {
+      "email": "patrick3@hotmail.com",
+      "password": "123",
+      "id": 8
+    },
+    {
+      "email": "patrick4@hotmail.com",
+      "password": "123",
+      "id": 9
     }
   ]
 }

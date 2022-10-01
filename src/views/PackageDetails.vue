@@ -47,7 +47,7 @@
 
         <!-- FinCarrousel -->
 
-        <div class="px-0 md:px-4 lg:mx-8">
+        <div class="px-0 md:px-4">
           <Breadcrumb :model="items">
             <template #item="{ item }">
               <a @click="item.onClick" class="cursor-pointer">{{
@@ -102,7 +102,11 @@
         <!-- reseñas -->
 
         <ul class="list-none flex flex-column gap-4">
-          <li v-for="review in packageData.reviews">
+          <li
+            v-for="review in packageData.reviews"
+            class="pr-6"
+            :key="review.id"
+          >
             <Rating
               :modelValue="review.rating"
               :readonly="true"
@@ -126,52 +130,56 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import Accommodations from "../components/package_details/Accommodations.vue";
-import Transport from "../components/package_details/Transport.vue";
-import Tour from "../components/package_details/Tour.vue";
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import Accommodations from '../components/package_details/Accommodations.vue';
+import Transport from '../components/package_details/Transport.vue';
+import Tour from '../components/package_details/Tour.vue';
 
 // Services
-import { PackageService } from "../services/Package.service";
+import { PackageService } from '../services/Package.service';
 /** Static **/
 
+//Router
+const router = useRouter();
+
 // Breadcrumb
-const home = { icon: "pi pi-home", to: "/" };
+const home = { icon: 'pi pi-home', to: '/' };
 const items = [
   {
-    label: "ACCOMMODATIONS",
-    onClick: () => (breadcrumbView.value = "accomodations"),
+    label: 'ACCOMMODATIONS',
+    onClick: () => (breadcrumbView.value = 'accomodations'),
   },
-  { label: "TRANSPORTS", onClick: () => (breadcrumbView.value = "transports") },
-  { label: "TOURS", onClick: () => (breadcrumbView.value = "tours") },
+  { label: 'TRANSPORTS', onClick: () => (breadcrumbView.value = 'transports') },
+  { label: 'TOURS', onClick: () => (breadcrumbView.value = 'tours') },
 ];
 
 const props = defineProps({
   id: {
     type: String,
     required: true,
-    default: "1",
+    default: '1',
   },
 });
 
 /** States **/
 // accomodations | flights | tours | ...
-const breadcrumbView = ref("accomodations");
+const breadcrumbView = ref('accomodations');
 
 // Carousel
 const responsiveOptions = ref([
   {
-    breakpoint: "1024px",
+    breakpoint: '1024px',
     numVisible: 3,
     numScroll: 3,
   },
   {
-    breakpoint: "600px",
+    breakpoint: '600px',
     numVisible: 2,
     numScroll: 2,
   },
   {
-    breakpoint: "480px",
+    breakpoint: '480px',
     numVisible: 1,
     numScroll: 1,
   },
@@ -197,7 +205,8 @@ const getRating = (data) => {
 /*** LifeCycle Hooks ***/
 
 onMounted(() => {
-  PackageService.getPackage(props.id).then((response) => {
+  const params = router.currentRoute.value.params;
+  PackageService.getPackage(params.id).then((response) => {
     packageData.value = response;
     getRating(response);
   });
@@ -234,7 +243,7 @@ header {
 }
 
 .p-breadcrumb-chevron ul li.p-breadcrumb-chevron {
-  color: "#fc4747" !important;
+  color: '#fc4747' !important;
 }
 
 .image-container {

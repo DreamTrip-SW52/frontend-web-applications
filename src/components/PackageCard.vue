@@ -1,5 +1,6 @@
 <script setup>
 defineProps({
+  id: String,
   nombre: String,
   descripcion: String,
   lugar: String,
@@ -26,7 +27,7 @@ defineProps({
     <div class="card-action">
       <div>Since:</div>
       <div class="card-price">{{ precio }}</div>
-      <router-link to="/package">
+      <router-link :to="`/package/${id}`">
         <button class="card-button">See Details</button>
       </router-link>
     </div>
