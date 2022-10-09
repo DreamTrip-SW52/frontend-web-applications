@@ -1,22 +1,29 @@
 <template>
-  <div class="title-initial">DreamTrip</div>
+  <div class="initial">
+    <div class="title-initial">DreamTrip</div>
 
-  <div class="slogan">Create your dream trip</div>
+    <div class="slogan">Create your dream trip</div>
 
-  <div class="space-1">
-    <router-link to="/signup">
-      <button class="initial-button-sign-up">Sign up</button>
-    </router-link>
-  </div>
+    <div class="space-1">
+      <router-link to="/signup">
+        <button class="initial-button-sign-up">Sign up</button>
+      </router-link>
+    </div>
 
-  <div class="space-2">
-    <router-link to="/login">
-      <button class="initial-button-log-in">Log in</button>
-    </router-link>
+    <div class="space-2">
+      <router-link to="/login">
+        <button class="initial-button-log-in">Log in</button>
+      </router-link>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.initial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .title-initial {
   font-size: 96px;
   color: #ffffff;
@@ -51,12 +58,12 @@
 }
 
 .space-2 {
-  margin: 20px;
+  margin-top: 20px;
 }
 </style>
 
 <script>
 export default {
-  name: 'Initial',
+  name: "Initial",
 };
 </script>
