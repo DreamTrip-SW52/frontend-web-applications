@@ -45,11 +45,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { pushScopeId, ref } from 'vue';
 import { getAuthLoginErrors } from '../utils/authUtils';
 import { UsersApiService } from '../services/Users.service';
+import { useRouter } from 'vue-router';
 
 const userApiService = new UsersApiService();
+const router = useRouter();
 
 const handleLogin = async (e) => {
   e.preventDefault();
@@ -71,6 +73,8 @@ const handleLogin = async (e) => {
 
     // Usuario encontrado
     console.log('User found', data);
+
+    router.push('/home');
   }
 };
 
