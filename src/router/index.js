@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import Initial from '../views/Initial.vue';
 import SignUp from '../views/SignUp.vue';
+import Additionaldata from '../views/Additionaldata.vue';
 import Login from '../views/Login.vue';
 import Home from '../views/Home.vue';
 import PackageDetails from '../views/PackageDetails.vue';
@@ -16,6 +17,12 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: SignUp,
+    meta: { requiresAuth: false },
+  },
+  {
+    path: '/additionaldata',
+    name: 'additionaldata',
+    component: Additionaldata,
     meta: { requiresAuth: false },
   },
   {
