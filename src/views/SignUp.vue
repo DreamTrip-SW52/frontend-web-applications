@@ -105,7 +105,7 @@ const handleRegister = async (e) => {
       password: password.value,
     });
 
-    router.push('/home');
+    router.push('/additionaldata');
   }
 };
 
