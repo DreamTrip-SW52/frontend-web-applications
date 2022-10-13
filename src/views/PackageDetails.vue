@@ -97,8 +97,36 @@
           </div>
         </div>
         <div class="text-right my-2">
-          <Button label="Write review" class="p-button-text underline white" />
+          <Button
+            label="Write review"
+            class="p-button-text underline white"
+            @click="openDialogWriteReview"
+          />
         </div>
+        <Dialog v-model:visible="displayDialogWriteReview" :modal="true">
+          <div class="flex justify-content-between">
+            <p>Rate this travel package</p>
+            <Rating v-model="rating" :cancel="false" />
+          </div>
+          <br />
+          <Textarea
+            v-model="comment"
+            :autoResize="true"
+            rows="3"
+            cols="60"
+            placeholder="Write your comment"
+          />
+          <br /><br />
+          <div class="flex justify-content-between">
+            <Button
+              label="Cancel"
+              class="p-button-danger"
+              @click="closeDialogWriteReview"
+            />
+            <Button label="Submit" @click="closeDialogWriteReview" />
+          </div>
+        </Dialog>
+
         <!-- reseñas -->
 
         <ul class="list-none flex flex-column gap-4">
@@ -120,8 +148,31 @@
         </ul>
 
         <div class="text-right my-2">
-          <Button label="See more" class="p-button-text underline white" />
+          <Button
+            label="See more"
+            class="p-button-text underline white"
+            @click="openDialogSeeMore"
+          />
         </div>
+        <Dialog v-model:visible="displayDialogSeeMore">
+          <ul class="list-none flex flex-column gap-4">
+            <li
+              v-for="review in packageData.reviews"
+              class="pr-6"
+              :key="review.id"
+            >
+              <Rating
+                :modelValue="review.rating"
+                :readonly="true"
+                :cancel="false"
+              />
+              <br />
+              For {{ review.author }} the {{ review.date }}
+              <br />
+              <span class="font-light">{{ review.comment }}</span>
+            </li>
+          </ul>
+        </Dialog>
       </div>
 
       <!-- {{ JSON.stringify(packageData, null, 4) }} -->
@@ -130,56 +181,56 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import Accommodations from '../components/package_details/Accommodations.vue';
-import Transport from '../components/package_details/Transport.vue';
-import Tour from '../components/package_details/Tour.vue';
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+import Accommodations from "../components/package_details/Accommodations.vue";
+import Transport from "../components/package_details/Transport.vue";
+import Tour from "../components/package_details/Tour.vue";
 
 // Services
-import { PackageService } from '../services/Package.service';
+import { PackageService } from "../services/Package.service";
 /** Static **/
 
 //Router
 const router = useRouter();
 
-// Breadcrumb
-const home = { icon: 'pi pi-home', to: '/' };
-const items = [
-  {
-    label: 'ACCOMMODATIONS',
-    onClick: () => (breadcrumbView.value = 'accomodations'),
-  },
-  { label: 'TRANSPORTS', onClick: () => (breadcrumbView.value = 'transports') },
-  { label: 'TOURS', onClick: () => (breadcrumbView.value = 'tours') },
-];
-
 const props = defineProps({
   id: {
     type: String,
     required: true,
-    default: '1',
+    default: "1",
   },
 });
 
+// Breadcrumb
+const home = { icon: "pi pi-home", to: "/" };
+const items = [
+  {
+    label: "ACCOMMODATIONS",
+    onClick: () => (breadcrumbView.value = "accomodations"),
+  },
+  { label: "TRANSPORTS", onClick: () => (breadcrumbView.value = "transports") },
+  { label: "TOURS", onClick: () => (breadcrumbView.value = "tours") },
+];
+
 /** States **/
 // accomodations | flights | tours | ...
-const breadcrumbView = ref('accomodations');
+const breadcrumbView = ref("accomodations");
 
 // Carousel
 const responsiveOptions = ref([
   {
-    breakpoint: '1024px',
+    breakpoint: "1024px",
     numVisible: 3,
     numScroll: 3,
   },
   {
-    breakpoint: '600px',
+    breakpoint: "600px",
     numVisible: 2,
     numScroll: 2,
   },
   {
-    breakpoint: '480px',
+    breakpoint: "480px",
     numVisible: 1,
     numScroll: 1,
   },
@@ -200,6 +251,28 @@ const getRating = (data) => {
 
   const result = Math.floor(total / data?.reviews?.length);
   averageReviews.value = result;
+};
+
+/*** Reviews ***/
+
+// Write review
+
+const displayDialogWriteReview = ref(false);
+const openDialogWriteReview = () => {
+  displayDialogWriteReview.value = true;
+};
+const closeDialogWriteReview = () => {
+  displayDialogWriteReview.value = false;
+};
+
+const comment = ref("");
+const rating = ref(0);
+
+// See more
+
+const displayDialogSeeMore = ref(false);
+const openDialogSeeMore = () => {
+  displayDialogSeeMore.value = true;
 };
 
 /*** LifeCycle Hooks ***/
@@ -243,7 +316,7 @@ header {
 }
 
 .p-breadcrumb-chevron ul li.p-breadcrumb-chevron {
-  color: '#fc4747' !important;
+  color: "#fc4747" !important;
 }
 
 .image-container {
@@ -259,5 +332,9 @@ header {
 .calendar-container,
 .review-container {
   background: #161d2f;
+}
+
+.dialog {
+  background: #5a698f;
 }
 </style>
