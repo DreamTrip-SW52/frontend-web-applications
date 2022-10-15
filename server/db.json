@@ -2,12 +2,13 @@
   "packages": [
     {
       "id": 1,
+      "travelAgencyId": 1,
       "name": "Nature Adventure",
       "description": "Four hours from Lima is Rúpac, an archaeological complex in the heights, where at 5 a.m. there is a great show for the clouds that are clearing the coast. It is a unique landscape.",
       "location": "Huaral",
       "duration": "4 days",
       "capacity": "30",
-      "disponibility": "24/7",
+      "availability": "24/7",
       "accommodations": {
         "details": "A unique experience to see the red sunset and a sunrise full of clouds.",
         "services": [
@@ -65,7 +66,7 @@
         "oustanding": [
           "Friendly guide",
           "Good tour",
-          "Beatiful landscape"
+          "Beautiful landscape"
         ],
         "it-includes": [],
         "location": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d500752.6482146545!2d-77.36509933437503!3d-11.325202799999975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91063f2a1c794e93%3A0xef50cc8630d532e8!2sCOMPLEJO%20ARQUEOL%C3%93GICO%20DE%20RUPAC!5e0!3m2!1ses-419!2spe!4v1664149265135!5m2!1ses-419!2spe",
@@ -110,7 +111,7 @@
       "location": "Lima",
       "duration": "7 days",
       "capacity": "10",
-      "disponibility": "24/7",
+      "availability": "24/7",
       "accommodations": {
         "details": "Playa Caballeros, presents some waves of the Reef-break type; In Caballeros it is possible to find some impressive waves that are characterized by being long and well formed, in addition to having a clear tubular section, which can reach up to 3 meters in height. It is known that, near the sea of Playa Caballeros, one of the most impressive waves of the Peruvian sea is formed, that one is known by the name of Pico Alto and they have the peculiarity of reaching 7 to 8 meters, on average. Playa Caballeros is also a recommended beach for those visitors who like fishing, which can be done from its rocks, which are located at both ends of the resort. The fertile sea of Caballeros allows the fishing of species such as the cheetah, among others.",
         "services": [

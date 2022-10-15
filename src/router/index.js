@@ -4,6 +4,8 @@ import SignUp from '../views/SignUp.vue';
 import Login from '../views/Login.vue';
 import Home from '../views/Home.vue';
 import PackageDetails from '../views/PackageDetails.vue';
+import Packages from '../views/Packages.vue';
+import Statistics from '../views/Statistics.vue'
 
 const routes = [
   {
@@ -33,6 +35,16 @@ const routes = [
     path: '/package/:id',
     component: PackageDetails,
     meta: { requiresAuth: true },
+  },
+  {
+    path: '/packages',
+    component: Packages,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/statistics',
+    component: Statistics,
+    meta: { requiresAuth: true }
   },
   // crear para cualquier ruta que no exista y redirigir a la ruta inicial
   // { path: '/:pathMatch(.*)*', redirect: '/login' },

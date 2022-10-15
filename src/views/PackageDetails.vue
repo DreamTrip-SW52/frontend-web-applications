@@ -1,7 +1,7 @@
 <template>
   <!-- {{ $route.params.id }} -->
 
-  <main class="grid w-full ml-4" v-if="packageData !== {}">
+  <main class="grid w-full ml-4 text-white" v-if="packageData !== {}">
     <section id="center" class="col-8">
       <header>
         <span class="primary text-lg font-medium">DreamTrip</span> /
@@ -26,21 +26,21 @@
           </div>
           <div class="text-center">
             <i class="pi pi-calendar icons"></i>
-            <p>{{ packageData.disponibility }}</p>
+            <p>{{ packageData.availability }}</p>
           </div>
         </div>
         <!-- Carrousel -->
 
         <Carousel
-          :value="packageData.images"
-          :numVisible="1"
-          :numScroll="3"
-          :responsiveOptions="responsiveOptions"
+            :value="packageData.images"
+            :numVisible="1"
+            :numScroll="3"
+            :responsiveOptions="responsiveOptions"
         >
-          <template #header> </template>
+          <template #header></template>
           <template #item="slotProps">
             <div class="image-container">
-              <img :src="slotProps.data.src" class="w-full" />
+              <img :src="slotProps.data.src" class="w-full"/>
             </div>
           </template>
         </Carousel>
@@ -51,27 +51,27 @@
           <Breadcrumb :model="items">
             <template #item="{ item }">
               <a @click="item.onClick" class="cursor-pointer">{{
-                item.label
-              }}</a>
+                  item.label
+                }}</a>
             </template>
           </Breadcrumb>
           <!-- accomodation - tour - transport  -->
           <div>
             <div v-if="breadcrumbView === 'accomodations'">
-              <Accommodations :source="packageData.accommodations" />
+              <Accommodations :source="packageData.accommodations"/>
             </div>
             <div v-if="breadcrumbView === 'tours'">
-              <Tour :source="packageData.tour" />
+              <Tour :source="packageData.tour"/>
             </div>
             <div v-if="breadcrumbView === 'transports'">
-              <Transport :source="packageData.transport" />
+              <Transport :source="packageData.transport"/>
             </div>
           </div>
         </div>
       </section>
     </section>
 
-    <section id="right" class="col-4 p-2 flex flex-column gap-8 white">
+    <section id="right" class="col-4 p-2 flex flex-column gap-8 text-white">
       <div class="text-center calendar-container flex flex-column gap-4 p-4">
         <h2>Booking online</h2>
         <h2>S/.{{ packageData.total }}</h2>
@@ -79,9 +79,9 @@
           <p>Choose a date</p>
           <p>Available day</p>
         </div>
-        <Calendar v-model="calendar" :inline="true" />
+        <Calendar v-model="calendar" :inline="true"/>
         <div class="text-center">
-          <Button label="Buy" style="width: 8rem" />
+          <Button label="Buy" style="width: 8rem"/>
         </div>
       </div>
       <div class="review-container p-4">
@@ -90,37 +90,37 @@
           <h3 class="text-4xl font-medium">{{ averageReviews }}</h3>
           <div class="flex justify-content-center">
             <Rating
-              :modelValue="averageReviews"
-              :readonly="true"
-              :cancel="false"
+                :modelValue="averageReviews"
+                :readonly="true"
+                :cancel="false"
             />
           </div>
         </div>
         <div class="text-right my-2">
-          <Button label="Write review" class="p-button-text underline white" />
+          <Button label="Write review" class="p-button-text underline text-white"/>
         </div>
         <!-- reseñas -->
 
         <ul class="list-none flex flex-column gap-4">
           <li
-            v-for="review in packageData.reviews"
-            class="pr-6"
-            :key="review.id"
+              v-for="review in packageData.reviews"
+              class="pr-6"
+              :key="review.id"
           >
             <Rating
-              :modelValue="review.rating"
-              :readonly="true"
-              :cancel="false"
+                :modelValue="review.rating"
+                :readonly="true"
+                :cancel="false"
             />
-            <br />
+            <br/>
             For {{ review.author }} the {{ review.date }}
-            <br />
+            <br/>
             <span class="font-light">{{ review.comment }}</span>
           </li>
         </ul>
 
         <div class="text-right my-2">
-          <Button label="See more" class="p-button-text underline white" />
+          <Button label="See more" class="p-button-text underline text-white"/>
         </div>
       </div>
 
@@ -130,28 +130,29 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import {onMounted, ref} from 'vue';
+import {useRouter} from 'vue-router';
 import Accommodations from '../components/package_details/Accommodations.vue';
 import Transport from '../components/package_details/Transport.vue';
 import Tour from '../components/package_details/Tour.vue';
 
 // Services
-import { PackageService } from '../services/Package.service';
+import {PackageService} from '../services/Package.service';
+
 /** Static **/
 
 //Router
 const router = useRouter();
 
 // Breadcrumb
-const home = { icon: 'pi pi-home', to: '/' };
+const home = {icon: 'pi pi-home', to: '/'};
 const items = [
   {
     label: 'ACCOMMODATIONS',
     onClick: () => (breadcrumbView.value = 'accomodations'),
   },
-  { label: 'TRANSPORTS', onClick: () => (breadcrumbView.value = 'transports') },
-  { label: 'TOURS', onClick: () => (breadcrumbView.value = 'tours') },
+  {label: 'TRANSPORTS', onClick: () => (breadcrumbView.value = 'transports')},
+  {label: 'TOURS', onClick: () => (breadcrumbView.value = 'tours')},
 ];
 
 const props = defineProps({
@@ -198,16 +199,17 @@ const getRating = (data) => {
     total += review.rating;
   });
 
-  const result = Math.floor(total / data?.reviews?.length);
-  averageReviews.value = result;
+  averageReviews.value = Math.floor(total / data?.reviews?.length);
 };
 
 /*** LifeCycle Hooks ***/
 
+const packageService = new PackageService();
+
 onMounted(() => {
   const params = router.currentRoute.value.params;
-  PackageService.getPackage(params.id).then((response) => {
-    packageData.value = response;
+  packageService.getPackageById(params.id).then((response) => {
+    packageData.value = response.data;
     getRating(response);
   });
 });
@@ -218,6 +220,7 @@ header {
   background: #5a698f;
   padding: 14px 0 14px 48px;
 }
+
 .primary {
   color: #fc4747;
 }
@@ -243,7 +246,7 @@ header {
 }
 
 .p-breadcrumb-chevron ul li.p-breadcrumb-chevron {
-  color: '#fc4747' !important;
+  color: #fc4747 !important;
 }
 
 .image-container {
