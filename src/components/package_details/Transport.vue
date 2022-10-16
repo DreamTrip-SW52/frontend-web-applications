@@ -6,10 +6,10 @@
         <span>About</span>
       </div>
       <ul class="flex flex-column flex-wrap gap-2">
-        <li>{{ props?.source?.about?.type }}</li>
+        <li>{{ transportData?.about?.type }}</li>
         <li>
-          {{ props?.source?.about?.from }} ➡️
-          {{ props?.source?.about?.to }}
+          {{ transportData?.about?.from }} ➡️
+          {{ transportData?.about?.to }}
         </li>
       </ul>
     </section>
@@ -22,7 +22,7 @@
       <div class="flex flex-column gap-3">
         <!-- render the flight cards -->
         <FlightCard
-          v-for="flight in props?.source?.details"
+          v-for="flight in transportData?.details"
           :key="flight.id"
           :source="flight"
         ></FlightCard>
@@ -30,7 +30,7 @@
       <!-- cards end -->
       <div class="mt-5">
         <p class="text-right text-2xl font-medium">
-          Total: S/. {{ getTotal() }}
+          Total: S/. {{ transportData?.price }}
         </p>
       </div>
     </section>
@@ -40,17 +40,25 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import FlightCard from "./FlightCard.vue";
+import { TransportService } from "../../services/Transport.service";
 
-const getTotal = () => {
-  return props.source.details.reduce((acc, curr) => {
-    return acc + curr.price;
-  }, 0);
-};
+const transportService = new TransportService();
+const transportData = ref({});
 
 const props = defineProps({
-  source: {
+  id: {
+    type: Number,
     required: true,
+    default: 1,
   },
+});
+
+onMounted(() => {
+  transportService.getTransportByPackageId(props.id).then((response) => {
+    const res = response.data;
+    transportData.value = res[0];
+    console.log(transportData.value);
+  });
 });
 </script>
 

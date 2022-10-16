@@ -32,7 +32,7 @@
         <!-- Carrousel -->
 
         <Carousel
-          :value="packageData.images"
+          :value="imageData"
           :numVisible="1"
           :numScroll="3"
           :responsiveOptions="responsiveOptions"
@@ -58,13 +58,13 @@
           <!-- accomodation - tour - transport  -->
           <div>
             <div v-if="breadcrumbView === 'accomodations'">
-              <Accommodations :source="packageData.accommodations" />
+              <Accommodations :id="packageData.id" />
             </div>
             <div v-if="breadcrumbView === 'tours'">
-              <Tour :source="packageData.tour" />
+              <Tour :id="packageData.id" />
             </div>
             <div v-if="breadcrumbView === 'transports'">
-              <Transport :source="packageData.transport" />
+              <Transport :id="packageData.id" />
             </div>
           </div>
         </div>
@@ -131,7 +131,7 @@
 
         <ul class="list-none flex flex-column gap-4">
           <li
-            v-for="review in packageData.reviews"
+            v-for="review in reviews.slice(0, 3)"
             class="pr-6"
             :key="review.id"
           >
@@ -141,7 +141,7 @@
               :cancel="false"
             />
             <br />
-            For {{ review.author }} the {{ review.date }}
+            For {{ review.user.name }} the {{ review.date }}
             <br />
             <span class="font-light">{{ review.comment }}</span>
           </li>
@@ -156,18 +156,14 @@
         </div>
         <Dialog v-model:visible="displayDialogSeeMore">
           <ul class="list-none flex flex-column gap-4">
-            <li
-              v-for="review in packageData.reviews"
-              class="pr-6"
-              :key="review.id"
-            >
+            <li v-for="review in reviews" class="pr-6" :key="review.id">
               <Rating
                 :modelValue="review.rating"
                 :readonly="true"
                 :cancel="false"
               />
               <br />
-              For {{ review.author }} the {{ review.date }}
+              For {{ review.user.name }} the {{ review.date }}
               <br />
               <span class="font-light">{{ review.comment }}</span>
             </li>
@@ -183,7 +179,6 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
 import Accommodations from "../components/package_details/Accommodations.vue";
 import Transport from "../components/package_details/Transport.vue";
 import Tour from "../components/package_details/Tour.vue";
@@ -191,21 +186,19 @@ import Tour from "../components/package_details/Tour.vue";
 // Services
 import { PackageService } from "../services/Package.service";
 import { ReviewService } from "../services/Review.service";
+import { ImageService } from "../services/Images.service";
+
 /** Static **/
 
 //Router
 const router = useRouter();
 
-// const props = defineProps({
-//   id: {
-//     type: Number,
-//     required: true,
-// default: 1,
-//   },
-// });
+const packageService = new PackageService();
+const imageService = new ImageService();
+const packageData = ref({});
+const imageData = ref({});
 
 // Breadcrumb
-const home = { icon: "pi pi-home", to: "/" };
 const items = [
   {
     label: "ACCOMMODATIONS",
@@ -240,18 +233,18 @@ const responsiveOptions = ref([
 
 // Calendar
 const calendar = ref();
-const packageData = ref({});
-const averageReviews = ref(0);
 
 // Rating
-const getRating = (data) => {
+const averageReviews = ref(0);
+
+const getRating = () => {
   let total = 0;
 
-  data?.reviews.forEach((review) => {
+  reviews.value.forEach((review) => {
     total += review.rating;
   });
 
-  const result = Math.floor(total / data?.reviews?.length);
+  const result = Math.floor(total / reviews.value.length);
   averageReviews.value = result;
 };
 
@@ -275,25 +268,31 @@ const rating = ref(0);
 
 const writeReview = () => {
   const currentDate = new Date();
-  const date = currentDate.toString();
+  const strDate =
+    currentDate.getDate() +
+    "/" +
+    currentDate.getMonth() +
+    "/" +
+    currentDate.getFullYear();
   const params = router.currentRoute.value.params;
 
   const review = {
     packageId: Number,
-    author: String,
     date: String,
     rating: Number,
     comment: String,
+    userId: Number,
   };
+
   review.packageId = parseInt(params.id);
-  review.author = "A";
-  review.date = date;
+  review.date = strDate;
   review.rating = rating.value;
   review.comment = comment.value;
+  review.userId = 1;
 
   console.log(review);
 
-  axios.post(`http://localhost:3000/reviews/`, review);
+  reviewService.addReview(review);
   closeDialogWriteReview();
 };
 
@@ -308,13 +307,16 @@ const openDialogSeeMore = () => {
 
 onMounted(() => {
   const params = router.currentRoute.value.params;
-  // props.id = params.id;
-  PackageService.getPackage(params.id).then((response) => {
-    packageData.value = response;
-    getRating(response);
+
+  packageService.getPackageById(params.id).then((response) => {
+    packageData.value = response.data;
   });
-  reviewService.getReviews().then((response) => {
-    reviews.value = response;
+  imageService.getImageByPackageId(params.id).then((response) => {
+    imageData.value = response.data;
+  });
+  reviewService.getReviewUserByPackageId(params.id).then((response) => {
+    reviews.value = response.data;
+    getRating();
   });
 });
 </script>
