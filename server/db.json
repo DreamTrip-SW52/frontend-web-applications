@@ -83,18 +83,21 @@
       ],
       "reviews": [
         {
+          "id": 1,
           "author": "Frank",
           "date": "13/11/22",
           "rating": 4,
           "comment": "It is a good option if you want a trip out of the ordinary."
         },
         {
+          "id": 2,
           "author": "Pedro",
           "date": "20/11/22",
           "rating": 3,
           "comment": "The hotel was very good, but the travel can be better."
         },
         {
+          "id": 3,
           "author": "Mariana",
           "date": "23/11/22",
           "rating": 5,
@@ -163,18 +166,21 @@
       ],
       "reviews": [
         {
+          "id": 1,
           "author": "Jorge",
           "date": "23/09/22",
           "rating": 4,
           "comment": "It is a good option if you want a trip out of the ordinary."
         },
         {
+          "id": 2,
           "author": "Mario",
           "date": "15/09/22",
           "rating": 4,
           "comment": "The travel was very good, but the hotel can be better."
         },
         {
+          "3": 3,
           "author": "Rosa",
           "date": "30/09/22",
           "rating": 5,
@@ -218,6 +224,32 @@
       "email": "cokijlmf@gmail.com",
       "password": "pizza",
       "id": 10
+    }
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "packageId": 1,
+      "author": "Jorge",
+      "date": "23/09/22",
+      "rating": 4,
+      "comment": "It is a good option if you want a trip out of the ordinary."
+    },
+    {
+      "id": 2,
+      "packageId": 1,
+      "author": "Mario",
+      "date": "15/09/22",
+      "rating": 4,
+      "comment": "The travel was very good, but the hotel can be better."
+    },
+    {
+      "id": 3,
+      "packageId": 1,
+      "author": "Rosa",
+      "date": "30/09/22",
+      "rating": 5,
+      "comment": "This travel package it's amazing!"
     }
   ]
 }

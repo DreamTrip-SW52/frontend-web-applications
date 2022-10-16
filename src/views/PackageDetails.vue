@@ -123,7 +123,7 @@
               class="p-button-danger"
               @click="closeDialogWriteReview"
             />
-            <Button label="Submit" @click="closeDialogWriteReview" />
+            <Button label="Submit" @click="writeReview" />
           </div>
         </Dialog>
 
@@ -183,24 +183,26 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import axios from "axios";
 import Accommodations from "../components/package_details/Accommodations.vue";
 import Transport from "../components/package_details/Transport.vue";
 import Tour from "../components/package_details/Tour.vue";
 
 // Services
 import { PackageService } from "../services/Package.service";
+import { ReviewService } from "../services/Review.service";
 /** Static **/
 
 //Router
 const router = useRouter();
 
-const props = defineProps({
-  id: {
-    type: String,
-    required: true,
-    default: "1",
-  },
-});
+// const props = defineProps({
+//   id: {
+//     type: Number,
+//     required: true,
+// default: 1,
+//   },
+// });
 
 // Breadcrumb
 const home = { icon: "pi pi-home", to: "/" };
@@ -257,6 +259,9 @@ const getRating = (data) => {
 
 // Write review
 
+const reviewService = new ReviewService();
+const reviews = ref([]);
+
 const displayDialogWriteReview = ref(false);
 const openDialogWriteReview = () => {
   displayDialogWriteReview.value = true;
@@ -267,6 +272,30 @@ const closeDialogWriteReview = () => {
 
 const comment = ref("");
 const rating = ref(0);
+
+const writeReview = () => {
+  const currentDate = new Date();
+  const date = currentDate.toString();
+  const params = router.currentRoute.value.params;
+
+  const review = {
+    packageId: Number,
+    author: String,
+    date: String,
+    rating: Number,
+    comment: String,
+  };
+  review.packageId = parseInt(params.id);
+  review.author = "A";
+  review.date = date;
+  review.rating = rating.value;
+  review.comment = comment.value;
+
+  console.log(review);
+
+  axios.post(`http://localhost:3000/reviews/`, review);
+  closeDialogWriteReview();
+};
 
 // See more
 
@@ -279,9 +308,13 @@ const openDialogSeeMore = () => {
 
 onMounted(() => {
   const params = router.currentRoute.value.params;
+  // props.id = params.id;
   PackageService.getPackage(params.id).then((response) => {
     packageData.value = response;
     getRating(response);
+  });
+  reviewService.getReviews().then((response) => {
+    reviews.value = response;
   });
 });
 </script>
