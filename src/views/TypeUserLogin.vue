@@ -2,6 +2,8 @@
   <div class="typeuserlogin">
     <div class="title-typeuserlogin">DreamTrip</div>
 
+    <div class="caption-login">Login</div>
+
     <div class="space-1">
       <router-link to="/login">
         <button class="typeuserlogin-button-login-travellers">
@@ -12,9 +14,7 @@
 
     <div class="space-2">
       <router-link to="/login">
-        <button class="typeuserlogin-button-login-travellers">
-          Travel agency
-        </button>
+        <button class="typeuserlogin-button-login-agent">Travel agency</button>
       </router-link>
     </div>
   </div>
@@ -32,10 +32,17 @@
   margin: 20px;
 }
 
+.caption-login {
+  font-size: 32px;
+  color: #ffffff;
+  opacity: 0.7;
+  margin: 40px;
+}
+
 .typeuserlogin-button-login-travellers {
   background-color: #fc4747;
-  padding-left: 100px;
-  padding-right: 100px;
+  padding-left: 120px;
+  padding-right: 120px;
   border: 0px;
   border-radius: 10px;
 }

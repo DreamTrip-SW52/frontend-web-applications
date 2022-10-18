@@ -5,14 +5,14 @@
     <div class="slogan">Create your dream trip</div>
 
     <div class="space-1">
-      <router-link to="/signup">
+      <router-link to="/typeusersignup">
         <button class="initial-button-sign-up">Sign up</button>
       </router-link>
     </div>
 
     <div class="space-2">
-      <router-link to="/login">
-        <button class="initial-button-log-in">Log in</button>
+      <router-link to="/typeuserlogin">
+        <button class="initial-button-log-in">Login</button>
       </router-link>
     </div>
   </div>

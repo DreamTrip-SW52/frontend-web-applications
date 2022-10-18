@@ -43,7 +43,7 @@
           <button
             type="submit"
             class="initial-button-log-in"
-            @click="handleRegister"
+            @click="handleAdditional"
           >
             Add data
           </button>
@@ -69,7 +69,7 @@ import { useRouter } from 'vue-router';
 const userApiService = new UsersApiService();
 const router = useRouter();
 
-const handleRegister = async (e) => {
+const handleAdditional = async (e) => {
   e.preventDefault();
   // // Your login logic here
   const registerErrors = getAuthRegisterErrors(

@@ -223,6 +223,11 @@
       "email": "cokijlmf@outlook.com",
       "password": "otto",
       "id": 11
+    },
+    {
+      "email": "evelynfassioli@hotmail.com",
+      "password": "eve1234",
+      "id": 12
     }
   ]
 }
