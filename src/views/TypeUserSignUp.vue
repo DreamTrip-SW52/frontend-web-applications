@@ -1,43 +1,38 @@
 <template>
-  <div class="initial">
-    <div class="title-initial">DreamTrip</div>
-
-    <div class="slogan">Create your dream trip</div>
+  <div class="typeusersignup">
+    <div class="title-typeusersignup">DreamTrip</div>
 
     <div class="space-1">
       <router-link to="/signup">
-        <button class="initial-button-sign-up">Sign up</button>
+        <button class="typeusersignup-button-sign-up-travellers">
+          Passengers
+        </button>
       </router-link>
     </div>
 
     <div class="space-2">
-      <router-link to="/login">
-        <button class="initial-button-log-in">Log in</button>
+      <router-link to="/signup">
+        <button class="typeusersignup-button-sign-up-agent">
+          Travel agency
+        </button>
       </router-link>
     </div>
   </div>
 </template>
 
 <style scoped>
-.initial {
+.typeusersignup {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.title-initial {
+.title-typeusersignup {
   font-size: 96px;
   color: #ffffff;
   margin: 20px;
 }
 
-.slogan {
-  font-size: 32px;
-  color: #ffffff;
-  opacity: 0.7;
-  margin: 40px;
-}
-
-.initial-button-sign-up {
+.typeusersignup-button-sign-up-travellers {
   background-color: #fc4747;
   padding-left: 100px;
   padding-right: 100px;
@@ -45,7 +40,7 @@
   border-radius: 10px;
 }
 
-.initial-button-log-in {
+.typeusersignup-button-sign-up-agent {
   background-color: #fc4747;
   padding-left: 105px;
   padding-right: 105px;
@@ -64,6 +59,6 @@
 
 <script>
 export default {
-  name: 'Initial',
+  name: 'TypeUserSignUp',
 };
 </script>

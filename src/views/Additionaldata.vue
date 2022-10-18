@@ -61,10 +61,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { getAuthRegisterErrors } from "../utils/authUtils";
-import { UsersApiService } from "../services/Users.service";
-import { useRouter } from "vue-router";
+import { ref } from 'vue';
+import { getAuthRegisterErrors } from '../utils/authUtils';
+import { UsersApiService } from '../services/Users.service';
+import { useRouter } from 'vue-router';
 
 const userApiService = new UsersApiService();
 const router = useRouter();
@@ -81,9 +81,9 @@ const handleRegister = async (e) => {
   errors.value = registerErrors;
 
   if (
-    registerErrors.name.error ||
-    registerErrors.lastname.error ||
-    registerErrors.phone.error
+    registerErrors.name?.error ||
+    registerErrors.lastname?.error ||
+    registerErrors.phone?.error
   )
     return;
 
@@ -91,7 +91,7 @@ const handleRegister = async (e) => {
 
   if (Array.isArray(data) && data.length > 0) {
     errors.value.phone.error = true;
-    errors.value.phone.message = "That phone alrery existis";
+    errors.value.phone.message = 'That phone alrery existis';
     return;
   }
 
@@ -106,27 +106,27 @@ const handleRegister = async (e) => {
       phone: phone.value,
     });
 
-    router.push("/login");
+    router.push('/login');
   }
 };
 
 let errors = ref({
   name: {
     name: false,
-    message: "",
+    message: '',
   },
   lastname: {
     error: false,
-    message: "",
+    message: '',
   },
   phone: {
     error: false,
-    message: "",
+    message: '',
   },
 });
-const name = ref("");
-const lastname = ref("");
-const phone = ref("");
+const name = ref('');
+const lastname = ref('');
+const phone = ref('');
 </script>
 
 <style scoped>
