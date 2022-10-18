@@ -71,14 +71,13 @@ const props = defineProps({
   id: {
     type: Number,
     required: true,
-    default: 1,
   },
 });
 
 onMounted(() => {
-  tourService.getTourByPackageId(props.id).then((response) => {
-    const res = response.data;
-    tourData.value = res[0];
+  tourService.getTourById(props.id).then((response) => {
+    console.log(props.id);
+    tourData.value = response.data;
   });
 });
 </script>

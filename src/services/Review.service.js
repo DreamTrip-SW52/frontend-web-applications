@@ -13,8 +13,8 @@ export class ReviewService {
     return http.get(`/reviews?packageId=${packageId}`);
   }
 
-  getReviewUserByPackageId(packageId) {
-    http: return http.get(`/reviews?packageId=${packageId}&_expand=user`);
+  getReviewTravellerByPackageId(packageId) {
+    http: return http.get(`/reviews?packageId=${packageId}&_expand=traveller`);
   }
 
   addReview(review) {

@@ -4,7 +4,6 @@
       <div class="text-center mb-4">
         <i class="pi pi-info-circle"></i>
         <span>Details</span>
-        <!-- {{ JSON.stringify(props.source) }} -->
       </div>
       <div>
         <p>
@@ -75,18 +74,15 @@ const props = defineProps({
   id: {
     type: Number,
     required: true,
-    default: 1,
   },
 });
 
 onMounted(() => {
-  accommodationService
-    .getAccommodationByPackageId(props.id)
-    .then((response) => {
-      const res = response.data;
-      accommodationData.value = res[0];
-      console.log(accommodationData.value);
-    });
+  console.log(props.id);
+  accommodationService.getAccommodationById(props.id).then((response) => {
+    accommodationData.value = response.data;
+    console.log(accommodationData.value);
+  });
 });
 </script>
 

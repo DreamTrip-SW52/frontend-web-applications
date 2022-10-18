@@ -11,6 +11,7 @@ import Rating from "primevue/rating";
 import InputText from "primevue/inputtext";
 import Dialog from "primevue/dialog";
 import Textarea from "primevue/textarea";
+import Steps from "primevue/steps";
 
 import App from "./App.vue";
 import router from "./router";
@@ -149,4 +150,5 @@ app.component("Rating", Rating);
 app.component("InputText", InputText);
 app.component("Dialog", Dialog);
 app.component("Textarea", Textarea);
+app.component("Steps", Steps);
 app.mount("#app");

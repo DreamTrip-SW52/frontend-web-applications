@@ -9,7 +9,7 @@ export class TransportService {
     return http.get(`/transports/${id}`);
   }
 
-  getTransportByPackageId(packageId) {
-    return http.get(`/transports/?packageId=${packageId}`);
+  getTransportByPackageTypeAndId(type,transportId) {
+    return http.get(`/${type}/${transportId}`);
   }
 }

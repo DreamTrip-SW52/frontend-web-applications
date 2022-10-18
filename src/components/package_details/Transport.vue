@@ -5,12 +5,12 @@
         <i class="pi pi-info-circle"></i>
         <span>About</span>
       </div>
-      <ul class="flex flex-column flex-wrap gap-2">
-        <li>{{ transportData?.about?.type }}</li>
-        <li>
-          {{ transportData?.about?.from }} ➡️
-          {{ transportData?.about?.to }}
-        </li>
+      <ul
+        class="flex flex-column flex-wrap gap-2"
+        v-if="transportData !== {} && transportData !== undefined"
+      >
+        <li>{{ transportData?.typeOfTrip }}</li>
+        <li>{{ details?.from?.tag }} -> {{ details?.to?.tag }}</li>
       </ul>
     </section>
     <section id="flight-details">
@@ -44,21 +44,26 @@ import { TransportService } from "../../services/Transport.service";
 
 const transportService = new TransportService();
 const transportData = ref({});
+const details = ref({});
 
 const props = defineProps({
+  type: {
+    type: String,
+    required: true,
+  },
   id: {
     type: Number,
     required: true,
-    default: 1,
   },
 });
 
 onMounted(() => {
-  transportService.getTransportByPackageId(props.id).then((response) => {
-    const res = response.data;
-    transportData.value = res[0];
-    console.log(transportData.value);
-  });
+  transportService
+    .getTransportByPackageTypeAndId(props.type, props.id)
+    .then((response) => {
+      transportData.value = response.data;
+      details.value = response.data.details[0];
+    });
 });
 </script>
 

@@ -18,7 +18,7 @@
           </div>
           <div class="text-center">
             <i class="pi pi-clock icons"></i>
-            <p>{{ packageData.duration }}</p>
+            <p>{{ packageData.duration }} days</p>
           </div>
           <div class="text-center">
             <i class="pi pi-user icons"></i>
@@ -58,13 +58,16 @@
           <!-- accomodation - tour - transport  -->
           <div>
             <div v-if="breadcrumbView === 'accomodations'">
-              <Accommodations :id="packageData.id" />
+              <Accommodations :id="packageData.accommodationId" />
             </div>
             <div v-if="breadcrumbView === 'tours'">
-              <Tour :id="packageData.id" />
+              <Tour :id="packageData.tourId" />
             </div>
             <div v-if="breadcrumbView === 'transports'">
-              <Transport :id="packageData.id" />
+              <Transport
+                :type="packageData.transport.type"
+                :id="packageData.transport.id"
+              />
             </div>
           </div>
         </div>
@@ -141,7 +144,7 @@
               :cancel="false"
             />
             <br />
-            For {{ review.user.name }} the {{ review.date }}
+            For {{ review.traveller.name }} the {{ review.date }}
             <br />
             <span class="font-light">{{ review.comment }}</span>
           </li>
@@ -163,7 +166,7 @@
                 :cancel="false"
               />
               <br />
-              For {{ review.user.name }} the {{ review.date }}
+              For {{ review.traveller.name }} the {{ review.date }}
               <br />
               <span class="font-light">{{ review.comment }}</span>
             </li>
@@ -186,7 +189,7 @@ import Tour from "../components/package_details/Tour.vue";
 // Services
 import { PackageService } from "../services/Package.service";
 import { ReviewService } from "../services/Review.service";
-import { ImageService } from "../services/Images.service";
+import { ImageService } from "../services/Image.service";
 
 /** Static **/
 
@@ -195,6 +198,7 @@ const router = useRouter();
 
 const packageService = new PackageService();
 const imageService = new ImageService();
+
 const packageData = ref({});
 const imageData = ref({});
 
@@ -314,7 +318,7 @@ onMounted(() => {
   imageService.getImageByPackageId(params.id).then((response) => {
     imageData.value = response.data;
   });
-  reviewService.getReviewUserByPackageId(params.id).then((response) => {
+  reviewService.getReviewTravellerByPackageId(params.id).then((response) => {
     reviews.value = response.data;
     getRating();
   });
