@@ -46,12 +46,10 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
 import { getAuthLoginErrors } from "../utils/authUtils";
-import { TravellerService } from "../services/Traveller.service";
+import { TravelAgencyService } from "../services/TravelAgency.service";
 
-const travellerService = new TravellerService();
-const router = useRouter();
+const travelAgencyService = new TravelAgencyService();
 
 const handleLogin = async (e) => {
   e.preventDefault();
@@ -64,21 +62,18 @@ const handleLogin = async (e) => {
   errors.value = loginErrors;
 
   if (!loginErrors?.email?.error && !loginErrors?.password?.error) {
-    const { data } = await travellerService.loginWithEmailAndPassword(
+    const { data } = await travelAgencyService.loginWithEmailAndPassword(
       email.value,
       password.value
     );
 
     if (Array.isArray(data) && data.length === 0)
-      console.log("Traveller not found");
+      console.log("Travel Agency not found");
 
     localStorage.setItem("currentUser", JSON.stringify(data[0].id));
 
-    // Redirect to home page
-    router.push("/home");
-
     // Usuario encontrado
-    console.log('User found', data);
+    console.table(data);
   }
 };
 
