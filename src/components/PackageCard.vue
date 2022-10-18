@@ -20,7 +20,7 @@ defineProps({
       <div class="des-pack">{{ descripcion }}</div>
       <div class="pl-du">
         <div>{{ lugar }}</div>
-        <div>{{ duracion }}</div>
+        <div>{{ duracion }} days</div>
       </div>
     </div>
 

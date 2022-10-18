@@ -7,20 +7,40 @@
       <h2 class="title1">Filters</h2>
       <div class="prices">
         <h3 class="title2">Price</h3>
-        <input type="range" min="300" max="10000" class="filter-range" />
+        <input
+          v-model="price_filter"
+          v-on:change="show_package_filters()"
+          type="range"
+          id="price"
+          name="price"
+          min="300"
+          max="5000"
+          class="filter-range"
+        />
         <div class="pric-ran">
-          <div>min</div>
-          <div>max</div>
+          <div>300</div>
+          <div>5000</div>
         </div>
+        <p>Price: {{ price_filter }}</p>
       </div>
 
       <div class="conftime">
         <h3 class="title2">Configuration Time</h3>
-        <input type="range" min="0" max="24" class="filter-range" />
+        <input
+          v-model="time_filter"
+          v-on:change="show_package_filters()"
+          type="range"
+          id="time"
+          name="time"
+          min="3"
+          max="30"
+          class="filter-range"
+        />
         <div class="tim-ran">
           <div>immediate</div>
           <div>24h</div>
         </div>
+        <p>Time: {{ time_filter }}</p>
       </div>
 
       <div class="type">
@@ -97,6 +117,17 @@ onMounted(() => {
 });
 
 const packages = ref([]);
+const price_filter = ref(5000);
+const time_filter = ref(30);
+
+const show_package_filters = () => {
+  const price_value = price_filter.value.toString();
+  const time_value = time_filter.value.toString();
+
+  PackageService.getPackages(price_value, time_value).then((response) => {
+    packages.value = response;
+  });
+};
 </script>
 
 <style scoped>
@@ -109,7 +140,7 @@ const packages = ref([]);
   background-color: #161d2f;
   border-radius: 5px;
   width: 315px;
-  height: 713px;
+  height: 800px;
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 10px;
@@ -157,6 +188,7 @@ const packages = ref([]);
 }
 .title1 {
   color: #ffffff;
+  text-align: center;
 }
 .title2 {
   border-bottom: 2px solid #fc4747;
@@ -173,15 +205,15 @@ const packages = ref([]);
   color: #ffffff;
   display: flex;
   flex-direction: row;
-  gap: 170px;
-  padding-left: 15px;
+  gap: 230px;
+  padding-left: 2px;
 }
 .tim-ran {
   font-size: 12px;
   color: #ffffff;
   display: flex;
   flex-direction: row;
-  gap: 150px;
+  gap: 195px;
   padding-left: 2px;
 }
 .forms {

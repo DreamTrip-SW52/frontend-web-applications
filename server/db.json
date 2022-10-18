@@ -5,7 +5,7 @@
       "name": "Nature Adventure",
       "description": "Four hours from Lima is Rúpac, an archaeological complex in the heights, where at 5 a.m. there is a great show for the clouds that are clearing the coast. It is a unique landscape.",
       "location": "Huaral",
-      "duration": "4 days",
+      "duration": 4,
       "capacity": "30",
       "disponibility": "24/7",
       "accommodations": {
@@ -108,7 +108,7 @@
       "name": "Playa Caballeros",
       "description": "One of the most beautiful beaches in Punta Hermosa. A good place to sunbathe, swim in the sea and relax listening to the waves.",
       "location": "Lima",
-      "duration": "7 days",
+      "duration": 7,
       "capacity": "10",
       "disponibility": "24/7",
       "accommodations": {
