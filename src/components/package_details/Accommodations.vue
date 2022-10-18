@@ -4,11 +4,10 @@
       <div class="text-center mb-4">
         <i class="pi pi-info-circle"></i>
         <span>Details</span>
-        <!-- {{ JSON.stringify(props.source) }} -->
       </div>
       <div>
         <p>
-          {{ props?.source?.details }}
+          {{ accommodationData?.details }}
         </p>
       </div>
     </section>
@@ -18,7 +17,7 @@
         <span>Services</span>
       </div>
       <ul
-        v-for="service in props?.source?.services"
+        v-for="service in accommodationData?.services"
         :key="service.name"
         class="grid"
       >
@@ -34,10 +33,12 @@
         <h4 class="mb-2">SCHEDULE</h4>
         <ul class="flex flex-column gap-2">
           <li>
-            Check in: {{ props?.source?.conditions?.schedule?.["check-in"] }}
+            Check in:
+            {{ accommodationData?.conditions?.schedule?.["check-in"] }}
           </li>
           <li>
-            Check out: {{ props?.source?.conditions?.schedule?.["check-out"] }}
+            Check out:
+            {{ accommodationData?.conditions?.schedule?.["check-out"] }}
           </li>
         </ul>
       </div>
@@ -49,7 +50,7 @@
       </div>
       <div>
         <iframe
-          :src="props?.source?.location"
+          :src="accommodationData?.location"
           width="100%"
           height="450"
           style="border: 0"
@@ -63,15 +64,26 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
+import { AccommodationService } from "../../services/Accommodation.service";
+
+const accommodationService = new AccommodationService();
+const accommodationData = ref({});
 
 const props = defineProps({
-  source: {
+  id: {
+    type: Number,
     required: true,
   },
 });
 
-onMounted(() => {});
+onMounted(() => {
+  console.log(props.id);
+  accommodationService.getAccommodationById(props.id).then((response) => {
+    accommodationData.value = response.data;
+    console.log(accommodationData.value);
+  });
+});
 </script>
 
 <style scoped>

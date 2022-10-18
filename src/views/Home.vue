@@ -85,12 +85,12 @@
       <template v-for="myPackage in packages">
         <PackageCard
           :id="myPackage.id"
-          :nombre="myPackage.name"
-          :descripcion="myPackage.description"
-          :precio="myPackage.total"
-          :lugar="myPackage.location"
-          :duracion="myPackage.duration"
-          :img_url="myPackage.images[0].src"
+          :name="myPackage.name"
+          :description="myPackage.description"
+          :price="myPackage.total"
+          :place="myPackage.location"
+          :duration="myPackage.duration"
+          :img_url="myPackage.img"
         />
       </template>
 
@@ -100,19 +100,17 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import Navbar from '../components/Navbar.vue';
-import PackageCard from '../components/PackageCard.vue';
-import { PackageService } from '../services/Package.service';
+import { ref, onMounted } from "vue";
+import Navbar from "../components/Navbar.vue";
+import PackageCard from "../components/PackageCard.vue";
+import { PackageService } from "../services/Package.service";
+
+const packageService = new PackageService();
 
 // lifecyle hooks
 onMounted(() => {
-  PackageService.getPackages().then((response) => {
-    console.log(
-      '🚀 ~ file: Home.vue ~ line 91 ~ PackageService.getPackages ~ response',
-      response
-    );
-    packages.value = response;
+  packageService.getPackages().then((response) => {
+    packages.value = response.data;
   });
 });
 

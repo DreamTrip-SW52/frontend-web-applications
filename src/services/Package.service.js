@@ -1,31 +1,36 @@
 const BASE_URL = 'http://localhost:3000/packages?';
+import http from './common';
 
-const getPackage = async (id) => {
-  const response = await fetch(`${URL}/${id}`);
-  const packageData = await response.json();
-  return packageData;
-};
+export class PackageService {
+  async getPackages(total_lte = null, duration_lte = null) {
+    let url = BASE_URL;
 
-const getPackages = async (total_lte = null, duration_lte = null) => {
-  let url = BASE_URL;
+    if (total_lte) {
+      url = url + `&total_lte=${total_lte}`;
+    }
 
-  if (total_lte) {
-    url = url + `&total_lte=${total_lte}`;
+    if (duration_lte) {
+      url = url + `&duration_lte=${duration_lte}`;
+    }
+
+    console.log(url);
+    const response = await fetch(url);
+    const packagesData = await response.json();
+    return packagesData;
   }
 
-  if (duration_lte) {
-    url = url + `&duration_lte=${duration_lte}`;
+  // http://localhost:3000/packages?total_lte={insertar_valor_variable_aqui}
+  getPackageById(id) {
+    return http.get(`/packages/${id}`);
   }
 
-  console.log(url);
-  const response = await fetch(url);
-  const packagesData = await response.json();
-  return packagesData;
-};
+  getPackageByTravelAgencyId(travelAgencyId) {
+    return http.get(`/packages/?travelAgencyId=${travelAgencyId}`);
+  }
+}
 
 export const PackageService = {
-  getPackage,
   getPackages,
+  getPackageById,
+  getPackageByTravelAgencyId,
 };
-
-// http://localhost:3000/packages?total_lte={insertar_valor_variable_aqui}

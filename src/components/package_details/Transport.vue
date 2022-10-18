@@ -5,12 +5,12 @@
         <i class="pi pi-info-circle"></i>
         <span>About</span>
       </div>
-      <ul class="flex flex-column flex-wrap gap-2">
-        <li>{{ props?.source?.about?.type }}</li>
-        <li>
-          {{ props?.source?.about?.from }} ➡️
-          {{ props?.source?.about?.to }}
-        </li>
+      <ul
+        class="flex flex-column flex-wrap gap-2"
+        v-if="transportData !== {} && transportData !== undefined"
+      >
+        <li>{{ transportData?.typeOfTrip }}</li>
+        <li>{{ details?.from?.tag }} -> {{ details?.to?.tag }}</li>
       </ul>
     </section>
     <section id="flight-details">
@@ -22,7 +22,7 @@
       <div class="flex flex-column gap-3">
         <!-- render the flight cards -->
         <FlightCard
-          v-for="flight in props?.source?.details"
+          v-for="flight in transportData?.details"
           :key="flight.id"
           :source="flight"
         ></FlightCard>
@@ -30,7 +30,7 @@
       <!-- cards end -->
       <div class="mt-5">
         <p class="text-right text-2xl font-medium">
-          Total: S/. {{ getTotal() }}
+          Total: S/. {{ transportData?.price }}
         </p>
       </div>
     </section>
@@ -40,17 +40,30 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import FlightCard from "./FlightCard.vue";
+import { TransportService } from "../../services/Transport.service";
 
-const getTotal = () => {
-  return props.source.details.reduce((acc, curr) => {
-    return acc + curr.price;
-  }, 0);
-};
+const transportService = new TransportService();
+const transportData = ref({});
+const details = ref({});
 
 const props = defineProps({
-  source: {
+  type: {
+    type: String,
     required: true,
   },
+  id: {
+    type: Number,
+    required: true,
+  },
+});
+
+onMounted(() => {
+  transportService
+    .getTransportByPackageTypeAndId(props.type, props.id)
+    .then((response) => {
+      transportData.value = response.data;
+      details.value = response.data.details[0];
+    });
 });
 </script>
 

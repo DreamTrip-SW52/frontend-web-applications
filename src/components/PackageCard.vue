@@ -1,14 +1,3 @@
-<script setup>
-defineProps({
-  id: String,
-  nombre: String,
-  descripcion: String,
-  lugar: String,
-  duracion: String,
-  precio: String,
-  img_url: String,
-});
-</script>
 <template>
   <div class="package-card">
     <div class="">
@@ -16,23 +5,35 @@ defineProps({
     </div>
 
     <div class="card-description">
-      <div class="title-pack">{{ nombre }}</div>
-      <div class="des-pack">{{ descripcion }}</div>
+      <div class="title-pack">{{ name }}</div>
+      <div class="des-pack">{{ description }}</div>
       <div class="pl-du">
-        <div>{{ lugar }}</div>
-        <div>{{ duracion }} days</div>
+        <div>{{ place }}</div>
+        <div>{{ duration }}</div>
       </div>
     </div>
 
     <div class="card-action">
       <div>Since:</div>
-      <div class="card-price">{{ precio }}</div>
+      <div class="card-price">{{ price }}</div>
       <router-link :to="`/package/${id}`">
         <button class="card-button">See Details</button>
       </router-link>
     </div>
   </div>
 </template>
+
+<script setup>
+defineProps({
+  id: Number,
+  name: String,
+  description: String,
+  place: String,
+  duration: Number,
+  price: Number,
+  img_url: String,
+});
+</script>
 
 <style scoped>
 .package-card {
