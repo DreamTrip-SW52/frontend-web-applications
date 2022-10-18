@@ -6,18 +6,18 @@
         <span>Tour Details</span>
       </div>
       <div>
-        <p>{{ props?.source?.details }}</p>
+        <p>{{ tourData?.details }}</p>
       </div>
       <div class="flex flex-wrap justify-content-between">
         <div class="mt-4 px-4">
           <h4 class="mb-2 tag">OUTSTANDING OF TOUR</h4>
-          <ul class="grid" v-for="item in props?.source?.outstanding">
+          <ul class="grid" v-for="item in tourData?.outstanding">
             <li class="col-6">{{ item }}</li>
           </ul>
         </div>
         <div class="mt-4 px-4">
           <h4 class="mb-2 tag">IT INCLUDES</h4>
-          <ul class="grid" v-for="item in props?.source?.['it-includes']">
+          <ul class="grid" v-for="item in tourData?.['it-includes']">
             <li class="col-6">{{ item }}</li>
           </ul>
         </div>
@@ -30,7 +30,7 @@
       </div>
       <div>
         <iframe
-          :src="props?.source?.location"
+          :src="tourData?.location"
           width="100%"
           height="450"
           style="border: 0"
@@ -47,7 +47,7 @@
       </div>
       <div>
         <iframe
-          :src="props?.source?.['meeting-point']"
+          :src="tourData?.['meeting-point']"
           width="100%"
           height="450"
           style="border: 0"
@@ -61,15 +61,25 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
+import { TourService } from "../../services/Tour.service";
+
+const tourService = new TourService();
+const tourData = ref({});
 
 const props = defineProps({
-  source: {
+  id: {
+    type: Number,
     required: true,
   },
 });
 
-onMounted(() => {});
+onMounted(() => {
+  tourService.getTourById(props.id).then((response) => {
+    console.log(props.id);
+    tourData.value = response.data;
+  });
+});
 </script>
 
 <style scoped>

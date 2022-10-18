@@ -51,8 +51,6 @@
       </form>
     </div>
 
-    {{ JSON.stringify(errors, null, 4) }}
-
     <div class="signup-to-signup">
       Already have an account?
       <router-link to="/login" class="link">Login</router-link>
@@ -61,12 +59,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { getAuthRegisterErrors } from '../utils/authUtils';
-import { UsersApiService } from '../services/Users.service';
-import { useRouter } from 'vue-router';
+import { ref } from "vue";
+import { getAuthRegisterErrors } from "../utils/authUtils";
+import { TravellerService } from "../services/Traveller.service";
+import { useRouter } from "vue-router";
 
-const userApiService = new UsersApiService();
+const travellerService = new TravellerService();
 const router = useRouter();
 
 const handleRegister = async (e) => {
@@ -87,11 +85,11 @@ const handleRegister = async (e) => {
   )
     return;
 
-  const { data } = await userApiService.isEmailRepeated(email.value);
+  const { data } = await travellerService.isEmailRepeated(email.value);
 
   if (Array.isArray(data) && data.length > 0) {
     errors.value.email.error = true;
-    errors.value.email.message = 'Email already exists';
+    errors.value.email.message = "Email already exists";
     return;
   }
 
@@ -100,7 +98,7 @@ const handleRegister = async (e) => {
     !registerErrors?.password?.error &&
     !registerErrors?.confirmPassword?.error
   ) {
-    userApiService.create({
+    travellerService.create({
       email: email.value,
       password: password.value,
     });
@@ -112,20 +110,20 @@ const handleRegister = async (e) => {
 let errors = ref({
   email: {
     error: false,
-    message: '',
+    message: "",
   },
   password: {
     error: false,
-    message: '',
+    message: "",
   },
   confirmPassword: {
     error: false,
-    message: '',
+    message: "",
   },
 });
-const email = ref('');
-const password = ref('123');
-const confirmPassword = ref('123');
+const email = ref("");
+const password = ref("");
+const confirmPassword = ref("");
 </script>
 
 <style scoped>
