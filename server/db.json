@@ -13,8 +13,8 @@
       "description": "Four hours from Lima is Rúpac, an archaeological complex in the heights, where at 5 a.m. there is a great show for the clouds that are clearing the coast. It is a unique landscape.",
       "location": "Huaral",
       "duration": 4,
-      "typeOfPackage": "standar",
-      "typeOfTour": "in group",
+      "typeOfPackage": "Standar",
+      "typeOfTour": "In group",
       "capacity": 30,
       "disponibility": "24/7",
       "total": 500,
@@ -32,8 +32,8 @@
       "description": "One of the most beautiful beaches in Punta Hermosa. A good place to sunbathe, swim in the sea and relax listening to the waves.",
       "location": "Lima",
       "duration": 7,
-      "typeOfPackage": "special",
-      "typeOfTour": "private",
+      "typeOfPackage": "Special",
+      "typeOfTour": "Private",
       "capacity": 20,
       "disponibility": "24/7",
       "total": 400,
@@ -103,6 +103,7 @@
       "dni": "65471199",
       "id": 7
     }
+ 
   ],
   "travelAgency": [
     {

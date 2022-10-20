@@ -85,9 +85,9 @@
             type="radio"
             id="type_specials"
             name="typepackage"
-            value="Specials"
+            value="Special"
           />
-          <label for="type_specials" class="textform">Specials</label><br />
+          <label for="type_specials" class="textform">Special</label><br />
           <input
             v-model="typepackage_filter"
             v-on:change="show_package_filters()"
@@ -182,15 +182,16 @@ import PackageCard from '../components/PackageCard.vue';
 import { PackageService } from '../services/Package.service';
 
 const packageService = new PackageService();
+const parseProxy = (proxy) => JSON.parse(JSON.stringify(proxy));
+const packages = ref([]);
 
 // lifecyle hooks
 onMounted(() => {
   packageService.getPackages().then((response) => {
-    packages.value = response;
+    packages.value = response.data;
   });
 });
 
-const packages = ref([]);
 const price_filter = ref(5000);
 const time_filter = ref(30);
 const typetour_filter = ref(null);
@@ -207,9 +208,13 @@ const show_package_filters = () => {
     : null;
 
   packageService
-    .getPackages(price_value, time_value, typetour_value, typepackage_value)
+    .filterPackage(price_value, time_value, typetour_value, typepackage_value)
     .then((response) => {
-      packages.value = response;
+      packages.value = response.data;
+      console.log(
+        '🚀 ~ file: Home.vue ~ line 214 ~ .then ~ packages.value',
+        packages.value
+      );
     });
 };
 </script>

@@ -2,7 +2,11 @@ const BASE_URL = 'http://localhost:3000/packages?';
 import http from './common';
 
 export class PackageService {
-  async getPackages(
+  getPackages() {
+    return http.get('/packages');
+  }
+
+  filterPackage(
     total_lte = null,
     duration_lte = null,
     typeoftour = null,
@@ -19,17 +23,19 @@ export class PackageService {
     }
 
     if (typeoftour) {
-      url = url + `&typeoftour=${typeoftour}`;
+      url = url + `&typeOfTour=${typeoftour}`;
     }
 
     if (typeofpackage) {
-      url = url + `&typeofpackage=${typeofpackage}`;
+      url = url + `&typeOfPackage=${typeofpackage}`;
     }
 
-    console.log(url);
-    const response = await fetch(url);
-    const packagesData = await response.json();
-    return packagesData;
+    const encodedURL = encodeURI(url);
+    //const response = await fetch(url);
+    //const packagesData = await response.json();
+    //return packagesData;
+    console.log(encodedURL);
+    return http.get(encodedURL);
   }
 
   // http://localhost:3000/packages?total_lte={insertar_valor_variable_aqui}
