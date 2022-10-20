@@ -2,7 +2,12 @@ const BASE_URL = 'http://localhost:3000/packages?';
 import http from './common';
 
 export class PackageService {
-  async getPackages(total_lte = null, duration_lte = null) {
+  async getPackages(
+    total_lte = null,
+    duration_lte = null,
+    typeoftour = null,
+    typeofpackage = null
+  ) {
     let url = BASE_URL;
 
     if (total_lte) {
@@ -11,6 +16,14 @@ export class PackageService {
 
     if (duration_lte) {
       url = url + `&duration_lte=${duration_lte}`;
+    }
+
+    if (typeoftour) {
+      url = url + `&typeoftour=${typeoftour}`;
+    }
+
+    if (typeofpackage) {
+      url = url + `&typeofpackage=${typeofpackage}`;
     }
 
     console.log(url);
@@ -28,9 +41,3 @@ export class PackageService {
     return http.get(`/packages/?travelAgencyId=${travelAgencyId}`);
   }
 }
-
-export const PackageService = {
-  getPackages,
-  getPackageById,
-  getPackageByTravelAgencyId,
-};

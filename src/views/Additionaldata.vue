@@ -33,10 +33,21 @@
           placeholder="Phone"
           class="input"
           :class="errors.phone.error && 'p-invalid'"
-          v-model="email"
+          v-model="phone"
         />
         <small class="p-error" v-if="errors.phone.error">{{
           errors.phone.message
+        }}</small>
+        <br /><br />
+        <InputText
+          type="dni"
+          placeholder="DNI"
+          class="input"
+          :class="errors.dni.error && 'p-invalid'"
+          v-model="dni"
+        />
+        <small class="p-error" v-if="errors.dni.error">{{
+          errors.dni.message
         }}</small>
         <br /><br />
         <div>
@@ -63,10 +74,10 @@
 <script setup>
 import { ref } from 'vue';
 import { getAuthRegisterErrors } from '../utils/authUtils';
-import { UsersApiService } from '../services/Users.service';
+import { TravellerService } from '../services/Traveller.service';
 import { useRouter } from 'vue-router';
 
-const userApiService = new UsersApiService();
+const userApiService = new TravellerService();
 const router = useRouter();
 
 const handleAdditional = async (e) => {
@@ -75,7 +86,8 @@ const handleAdditional = async (e) => {
   const registerErrors = getAuthRegisterErrors(
     name.value,
     lastname.value,
-    phone.value
+    phone.value,
+    dni.value
   );
 
   errors.value = registerErrors;
@@ -83,27 +95,22 @@ const handleAdditional = async (e) => {
   if (
     registerErrors.name?.error ||
     registerErrors.lastname?.error ||
-    registerErrors.phone?.error
+    registerErrors.phone?.error ||
+    registerErrors.dni?.error
   )
     return;
-
-  const { data } = await userApiService.isphoneRepeated(phone.value);
-
-  if (Array.isArray(data) && data.length > 0) {
-    errors.value.phone.error = true;
-    errors.value.phone.message = 'That phone alrery existis';
-    return;
-  }
 
   if (
     !registerErrors?.name?.error &&
     !registerErrors?.lastname?.error &&
-    !registerErrors?.phone?.error
+    !registerErrors?.phone?.error &&
+    !registerErrors?.dni?.error
   ) {
     userApiService.create({
       name: name.value,
       lastname: lastname.value,
       phone: phone.value,
+      dni: dni.value,
     });
 
     router.push('/login');
@@ -123,10 +130,15 @@ let errors = ref({
     error: false,
     message: '',
   },
+  dni: {
+    error: false,
+    message: '',
+  },
 });
 const name = ref('');
 const lastname = ref('');
 const phone = ref('');
+const dni = ref('');
 </script>
 
 <style scoped>

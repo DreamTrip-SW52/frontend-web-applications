@@ -90,6 +90,18 @@
       "photo": "",
       "dni": "312412",
       "id": 5
+    },
+    {
+      "email": "cokijlmf@gmail.com",
+      "password": "pizza",
+      "id": 6
+    },
+    {
+      "name": "Jorge",
+      "lastname": "Mercado",
+      "phone": "999888777",
+      "dni": "65471199",
+      "id": 7
     }
   ],
   "travelAgency": [
