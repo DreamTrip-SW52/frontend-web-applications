@@ -16,13 +16,13 @@
     <div class="card-action">
       <div>Since:</div>
       <div class="card-price">{{ price }}</div>
-      <div v-if="type_of_button=='see-details'">
+      <div v-if="type_of_button == 'see-details'">
         <router-link :to="`/package/${id}`">
           <button class="card-button">See Details</button>
         </router-link>
       </div>
-      <div v-if="type_of_button=='statistics'">
-        <router-link :to="`/statistics/${id}`">
+      <div v-if="type_of_button == 'statistics'">
+        <router-link :to="`/agency/statistics/${id}`">
           <button class="card-button">Statistics</button>
         </router-link>
       </div>

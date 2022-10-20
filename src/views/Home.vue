@@ -64,14 +64,14 @@
 
       <template v-for="myPackage in packages">
         <PackageCard
-            :id="myPackage.id"
-            :name="myPackage.name"
-            :description="myPackage.description"
-            :price="myPackage.total"
-            :place="myPackage.location"
-            :duration="myPackage.duration"
-            :img_url="myPackage.images[0].src"
-            :type_of_button="'see-details'"
+          :id="myPackage.id"
+          :name="myPackage.name"
+          :description="myPackage.description"
+          :price="myPackage.total"
+          :place="myPackage.location"
+          :duration="myPackage.duration"
+          :img_url="myPackage.img"
+          :type_of_button="'see-details'"
         />
       </template>
 
@@ -81,10 +81,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import Navbar from '../components/Navbar.vue';
-import PackageCard from '../components/PackageCard.vue';
-import { PackageService } from '../services/Package.service';
+import { ref, onMounted } from "vue";
+import Navbar from "../components/Navbar.vue";
+import PackageCard from "../components/PackageCard.vue";
+import { PackageService } from "../services/Package.service";
 
 const packageService = new PackageService();
 

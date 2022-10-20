@@ -1,42 +1,42 @@
 <template>
-  <div class="signup">
+  <div class="additional-data">
     <div>
-      <div class="title-log">Signup</div>
+      <div class="title-log">Additional data</div>
     </div>
 
     <div>
       <form id="form-signup">
         <InputText
-          type="email"
-          placeholder="Email address"
+          type="name"
+          placeholder="Name"
           class="input"
-          :class="errors.email.error && 'p-invalid'"
+          :class="errors.name.error && 'p-invalid'"
+          v-model="name"
+        />
+        <small class="p-error" v-if="errors.name.error">{{
+          errors.name.message
+        }}</small>
+        <br /><br />
+        <InputText
+          type="lastname"
+          placeholder="Last name"
+          class="input"
+          :class="errors.lastname.error && 'p-invalid'"
+          v-model="lastname"
+        />
+        <small class="p-error" v-if="errors.lastname.error">{{
+          errors.lastname.message
+        }}</small>
+        <br /><br />
+        <InputText
+          type="phone"
+          placeholder="Phone"
+          class="input"
+          :class="errors.phone.error && 'p-invalid'"
           v-model="email"
         />
-        <small class="p-error" v-if="errors.email.error">{{
-          errors.email.message
-        }}</small>
-        <br /><br />
-        <InputText
-          type="password"
-          placeholder="Password"
-          class="input"
-          :class="errors.password.error && 'p-invalid'"
-          v-model="password"
-        />
-        <small class="p-error" v-if="errors.password.error">{{
-          errors.password.message
-        }}</small>
-        <br /><br />
-        <InputText
-          type="password"
-          placeholder="Repeat Password"
-          class="input"
-          :class="errors.confirmPassword.error && 'p-invalid'"
-          v-model="confirmPassword"
-        />
-        <small class="p-error" v-if="errors.confirmPassword.error">{{
-          errors.confirmPassword.message
+        <small class="p-error" v-if="errors.phone.error">{{
+          errors.phone.message
         }}</small>
         <br /><br />
         <div>
@@ -45,14 +45,16 @@
             class="initial-button-log-in"
             @click="handleRegister"
           >
-            Create an Account
+            Add data
           </button>
         </div>
       </form>
     </div>
 
+    {{ JSON.stringify(errors, null, 4) }}
+
     <div class="signup-to-signup">
-      Already have an account?
+      You already registered your data?
       <router-link to="/login" class="link">Login</router-link>
     </div>
   </div>
@@ -61,73 +63,74 @@
 <script setup>
 import { ref } from "vue";
 import { getAuthRegisterErrors } from "../utils/authUtils";
-import { TravellerService } from "../services/Traveller.service";
+import { UsersApiService } from "../services/Users.service";
 import { useRouter } from "vue-router";
 
-const travellerService = new TravellerService();
+const userApiService = new UsersApiService();
 const router = useRouter();
 
 const handleRegister = async (e) => {
   e.preventDefault();
   // // Your login logic here
   const registerErrors = getAuthRegisterErrors(
-    email.value,
-    password.value,
-    confirmPassword.value
+    name.value,
+    lastname.value,
+    phone.value
   );
 
   errors.value = registerErrors;
 
   if (
-    registerErrors.email.error ||
-    registerErrors.password.error ||
-    registerErrors.confirmPassword.error
+    registerErrors.name.error ||
+    registerErrors.lastname.error ||
+    registerErrors.phone.error
   )
     return;
 
-  const { data } = await travellerService.isEmailRepeated(email.value);
+  const { data } = await userApiService.isphoneRepeated(phone.value);
 
   if (Array.isArray(data) && data.length > 0) {
-    errors.value.email.error = true;
-    errors.value.email.message = "Email already exists";
+    errors.value.phone.error = true;
+    errors.value.phone.message = "That phone alrery existis";
     return;
   }
 
   if (
-    !registerErrors?.email?.error &&
-    !registerErrors?.password?.error &&
-    !registerErrors?.confirmPassword?.error
+    !registerErrors?.name?.error &&
+    !registerErrors?.lastname?.error &&
+    !registerErrors?.phone?.error
   ) {
-    travellerService.create({
-      email: email.value,
-      password: password.value,
+    userApiService.create({
+      name: name.value,
+      lastname: lastname.value,
+      phone: phone.value,
     });
 
-    router.push('/additionaldata');
+    router.push("/login");
   }
 };
 
 let errors = ref({
-  email: {
+  name: {
+    name: false,
+    message: "",
+  },
+  lastname: {
     error: false,
     message: "",
   },
-  password: {
-    error: false,
-    message: "",
-  },
-  confirmPassword: {
+  phone: {
     error: false,
     message: "",
   },
 });
-const email = ref("");
-const password = ref("");
-const confirmPassword = ref("");
+const name = ref("");
+const lastname = ref("");
+const phone = ref("");
 </script>
 
 <style scoped>
-.signup {
+.additional-data {
   background-color: #161d2f;
   border-radius: 20px;
   display: flex;
@@ -172,7 +175,7 @@ const confirmPassword = ref("");
   padding-right: 25px;
   border: 0px;
   border-radius: 10px;
-  /* width: 336px; */
+  width: 280px;
   height: 48px;
   font-size: 15px;
   font-weight: 300;
