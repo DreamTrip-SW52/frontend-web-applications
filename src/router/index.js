@@ -96,26 +96,3 @@ const router = createRouter({
 });
 
 export default router;
-
-// children: [
-//       {
-//         path: '/',
-//         component: TransportForm,
-//         meta: { requiresAuth: true },
-//       },
-//       {
-//         path: 'accommodation',
-//         component: AccommodationForm,
-//         meta: { requiresAuth: true },
-//       },
-//       {
-//         path: 'tour',
-//         component: TourForm,
-//         meta: { requiresAuth: true },
-//       },
-//       {
-//         path: 'rent',
-//         component: RentCarForm,
-//         meta: { requiresAuth: true },
-//       },
-//     ],
