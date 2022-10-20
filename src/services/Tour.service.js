@@ -1,8 +1,8 @@
-import http from "./common";
+import http from './common';
 
 export class TourService {
   getTours() {
-    return http.get("/tours");
+    return http.get('/tours');
   }
 
   getTourById(id) {
@@ -11,5 +11,9 @@ export class TourService {
 
   getTourByPackageId(packageId) {
     return http.get(`/tours/?packageId=${packageId}`);
+  }
+
+  filterTour(travelAgencyId, locationId) {
+    return http.get(`/tours/?travelAgencyId=${travelAgencyId}&locationId=${locationId}`);
   }
 }
