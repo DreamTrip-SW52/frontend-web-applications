@@ -78,7 +78,7 @@ const handleLogin = async (e) => {
     router.push("/home");
 
     // Usuario encontrado
-    console.log('User found', data);
+    console.log("User found", data);
   }
 };
 

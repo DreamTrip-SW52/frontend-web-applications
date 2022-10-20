@@ -16,22 +16,30 @@
     <div class="card-action">
       <div>Since:</div>
       <div class="card-price">{{ price }}</div>
-      <router-link :to="`/package/${id}`">
-        <button class="card-button">See Details</button>
-      </router-link>
+      <div v-if="type_of_button == 'see-details'">
+        <router-link :to="`/package/${id}`">
+          <button class="card-button">See Details</button>
+        </router-link>
+      </div>
+      <div v-if="type_of_button == 'statistics'">
+        <router-link :to="`/agency/statistics/${id}`">
+          <button class="card-button">Statistics</button>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 defineProps({
-  id: Number,
+  id: String,
   name: String,
   description: String,
   place: String,
-  duration: Number,
-  price: Number,
+  duration: String,
+  price: String,
   img_url: String,
+  type_of_button: String,
 });
 </script>
 

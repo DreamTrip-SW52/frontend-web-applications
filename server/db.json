@@ -141,7 +141,10 @@
       "travelAgencyId": 1,
       "packageId": 1,
       "details": "A unique experience to see the red sunset and a sunrise full of clouds.",
-      "services": ["WiFi", "Restaurant"],
+      "services": [
+        "WiFi",
+        "Restaurant"
+      ],
       "conditions": {
         "schedule": {
           "check-in": "10:00",
@@ -157,7 +160,12 @@
       "travelAgencyId": 1,
       "packageId": 1,
       "details": "Playa Caballeros, presents some waves of the Reef-break type; In Caballeros it is possible to find some impressive waves that are characterized by being long and well formed, in addition to having a clear tubular section, which can reach up to 3 meters in height. It is known that, near the sea of Playa Caballeros, one of the most impressive waves of the Peruvian sea is formed, that one is known by the name of Pico Alto and they have the peculiarity of reaching 7 to 8 meters, on average. Playa Caballeros is also a recommended beach for those visitors who like fishing, which can be done from its rocks, which are located at both ends of the resort. The fertile sea of Caballeros allows the fishing of species such as the cheetah, among others.",
-      "services": ["WiFi", "Restaurant", "Room Service", "Bar"],
+      "services": [
+        "WiFi",
+        "Restaurant",
+        "Room Service",
+        "Bar"
+      ],
       "conditions": {
         "schedule": {
           "check-in": "12:00",
@@ -174,7 +182,11 @@
       "id": 1,
       "packageId": 1,
       "details": "Are you a nature lover and you like camping? Well, this service is perfect for you. Camp in the 'Ciudadela de Fuego': Rupac, a wonderful archaeological complex 145 km north of Lima. This place is also known as the 'Machu Picchu of Lima' since it is located at more than 3,400 meters above sea level. You will enjoy the trekking visiting the buildings made of stones but that are still intact.",
-      "oustanding": ["Friendly guide", "Good tour", "Beatiful landscape"],
+      "oustanding": [
+        "Friendly guide",
+        "Good tour",
+        "Beatiful landscape"
+      ],
       "it-includes": [],
       "location": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d500752.6482146545!2d-77.36509933437503!3d-11.325202799999975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91063f2a1c794e93%3A0xef50cc8630d532e8!2sCOMPLEJO%20ARQUEOL%C3%93GICO%20DE%20RUPAC!5e0!3m2!1ses-419!2spe!4v1664149265135!5m2!1ses-419!2spe",
       "meeting-point": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1259.2243251395607!2d-76.80517029852469!3d-11.325689129369632!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91063f4821150abf%3A0xad3be9e203e1ae6d!2sZona%20De%20Campamento%20-RupaC!5e0!3m2!1ses-419!2spe!4v1664149416280!5m2!1ses-419!2spe",
@@ -362,25 +374,85 @@
       "id": 5,
       "name": "Ayacucho"
     },
-    { "id": 6, "name": "Cajamarca" },
-    { "id": 7, "name": "Callao" },
-    { "id": 8, "name": "Cusco" },
-    { "id": 9, "name": "Huancavelica" },
-    { "id": 10, "name": "Huanuco" },
-    { "id": 11, "name": "Ica" },
-    { "id": 12, "name": "Junin" },
-    { "id": 13, "name": "La Libertad" },
-    { "id": 14, "name": "Lambayeque" },
-    { "id": 15, "name": "Lima" },
-    { "id": 16, "name": "Loreto" },
-    { "id": 17, "name": "Madre de Dios" },
-    { "id": 18, "name": "Moquegua" },
-    { "id": 19, "name": "Pasco" },
-    { "id": 20, "name": "Piura" },
-    { "id": 21, "name": "Puno" },
-    { "id": 22, "name": "San MartIn" },
-    { "id": 23, "name": "Tacna" },
-    { "id": 24, "name": "Tumbes" },
-    { "id": 25, "name": "Ucayali" }
+    {
+      "id": 6,
+      "name": "Cajamarca"
+    },
+    {
+      "id": 7,
+      "name": "Callao"
+    },
+    {
+      "id": 8,
+      "name": "Cusco"
+    },
+    {
+      "id": 9,
+      "name": "Huancavelica"
+    },
+    {
+      "id": 10,
+      "name": "Huanuco"
+    },
+    {
+      "id": 11,
+      "name": "Ica"
+    },
+    {
+      "id": 12,
+      "name": "Junin"
+    },
+    {
+      "id": 13,
+      "name": "La Libertad"
+    },
+    {
+      "id": 14,
+      "name": "Lambayeque"
+    },
+    {
+      "id": 15,
+      "name": "Lima"
+    },
+    {
+      "id": 16,
+      "name": "Loreto"
+    },
+    {
+      "id": 17,
+      "name": "Madre de Dios"
+    },
+    {
+      "id": 18,
+      "name": "Moquegua"
+    },
+    {
+      "id": 19,
+      "name": "Pasco"
+    },
+    {
+      "id": 20,
+      "name": "Piura"
+    },
+    {
+      "id": 21,
+      "name": "Puno"
+    },
+    {
+      "id": 22,
+      "name": "San MartIn"
+    },
+    {
+      "id": 23,
+      "name": "Tacna"
+    },
+    {
+      "id": 24,
+      "name": "Tumbes"
+    },
+    {
+      "id": 25,
+      "name": "Ucayali"
+    }
   ]
 }

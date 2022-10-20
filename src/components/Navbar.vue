@@ -11,12 +11,12 @@
           <i class="pi pi-home"></i>
         </router-link>
         <!-- My Packages -->
-        <router-link to="/">
+        <router-link to="/agency/mypackages">
           <i class="pi pi-box"></i>
         </router-link>
       </div>
       <div class="icons-container" v-else>
-         <!-- Home -->
+        <!-- Home -->
         <router-link to="/home">
           <i class="pi pi-home"></i>
         </router-link>
@@ -34,12 +34,12 @@
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router';
+import { useRoute } from "vue-router";
 const router = useRoute();
 // print the current route
 
 const isAgencyFn = () => {
-  return router.path.includes('agency');
+  return router.path.includes("agency");
 };
 
 const isAgency = isAgencyFn();
