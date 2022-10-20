@@ -7,6 +7,11 @@ import PackageDetails from "../views/PackageDetails.vue";
 import CustomPackage from "../views/CustomPackage.vue";
 import AgencySignUp from "../views/AgencySignUp.vue";
 import AgencyLogin from "../views/AgencyLogin.vue";
+import TransportForm from "../components/custom_package/TransportForm.vue";
+import AccommodationForm from "../components/custom_package/AccommodationForm.vue";
+import TourForm from "../components/custom_package/TourForm.vue";
+import RentCarForm from "../components/custom_package/RentCarForm.vue";
+import NotFound from "../views/NotFound.vue";
 import MyPackages from "../views/MyPackages.vue";
 import Statistics from "../views/Statistics.vue";
 
@@ -40,9 +45,30 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: "/custom-package",
+    path: "/custom-packages",
     component: CustomPackage,
-    meta: { requiresAuth: true },
+    children: [
+      {
+        path: "",
+        component: TransportForm,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "accommodation",
+        component: AccommodationForm,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "tour",
+        component: TourForm,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "rent",
+        component: RentCarForm,
+        meta: { requiresAuth: true },
+      },
+    ],
   },
   {
     path: "/agency",
@@ -69,8 +95,11 @@ const routes = [
       },
     ],
   },
-  // crear para cualquier ruta que no exista y redirigir a la ruta inicial
-  // { path: '/:pathMatch(.*)*', redirect: '/login' },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: NotFound,
+  },
 ];
 
 const router = createRouter({

@@ -40,14 +40,6 @@ import { useRouter } from "vue-router";
 import { PackageService } from "@/services/Package.service";
 import { ReviewService } from "@/services/Review.service";
 
-// const props = defineProps({
-//   id: {
-//     type: Number,
-//     required: true,
-//   },
-// });
-
-const packageService = new PackageService();
 const reviewService = new ReviewService();
 
 const reviewInfo = ref({});
@@ -66,10 +58,6 @@ const getRating = (data) => {
   });
 
   stars.value = Math.floor(total / data.length);
-  console.log(
-    "🚀 ~ file: Statistics.vue ~ line 69 ~ getRating ~ stars.value",
-    stars.value
-  );
 };
 
 onMounted(() => {

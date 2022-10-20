@@ -1,6 +1,6 @@
 <template>
   <div class="package-card">
-    <div class="">
+    <div>
       <img class="card-image" :src="img_url" alt="travel" />
     </div>
 

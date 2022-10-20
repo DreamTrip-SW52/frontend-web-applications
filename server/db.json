@@ -138,6 +138,8 @@
   "accommodations": [
     {
       "id": 1,
+      "travelAgencyId": 1,
+      "packageId": 1,
       "details": "A unique experience to see the red sunset and a sunrise full of clouds.",
       "services": [
         "WiFi",
@@ -150,10 +152,13 @@
         }
       },
       "location": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d500752.6482146545!2d-77.36509933437503!3d-11.325202799999975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91063f2a1c794e93%3A0xef50cc8630d532e8!2sCOMPLEJO%20ARQUEOL%C3%93GICO%20DE%20RUPAC!5e0!3m2!1ses-419!2spe!4v1664149265135!5m2!1ses-419!2spe",
-      "price": 200
+      "price": 200,
+      "locationId": 8
     },
     {
       "id": 2,
+      "travelAgencyId": 1,
+      "packageId": 1,
       "details": "Playa Caballeros, presents some waves of the Reef-break type; In Caballeros it is possible to find some impressive waves that are characterized by being long and well formed, in addition to having a clear tubular section, which can reach up to 3 meters in height. It is known that, near the sea of Playa Caballeros, one of the most impressive waves of the Peruvian sea is formed, that one is known by the name of Pico Alto and they have the peculiarity of reaching 7 to 8 meters, on average. Playa Caballeros is also a recommended beach for those visitors who like fishing, which can be done from its rocks, which are located at both ends of the resort. The fertile sea of Caballeros allows the fishing of species such as the cheetah, among others.",
       "services": [
         "WiFi",
@@ -168,7 +173,8 @@
         }
       },
       "location": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3897.783888405212!2d-76.83417318545537!3d-12.330327891278849!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105a29b88d2b815%3A0x1ca8f8d6a7df2b87!2sPlaya%20Caballeros!5e0!3m2!1ses-419!2spe!4v1664149502719!5m2!1ses-419!2spe",
-      "price": 200
+      "price": 150,
+      "locationId": 8
     }
   ],
   "tours": [
@@ -183,16 +189,9 @@
       ],
       "it-includes": [],
       "location": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d500752.6482146545!2d-77.36509933437503!3d-11.325202799999975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91063f2a1c794e93%3A0xef50cc8630d532e8!2sCOMPLEJO%20ARQUEOL%C3%93GICO%20DE%20RUPAC!5e0!3m2!1ses-419!2spe!4v1664149265135!5m2!1ses-419!2spe",
-      "meeting-point": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1259.2243251395607!2d-76.80517029852469!3d-11.325689129369632!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91063f4821150abf%3A0xad3be9e203e1ae6d!2sZona%20De%20Campamento%20-RupaC!5e0!3m2!1ses-419!2spe!4v1664149416280!5m2!1ses-419!2spe"
-    },
-    {
-      "id": 2,
-      "packageId": 2,
-      "details": "",
-      "oustanding": [],
-      "it-includes": [],
-      "location": "",
-      "meeting-point": ""
+      "meeting-point": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1259.2243251395607!2d-76.80517029852469!3d-11.325689129369632!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91063f4821150abf%3A0xad3be9e203e1ae6d!2sZona%20De%20Campamento%20-RupaC!5e0!3m2!1ses-419!2spe!4v1664149416280!5m2!1ses-419!2spe",
+      "price": 150,
+      "locationId": 8
     }
   ],
   "images": [
@@ -228,8 +227,8 @@
       "typeOfTrip": "Round trip",
       "passengers": 200,
       "class": "express",
-      "departDate": "12/03/22",
-      "returnDate": "15/03/22",
+      "departDate": "20/10/22",
+      "returnDate": "23/10/22",
       "details": [
         {
           "type": "go",
@@ -258,7 +257,33 @@
           }
         }
       ],
-      "price": 100
+      "price": 100,
+      "locationId": 8
+    },
+    {
+      "id": 2,
+      "travelAgencyId": 2,
+      "typeOfTrip": "One way",
+      "passengers": 40,
+      "class": "vip",
+      "departDate": "24/10/22",
+      "returnDate": "30/10/22",
+      "details": [
+        {
+          "type": "go",
+          "name": "Fast Bus",
+          "price": 50,
+          "from": {
+            "tag": "Lima",
+            "abbr": "LIM"
+          },
+          "to": {
+            "tag": "Cuzco",
+            "abbr": "CUZ"
+          }
+        }
+      ],
+      "price": 80
     }
   ],
   "trains": [
@@ -270,7 +295,8 @@
       "to": "Cuzco",
       "class": "express",
       "departDate": "12/03/22",
-      "returnDate": "14/03/22"
+      "returnDate": "14/03/22",
+      "locationId": 8
     }
   ],
   "flights": [
@@ -310,7 +336,8 @@
           }
         }
       ],
-      "price": 120
+      "price": 120,
+      "locationId": 8
     }
   ],
   "cars": [
@@ -321,9 +348,111 @@
       "pick-up-hour": "9:00",
       "drop-off-hour": "21:00",
       "brand": "Toyota",
-      "capacity": "4",
+      "capacity": "5",
       "photo": "",
-      "price": 40
+      "price": 100
+    }
+  ],
+  "locations": [
+    {
+      "id": 1,
+      "name": "Amazonas"
+    },
+    {
+      "id": 2,
+      "name": "Ancash"
+    },
+    {
+      "id": 3,
+      "name": "Apurimac"
+    },
+    {
+      "id": 4,
+      "name": "Arequipa"
+    },
+    {
+      "id": 5,
+      "name": "Ayacucho"
+    },
+    {
+      "id": 6,
+      "name": "Cajamarca"
+    },
+    {
+      "id": 7,
+      "name": "Callao"
+    },
+    {
+      "id": 8,
+      "name": "Cusco"
+    },
+    {
+      "id": 9,
+      "name": "Huancavelica"
+    },
+    {
+      "id": 10,
+      "name": "Huanuco"
+    },
+    {
+      "id": 11,
+      "name": "Ica"
+    },
+    {
+      "id": 12,
+      "name": "Junin"
+    },
+    {
+      "id": 13,
+      "name": "La Libertad"
+    },
+    {
+      "id": 14,
+      "name": "Lambayeque"
+    },
+    {
+      "id": 15,
+      "name": "Lima"
+    },
+    {
+      "id": 16,
+      "name": "Loreto"
+    },
+    {
+      "id": 17,
+      "name": "Madre de Dios"
+    },
+    {
+      "id": 18,
+      "name": "Moquegua"
+    },
+    {
+      "id": 19,
+      "name": "Pasco"
+    },
+    {
+      "id": 20,
+      "name": "Piura"
+    },
+    {
+      "id": 21,
+      "name": "Puno"
+    },
+    {
+      "id": 22,
+      "name": "San MartIn"
+    },
+    {
+      "id": 23,
+      "name": "Tacna"
+    },
+    {
+      "id": 24,
+      "name": "Tumbes"
+    },
+    {
+      "id": 25,
+      "name": "Ucayali"
     }
   ]
 }
