@@ -10,7 +10,7 @@ export class ReviewService {
   }
 
   getReviewByPackageId(packageId) {
-    return http.get(`/reviews?packageId=${packageId}`);
+    return http.get(`/reviews/?packageId=${packageId}`);
   }
 
   getReviewTravellerByPackageId(packageId) {

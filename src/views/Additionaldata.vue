@@ -82,7 +82,7 @@ const router = useRouter();
 
 const handleAdditional = async (e) => {
   e.preventDefault();
-  // // Your login logic here
+  // Your login logic here
   const registerErrors = getAuthRegisterErrors(
     name.value,
     lastname.value,

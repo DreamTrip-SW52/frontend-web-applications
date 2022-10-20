@@ -167,6 +167,7 @@
           :place="myPackage.location"
           :duration="myPackage.duration"
           :img_url="myPackage.img"
+          :type_of_button="'see-details'"
         />
       </template>
 

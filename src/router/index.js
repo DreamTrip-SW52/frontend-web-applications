@@ -1,27 +1,27 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import Initial from '../views/Initial.vue';
-import TypeUserSignUp from '../views/TypeUserSignUp.vue';
 import SignUp from '../views/SignUp.vue';
-import Additionaldata from '../views/Additionaldata.vue';
-import TypeUserLogin from '../views/TypeUserLogin.vue';
 import Login from '../views/Login.vue';
 import Home from '../views/Home.vue';
 import PackageDetails from '../views/PackageDetails.vue';
 import CustomPackage from '../views/CustomPackage.vue';
 import AgencySignUp from '../views/AgencySignUp.vue';
 import AgencyLogin from '../views/AgencyLogin.vue';
+import TransportForm from '../components/custom_package/TransportForm.vue';
+import AccommodationForm from '../components/custom_package/AccommodationForm.vue';
+import TourForm from '../components/custom_package/TourForm.vue';
+import RentCarForm from '../components/custom_package/RentCarForm.vue';
+import NotFound from '../views/NotFound.vue';
+import MyPackages from '../views/MyPackages.vue';
+import Statistics from '../views/Statistics.vue';
+import Additionaldata from '../views/Additionaldata.vue';
+import TypeUser from '../views/TypeUser.vue';
 
 const routes = [
   {
     path: '/',
-    name: 'initial',
-    component: Initial,
-    meta: { requiresAuth: false },
-  },
-  {
-    path: '/typeusersignup',
-    name: 'typeusersignup',
-    component: TypeUserSignUp,
+    name: 'typeofuser',
+    component: TypeUser,
     meta: { requiresAuth: false },
   },
   {
@@ -37,9 +37,9 @@ const routes = [
     meta: { requiresAuth: false },
   },
   {
-    path: '/typeuserlogin',
-    name: 'typeuserlogin',
-    component: TypeUserLogin,
+    path: '/initial',
+    name: 'initial',
+    component: Initial,
     meta: { requiresAuth: false },
   },
   {
@@ -59,13 +59,39 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: '/custom-package',
+    path: '/custom-packages',
     component: CustomPackage,
-    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        component: TransportForm,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: 'accommodation',
+        component: AccommodationForm,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: 'tour',
+        component: TourForm,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: 'rent',
+        component: RentCarForm,
+        meta: { requiresAuth: true },
+      },
+    ],
   },
   {
     path: '/agency',
     children: [
+      {
+        path: 'initial',
+        component: Initial,
+        meta: { requiresAuth: false },
+      },
       {
         path: 'signup',
         component: AgencySignUp,
@@ -76,15 +102,23 @@ const routes = [
         component: AgencyLogin,
         meta: { requiresAuth: false },
       },
+      {
+        path: 'mypackages',
+        component: MyPackages,
+        meta: { requiresAuth: false },
+      },
+      {
+        path: 'statistics/:id',
+        component: Statistics,
+        meta: { requiresAuth: false },
+      },
     ],
   },
-  // {
-  //   path: "/agency/login",
-  //   components: AgencyLogin,
-  //   meta: { requiresAuth: false },
-  // },
-  // crear para cualquier ruta que no exista y redirigir a la ruta inicial
-  // { path: '/:pathMatch(.*)*', redirect: '/login' },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFound,
+  },
 ];
 
 const router = createRouter({

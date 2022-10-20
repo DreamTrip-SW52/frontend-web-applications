@@ -1,45 +1,41 @@
 <template>
-  <div class="typeuserlogin">
-    <div class="title-typeuserlogin">DreamTrip</div>
-
-    <div class="caption-login">Login</div>
+  <div class="typeuser">
+    <div class="title-typeuser">DreamTrip</div>
 
     <div class="space-1">
-      <router-link to="/login">
-        <button class="typeuserlogin-button-login-travellers">
-          Travellers
-        </button>
+      <router-link to="/initial">
+        <button class="typeuser-button-travellers">Travellers</button>
       </router-link>
     </div>
 
     <div class="space-2">
-      <router-link to="/login">
-        <button class="typeuserlogin-button-login-agent">Travel agency</button>
+      <router-link to="/agency/initial">
+        <button class="typeuser-button-agent">Travel agency</button>
       </router-link>
     </div>
   </div>
 </template>
 
 <style scoped>
-.typeuserlogin {
+.typeuser {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.title-typeuserlogin {
+.title-typeuser {
   font-size: 96px;
   color: #ffffff;
   margin: 20px;
 }
 
-.caption-login {
+.caption- {
   font-size: 32px;
   color: #ffffff;
   opacity: 0.7;
   margin: 40px;
 }
 
-.typeuserlogin-button-login-travellers {
+.typeuser-button-travellers {
   background-color: #fc4747;
   padding-left: 120px;
   padding-right: 120px;
@@ -47,7 +43,7 @@
   border-radius: 10px;
 }
 
-.typeuserlogin-button-login-agent {
+.typeuser-button-agent {
   background-color: #fc4747;
   padding-left: 105px;
   padding-right: 105px;
@@ -66,6 +62,6 @@
 
 <script>
 export default {
-  name: 'TypeUserLogin',
+  name: 'TypeUser',
 };
 </script>
