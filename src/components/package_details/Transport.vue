@@ -5,10 +5,7 @@
         <i class="pi pi-info-circle"></i>
         <span>About</span>
       </div>
-      <ul
-        class="flex flex-column flex-wrap gap-2"
-        v-if="transportData !== {} && transportData !== undefined"
-      >
+      <ul class="flex flex-column flex-wrap gap-2">
         <li>{{ transportData?.typeOfTrip }}</li>
         <li>{{ details?.from?.tag }} -> {{ details?.to?.tag }}</li>
       </ul>
@@ -38,9 +35,9 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import FlightCard from "./FlightCard.vue";
-import { TransportService } from "../../services/Transport.service";
+import { onMounted, ref } from 'vue';
+import FlightCard from './FlightCard.vue';
+import { TransportService } from '../../services/Transport.service';
 
 const transportService = new TransportService();
 const transportData = ref({});
@@ -59,7 +56,7 @@ const props = defineProps({
 
 onMounted(() => {
   transportService
-    .getTransportByPackageTypeAndId(props.type, props.id)
+    .getTransportByTypeAndId(props.type, props.id)
     .then((response) => {
       transportData.value = response.data;
       details.value = response.data.details[0];

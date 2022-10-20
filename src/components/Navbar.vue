@@ -4,9 +4,26 @@
     <div class="alignment-container">
       <!-- Logo -->
       <div class="logo"><img src="../assets/logo.png" /></div>
-      <div class="icons-container">
+      <div class="icons-container" v-if="isAgency">
         <!-- Rutas -->
-        <i class="pi pi-box"></i>
+        <!-- Create Package -->
+        <router-link to="/">
+          <i class="pi pi-home"></i>
+        </router-link>
+        <!-- My Packages -->
+        <router-link to="/">
+          <i class="pi pi-box"></i>
+        </router-link>
+      </div>
+      <div class="icons-container" v-else>
+         <!-- Home -->
+        <router-link to="/home">
+          <i class="pi pi-home"></i>
+        </router-link>
+        <!-- Custom Packages -->
+        <router-link to="/custom-packages">
+          <i class="pi pi-box"></i>
+        </router-link>
       </div>
       <!-- Perfil -->
       <div class="avatar">
@@ -17,6 +34,18 @@
 </template>
 
 <script setup>
+import { useRoute } from 'vue-router';
+const router = useRoute();
+// print the current route
+
+const isAgencyFn = () => {
+  return router.path.includes('agency');
+};
+
+const isAgency = isAgencyFn();
+
+console.log(isAgency);
+
 // <!-- 4 -> 1 rem -->
 </script>
 
@@ -41,7 +70,7 @@
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   height: 100%;
   margin-top: 76px;
   gap: 1.5rem;
