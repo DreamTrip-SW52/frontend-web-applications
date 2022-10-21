@@ -59,17 +59,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { getAuthRegisterErrors } from '../utils/authUtils';
-import { TravellerService } from '../services/Traveller.service';
-import { useRouter } from 'vue-router';
+import { ref } from "vue";
+import { getAuthRegisterErrors } from "../utils/authUtils";
+import { TravellerService } from "../services/Traveller.service";
+import { useRouter } from "vue-router";
 
 const travellerService = new TravellerService();
 const router = useRouter();
 
 const handleRegister = async (e) => {
   e.preventDefault();
-  // // Your login logic here
+
   const registerErrors = getAuthRegisterErrors(
     email.value,
     password.value,
@@ -89,7 +89,7 @@ const handleRegister = async (e) => {
 
   if (Array.isArray(data) && data.length > 0) {
     errors.value.email.error = true;
-    errors.value.email.message = 'Email already exists';
+    errors.value.email.message = "Email already exists";
     return;
   }
 
@@ -98,32 +98,30 @@ const handleRegister = async (e) => {
     !registerErrors?.password?.error &&
     !registerErrors?.confirmPassword?.error
   ) {
-    travellerService.create({
-      email: email.value,
-      password: password.value,
-    });
+    localStorage.setItem("email", email.value);
+    localStorage.setItem("password", password.value);
 
-    router.push('/additionaldata');
+    router.push("/additionaldata");
   }
 };
 
-let errors = ref({
+const errors = ref({
   email: {
     error: false,
-    message: '',
+    message: "",
   },
   password: {
     error: false,
-    message: '',
+    message: "",
   },
   confirmPassword: {
     error: false,
-    message: '',
+    message: "",
   },
 });
-const email = ref('');
-const password = ref('');
-const confirmPassword = ref('');
+const email = ref("");
+const password = ref("");
+const confirmPassword = ref("");
 </script>
 
 <style scoped>

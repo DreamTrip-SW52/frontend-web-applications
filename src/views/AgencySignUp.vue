@@ -75,23 +75,23 @@
 
     <div class="signup-to-signup">
       Already have an account?
-      <router-link to="/login" class="link">Login</router-link>
+      <router-link to="/agency/login" class="link">Login</router-link>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { getAuthRegisterErrors } from '../utils/authUtils';
-import { TravellerService } from '../services/Traveller.service';
-import { useRouter } from 'vue-router';
+import { ref } from "vue";
+import { getAuthRegisterErrors } from "../utils/authUtils";
+import { TravelAgencyService } from "../services/TravelAgency.service";
+import { useRouter } from "vue-router";
 
-const travellerService = new TravellerService();
+const travelAgencyService = new TravelAgencyService();
 const router = useRouter();
 
 const handleRegister = async (e) => {
   e.preventDefault();
-  // // Your login logic here
+
   const registerErrors = getAuthRegisterErrors(
     email.value,
     password.value,
@@ -101,67 +101,65 @@ const handleRegister = async (e) => {
   errors.value = registerErrors;
 
   if (
-    registerErrors.name.error ||
-    registerErrors.ruc.error ||
     registerErrors.email.error ||
     registerErrors.password.error ||
     registerErrors.confirmPassword.error
   )
     return;
 
-  const { data } = await travellerService.isEmailRepeated(email.value);
+  const { data } = await travelAgencyService.isEmailRepeated(email.value);
 
   if (Array.isArray(data) && data.length > 0) {
     errors.value.email.error = true;
-    errors.value.email.message = 'Email already exists';
+    errors.value.email.message = "Email already exists";
     return;
   }
 
   if (
-    !registerErrors?.name?.error &&
-    !registerErrors?.ruc?.error &&
     !registerErrors?.email?.error &&
     !registerErrors?.password?.error &&
     !registerErrors?.confirmPassword?.error
   ) {
-    travellerService.create({
+    travelAgencyService.create({
       name: name.value,
       ruc: ruc.value,
       email: email.value,
       password: password.value,
     });
 
-    router.push('/additionaldata');
+    localStorage.clear();
+    router.push("/agency/login");
   }
 };
 
-let errors = ref({
+const errors = ref({
   name: {
     error: false,
-    message: '',
+    message: "",
   },
   ruc: {
     error: false,
-    message: '',
+    message: "",
   },
   email: {
     error: false,
-    message: '',
+    message: "",
   },
   password: {
     error: false,
-    message: '',
+    message: "",
   },
   confirmPassword: {
     error: false,
-    message: '',
+    message: "",
   },
 });
-const name = ref('');
-const ruc = ref('');
-const email = ref('');
-const password = ref('');
-const confirmPassword = ref('');
+
+const name = ref("");
+const ruc = ref("");
+const email = ref("");
+const password = ref("");
+const confirmPassword = ref("");
 </script>
 
 <style scoped>

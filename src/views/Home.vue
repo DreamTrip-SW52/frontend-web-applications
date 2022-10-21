@@ -177,13 +177,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import Navbar from '../components/Navbar.vue';
-import PackageCard from '../components/PackageCard.vue';
-import { PackageService } from '../services/Package.service';
+import { ref, onMounted } from "vue";
+import Navbar from "../components/Navbar.vue";
+import PackageCard from "../components/PackageCard.vue";
+import { PackageService } from "../services/Package.service";
 
 const packageService = new PackageService();
-const parseProxy = (proxy) => JSON.parse(JSON.stringify(proxy));
 const packages = ref([]);
 
 // lifecyle hooks
@@ -213,7 +212,7 @@ const show_package_filters = () => {
     .then((response) => {
       packages.value = response.data;
       console.log(
-        '🚀 ~ file: Home.vue ~ line 214 ~ .then ~ packages.value',
+        "🚀 ~ file: Home.vue ~ line 214 ~ .then ~ packages.value",
         packages.value
       );
     });

@@ -16,6 +16,8 @@
   </div>
 </template>
 
+<script setup></script>
+
 <style scoped>
 .typeuser {
   display: flex;
@@ -59,9 +61,3 @@
   margin-top: 20px;
 }
 </style>
-
-<script>
-export default {
-  name: 'TypeUser',
-};
-</script>

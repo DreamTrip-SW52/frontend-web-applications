@@ -62,8 +62,6 @@
       </form>
     </div>
 
-    {{ JSON.stringify(errors, null, 4) }}
-
     <div class="signup-to-signup">
       You already registered your data?
       <router-link to="/login" class="link">Login</router-link>
@@ -72,73 +70,68 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { getAuthRegisterErrors } from '../utils/authUtils';
-import { TravellerService } from '../services/Traveller.service';
-import { useRouter } from 'vue-router';
+import { ref } from "vue";
+import { TravellerService } from "../services/Traveller.service";
+import { useRouter } from "vue-router";
 
-const userApiService = new TravellerService();
+const travellerService = new TravellerService();
 const router = useRouter();
 
 const handleAdditional = async (e) => {
   e.preventDefault();
-  // Your login logic here
-  const registerErrors = getAuthRegisterErrors(
-    name.value,
-    lastname.value,
-    phone.value,
-    dni.value
-  );
-
-  errors.value = registerErrors;
 
   if (
-    registerErrors.name?.error ||
-    registerErrors.lastname?.error ||
-    registerErrors.phone?.error ||
-    registerErrors.dni?.error
+    errors.name?.error ||
+    errors.lastname?.error ||
+    errors.phone?.error ||
+    errors.dni?.error
   )
     return;
 
   if (
-    !registerErrors?.name?.error &&
-    !registerErrors?.lastname?.error &&
-    !registerErrors?.phone?.error &&
-    !registerErrors?.dni?.error
+    !errors?.name?.error &&
+    !errors?.lastname?.error &&
+    !errors?.phone?.error &&
+    !errors?.dni?.error
   ) {
-    userApiService.create({
+    travellerService.create({
+      email: localStorage.getItem("email"),
+      password: localStorage.getItem("password"),
       name: name.value,
       lastname: lastname.value,
       phone: phone.value,
       dni: dni.value,
+      photo: "",
     });
 
-    router.push('/login');
+    localStorage.clear();
+    router.push("/login");
   }
 };
 
 let errors = ref({
   name: {
     name: false,
-    message: '',
+    message: "",
   },
   lastname: {
     error: false,
-    message: '',
+    message: "",
   },
   phone: {
     error: false,
-    message: '',
+    message: "",
   },
   dni: {
     error: false,
-    message: '',
+    message: "",
   },
 });
-const name = ref('');
-const lastname = ref('');
-const phone = ref('');
-const dni = ref('');
+
+const name = ref("");
+const lastname = ref("");
+const phone = ref("");
+const dni = ref("");
 </script>
 
 <style scoped>
