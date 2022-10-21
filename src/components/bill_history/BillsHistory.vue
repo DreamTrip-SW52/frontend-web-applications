@@ -22,36 +22,36 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
-import BillRecord from './BillRecord.vue';
-import { CurrentTravelService } from '../../services/CurrentTravel.service';
+import { reactive } from "vue";
+import BillRecord from "./BillRecord.vue";
+import { CurrentTravelService } from "../../services/CurrentTravel.service";
 
 const currentTravelService = new CurrentTravelService();
 
 defineProps({
   bills: Array,
 });
-const emit = defineEmits(['update']);
+const emit = defineEmits(["update"]);
 
-const userId = JSON.parse(localStorage.getItem('currentUser'));
+const userId = JSON.parse(localStorage.getItem("currentUser"));
 const newBill = reactive({
-  name: '',
-  amount: '',
+  name: "",
+  amount: "",
 });
 
 const addNewBill = async () => {
   await currentTravelService.createNewBill(userId, newBill);
   updateData();
-  newBill.name = '';
-  newBill.amount = '';
+  newBill.name = "";
+  newBill.amount = "";
 };
 
-const handleDelete = async billId => {
+const handleDelete = async (billId) => {
   await currentTravelService.deleteBill(userId, billId);
   updateData();
 };
 
-const updateData = () => emit('update');
+const updateData = () => emit("update");
 </script>
 
 <style scoped>
@@ -60,7 +60,7 @@ const updateData = () => emit('update');
   border-radius: 5px;
   background-color: #161d2f;
   width: 100%;
-  height: 180px;
+  /* height: 180px; */
 }
 
 .card-wrapper {

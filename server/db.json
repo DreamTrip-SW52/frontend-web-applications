@@ -56,7 +56,7 @@
             "phone_number": "969 497 766"
           },
           {
-            "id": 1,
+            "id": 2,
             "name": "CLISOVA - Clinica de salud Ocupacional Villa de Arnedo",
             "direction": "Las Orquídeas 237, Huaral 15202",
             "phone_number": "900 468 138"
@@ -268,7 +268,23 @@
       "id": 1,
       "packageId": 1,
       "travelerId": 1,
-      "new_bills": []
+      "new_bills": [
+        {
+          "name": "Hotel",
+          "amount": "200",
+          "id": 1
+        },
+        {
+          "name": "Food",
+          "amount": "120",
+          "id": 2
+        },
+        {
+          "name": "Car",
+          "amount": "50",
+          "id": 3
+        }
+      ]
     },
     {
       "id": 2,
