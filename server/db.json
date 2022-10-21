@@ -18,7 +18,51 @@
       "capacity": 30,
       "disponibility": "24/7",
       "total": 500,
-      "img": "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+      "img": "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+      "security": {
+        "police_stations": [
+          {
+            "id": 1,
+            "name": "Comisaria PNP Huaral",
+            "direction": "Blvd. El Solar 11, Huaral 15201",
+            "phone_number": "(01) 2461024"
+          }
+        ],
+        "hospitals": [
+          {
+            "id": 1,
+            "name": "Hospital San Juan Bautista",
+            "direction": "FQWP+QP3, Huaral 15202",
+            "phone_number": "(01) 2462990"
+          },
+          {
+            "id": 2,
+            "name": "Seguro Integral de Salud",
+            "direction": "GQ3X+PX5, Huaral 15201",
+            "phone_number": "(01) 2460785"
+          },
+          {
+            "id": 3,
+            "name": "Centro De Salud Base Huaral",
+            "direction": "Chancay 279, Huaral 15202",
+            "phone_number": "(01) 3355976"
+          }
+        ],
+        "clinics": [
+          {
+            "id": 1,
+            "name": "Clínica San Andrés Huaral",
+            "direction": "María Auxiliadora, Huaral 15202",
+            "phone_number": "969 497 766"
+          },
+          {
+            "id": 1,
+            "name": "CLISOVA - Clinica de salud Ocupacional Villa de Arnedo",
+            "direction": "Las Orquídeas 237, Huaral 15202",
+            "phone_number": "900 468 138"
+          }
+        ]
+      }
     },
     {
       "id": 2,
@@ -37,7 +81,25 @@
       "capacity": 20,
       "disponibility": "24/7",
       "total": 400,
-      "img": "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+      "img": "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+      "security": {
+        "police_stations": [
+          {
+            "id": 1,
+            "name": "Comisaria De Punta Hermosa",
+            "direction": "M5Q7+35X, Distrito de Lima 15846",
+            "phone_number": "(01) 4006236"
+          }
+        ],
+        "hospitals": [
+          {
+            "id": 1,
+            "name": "SISOL Salud Punta Hermosa",
+            "direction": "Antigua Panamericana Sur 40, Punta Hermosa 15846",
+            "phone_number": "(01) 7260130"
+          }
+        ]
+      }
     }
   ],
   "travellers": [
@@ -148,10 +210,7 @@
       "travelAgencyId": 1,
       "packageId": 1,
       "details": "A unique experience to see the red sunset and a sunrise full of clouds.",
-      "services": [
-        "WiFi",
-        "Restaurant"
-      ],
+      "services": ["WiFi", "Restaurant"],
       "conditions": {
         "schedule": {
           "check-in": "10:00",
@@ -167,12 +226,7 @@
       "travelAgencyId": 1,
       "packageId": 1,
       "details": "Playa Caballeros, presents some waves of the Reef-break type; In Caballeros it is possible to find some impressive waves that are characterized by being long and well formed, in addition to having a clear tubular section, which can reach up to 3 meters in height. It is known that, near the sea of Playa Caballeros, one of the most impressive waves of the Peruvian sea is formed, that one is known by the name of Pico Alto and they have the peculiarity of reaching 7 to 8 meters, on average. Playa Caballeros is also a recommended beach for those visitors who like fishing, which can be done from its rocks, which are located at both ends of the resort. The fertile sea of Caballeros allows the fishing of species such as the cheetah, among others.",
-      "services": [
-        "WiFi",
-        "Restaurant",
-        "Room Service",
-        "Bar"
-      ],
+      "services": ["WiFi", "Restaurant", "Room Service", "Bar"],
       "conditions": {
         "schedule": {
           "check-in": "12:00",
@@ -189,16 +243,39 @@
       "id": 1,
       "packageId": 1,
       "details": "Are you a nature lover and you like camping? Well, this service is perfect for you. Camp in the 'Ciudadela de Fuego': Rupac, a wonderful archaeological complex 145 km north of Lima. This place is also known as the 'Machu Picchu of Lima' since it is located at more than 3,400 meters above sea level. You will enjoy the trekking visiting the buildings made of stones but that are still intact.",
-      "oustanding": [
-        "Friendly guide",
-        "Good tour",
-        "Beatiful landscape"
-      ],
+      "oustanding": ["Friendly guide", "Good tour", "Beatiful landscape"],
       "it-includes": [],
       "location": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d500752.6482146545!2d-77.36509933437503!3d-11.325202799999975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91063f2a1c794e93%3A0xef50cc8630d532e8!2sCOMPLEJO%20ARQUEOL%C3%93GICO%20DE%20RUPAC!5e0!3m2!1ses-419!2spe!4v1664149265135!5m2!1ses-419!2spe",
       "meeting-point": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1259.2243251395607!2d-76.80517029852469!3d-11.325689129369632!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91063f4821150abf%3A0xad3be9e203e1ae6d!2sZona%20De%20Campamento%20-RupaC!5e0!3m2!1ses-419!2spe!4v1664149416280!5m2!1ses-419!2spe",
       "price": 150,
       "locationId": 8
+    }
+  ],
+  "current-travels": [
+    {
+      "id": 1,
+      "packageId": 1,
+      "travelerId": 1
+    },
+    {
+      "id": 2,
+      "packageId": 2,
+      "travelerId": 2
+    },
+    {
+      "id": 3,
+      "packageId": 1,
+      "travelerId": 3
+    },
+    {
+      "id": 4,
+      "packageId": 2,
+      "travelerId": 4
+    },
+    {
+      "id": 5,
+      "packageId": 1,
+      "travelerId": 5
     }
   ],
   "images": [
