@@ -6,9 +6,8 @@ const router = useRouter();
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
-    const user = localStorage.getItem('user');
-
-    if (user || 1) {
+    const user = localStorage.getItem('currentUser');
+    if (user) {
       next();
     } else {
       next('/login');

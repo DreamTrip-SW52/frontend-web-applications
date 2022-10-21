@@ -19,7 +19,6 @@ import CascadeSelect from "primevue/cascadeselect";
 import Card from "primevue/card";
 import ScrollTop from "primevue/scrolltop";
 import ScrollPanel from "primevue/scrollpanel";
-
 import App from "./App.vue";
 import router from "./router";
 
@@ -147,7 +146,6 @@ app.use(PrimeVue, {
     },
   },
 });
-
 //Components
 app.component("Button", Button);
 app.component("Carousel", Carousel);
