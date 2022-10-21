@@ -24,6 +24,14 @@
         <router-link to="/custom-packages">
           <i class="pi pi-box"></i>
         </router-link>
+        <!-- Economic Follow -->
+        <router-link to="/economic-follow">
+          <i class="pi pi-chart-bar"></i>
+        </router-link>
+        <!-- Security Information -->
+        <router-link to="/security">
+          <i class="pi pi-shield"></i>
+        </router-link>
       </div>
       <!-- Perfil -->
       <div class="avatar">
