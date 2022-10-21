@@ -69,7 +69,7 @@ const router = useRouter();
 
 const handleRegister = async (e) => {
   e.preventDefault();
-  // // Your login logic here
+
   const registerErrors = getAuthRegisterErrors(
     email.value,
     password.value,
@@ -98,16 +98,14 @@ const handleRegister = async (e) => {
     !registerErrors?.password?.error &&
     !registerErrors?.confirmPassword?.error
   ) {
-    travellerService.create({
-      email: email.value,
-      password: password.value,
-    });
+    localStorage.setItem("email", email.value);
+    localStorage.setItem("password", password.value);
 
-    router.push('/additionaldata');
+    router.push("/additionaldata");
   }
 };
 
-let errors = ref({
+const errors = ref({
   email: {
     error: false,
     message: "",

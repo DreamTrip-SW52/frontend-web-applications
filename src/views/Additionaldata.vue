@@ -33,25 +33,34 @@
           placeholder="Phone"
           class="input"
           :class="errors.phone.error && 'p-invalid'"
-          v-model="email"
+          v-model="phone"
         />
         <small class="p-error" v-if="errors.phone.error">{{
           errors.phone.message
+        }}</small>
+        <br /><br />
+        <InputText
+          type="dni"
+          placeholder="DNI"
+          class="input"
+          :class="errors.dni.error && 'p-invalid'"
+          v-model="dni"
+        />
+        <small class="p-error" v-if="errors.dni.error">{{
+          errors.dni.message
         }}</small>
         <br /><br />
         <div>
           <button
             type="submit"
             class="initial-button-log-in"
-            @click="handleRegister"
+            @click="handleAdditional"
           >
             Add data
           </button>
         </div>
       </form>
     </div>
-
-    {{ JSON.stringify(errors, null, 4) }}
 
     <div class="signup-to-signup">
       You already registered your data?
@@ -62,50 +71,40 @@
 
 <script setup>
 import { ref } from "vue";
-import { getAuthRegisterErrors } from "../utils/authUtils";
-import { UsersApiService } from "../services/Users.service";
+import { TravellerService } from "../services/Traveller.service";
 import { useRouter } from "vue-router";
 
-const userApiService = new UsersApiService();
+const travellerService = new TravellerService();
 const router = useRouter();
 
-const handleRegister = async (e) => {
+const handleAdditional = async (e) => {
   e.preventDefault();
-  // // Your login logic here
-  const registerErrors = getAuthRegisterErrors(
-    name.value,
-    lastname.value,
-    phone.value
-  );
-
-  errors.value = registerErrors;
 
   if (
-    registerErrors.name.error ||
-    registerErrors.lastname.error ||
-    registerErrors.phone.error
+    errors.name?.error ||
+    errors.lastname?.error ||
+    errors.phone?.error ||
+    errors.dni?.error
   )
     return;
 
-  const { data } = await userApiService.isphoneRepeated(phone.value);
-
-  if (Array.isArray(data) && data.length > 0) {
-    errors.value.phone.error = true;
-    errors.value.phone.message = "That phone alrery existis";
-    return;
-  }
-
   if (
-    !registerErrors?.name?.error &&
-    !registerErrors?.lastname?.error &&
-    !registerErrors?.phone?.error
+    !errors?.name?.error &&
+    !errors?.lastname?.error &&
+    !errors?.phone?.error &&
+    !errors?.dni?.error
   ) {
-    userApiService.create({
+    travellerService.create({
+      email: localStorage.getItem("email"),
+      password: localStorage.getItem("password"),
       name: name.value,
       lastname: lastname.value,
       phone: phone.value,
+      dni: dni.value,
+      photo: "",
     });
 
+    localStorage.clear();
     router.push("/login");
   }
 };
@@ -123,10 +122,16 @@ let errors = ref({
     error: false,
     message: "",
   },
+  dni: {
+    error: false,
+    message: "",
+  },
 });
+
 const name = ref("");
 const lastname = ref("");
 const phone = ref("");
+const dni = ref("");
 </script>
 
 <style scoped>

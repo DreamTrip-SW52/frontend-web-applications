@@ -5,18 +5,36 @@
     <div class="slogan">Create your dream trip</div>
 
     <div class="space-1">
-      <router-link to="/signup">
+      <router-link v-if="isAgency" to="/agency/signup">
+        <button class="initial-button-sign-up">Sign up</button>
+      </router-link>
+      <router-link v-else to="/signup">
         <button class="initial-button-sign-up">Sign up</button>
       </router-link>
     </div>
 
     <div class="space-2">
-      <router-link to="/login">
-        <button class="initial-button-log-in">Log in</button>
+      <router-link v-if="isAgency" to="/agency/login">
+        <button class="initial-button-log-in">Login</button>
+      </router-link>
+      <router-link v-else to="/login">
+        <button class="initial-button-log-in">Login</button>
       </router-link>
     </div>
   </div>
 </template>
+
+<script setup>
+import { useRoute } from 'vue-router';
+const router = useRoute();
+// print the current route
+
+const isAgencyFn = () => {
+  return router.path.includes('agency');
+};
+
+const isAgency = isAgencyFn();
+</script>
 
 <style scoped>
 .initial {
@@ -27,7 +45,7 @@
 .title-initial {
   font-size: 96px;
   color: #ffffff;
-  margin: 60px;
+  margin: 20px;
 }
 
 .slogan {
@@ -64,6 +82,6 @@
 
 <script>
 export default {
-  name: "Initial",
+  name: 'Initial',
 };
 </script>

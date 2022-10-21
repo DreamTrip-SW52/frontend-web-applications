@@ -14,23 +14,33 @@ import RentCarForm from "../components/custom_package/RentCarForm.vue";
 import NotFound from "../views/NotFound.vue";
 import MyPackages from "../views/MyPackages.vue";
 import Statistics from "../views/Statistics.vue";
+import Additionaldata from "../views/Additionaldata.vue";
+import TypeOfUser from "../views/TypeOfUser.vue";
 
 const routes = [
   {
     path: "/",
-    name: "initial",
-    component: Initial,
+    name: "typeofuser",
+    component: TypeOfUser,
     meta: { requiresAuth: false },
   },
   {
     path: "/signup",
-    name: "signup",
     component: SignUp,
     meta: { requiresAuth: false },
   },
   {
+    path: "/additionaldata",
+    component: Additionaldata,
+    meta: { requiresAuth: false },
+  },
+  {
+    path: "/initial",
+    component: Initial,
+    meta: { requiresAuth: false },
+  },
+  {
     path: "/login",
-    name: "login",
     component: Login,
     meta: { requiresAuth: false },
   },
@@ -73,6 +83,11 @@ const routes = [
   {
     path: "/agency",
     children: [
+      {
+        path: "initial",
+        component: Initial,
+        meta: { requiresAuth: false },
+      },
       {
         path: "signup",
         component: AgencySignUp,

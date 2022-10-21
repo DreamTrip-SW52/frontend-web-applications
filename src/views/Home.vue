@@ -7,51 +7,147 @@
       <h2 class="title1">Filters</h2>
       <div class="prices">
         <h3 class="title2">Price</h3>
-        <input type="range" min="300" max="10000" class="filter-range" />
+        <input
+          v-model="price_filter"
+          v-on:change="show_package_filters()"
+          type="range"
+          id="price"
+          name="price"
+          min="300"
+          max="5000"
+          class="filter-range"
+        />
         <div class="pric-ran">
-          <div>min</div>
-          <div>max</div>
+          <div>300</div>
+          <div>5000</div>
         </div>
+        <p>Price: {{ price_filter }}</p>
       </div>
 
       <div class="conftime">
         <h3 class="title2">Configuration Time</h3>
-        <input type="range" min="0" max="24" class="filter-range" />
+        <input
+          v-model="time_filter"
+          v-on:change="show_package_filters()"
+          type="range"
+          id="time"
+          name="time"
+          min="3"
+          max="30"
+          class="filter-range"
+        />
         <div class="tim-ran">
-          <div>immediate</div>
-          <div>24h</div>
+          <div>3 days</div>
+          <div>30 days</div>
         </div>
+        <p>Time: {{ time_filter }}</p>
       </div>
 
       <div class="type">
         <h3 class="title2">Type of tour</h3>
         <form class="forms">
-          <input type="checkbox" value="In group" />
+          <input
+            v-model="typetour_filter"
+            v-on:change="show_package_filters()"
+            type="radio"
+            id="type_in_group"
+            name="typetour"
+            value="In group"
+          />
           <label for="In group" class="textform">In group</label><br />
-          <input type="checkbox" value="Private" />
-          <label for="Private" class="textform">Private</label><br />
+          <input
+            v-model="typetour_filter"
+            v-on:change="show_package_filters()"
+            type="radio"
+            id="type_private"
+            name="typetour"
+            value="Private"
+          />
+          <label for="type_private" class="textform">Private</label><br />
         </form>
       </div>
 
       <div>
         <h3 class="title2">Categories</h3>
         <form class="forms">
-          <input type="checkbox" value="Private" />
-          <label for="Private" class="textform">Standard</label><br />
-          <input type="checkbox" value="Private" />
-          <label for="Private" class="textform">Specials</label><br />
-          <input type="checkbox" value="Private" />
-          <label for="Private" class="textform">Itinerant trips</label><br />
-          <input type="checkbox" value="Private" />
-          <label for="Private" class="textform">Stay trips</label><br />
-          <input type="checkbox" value="Private" />
-          <label for="Private" class="textform">Generals</label><br />
-          <input type="checkbox" value="Private" />
-          <label for="Private" class="textform">Specific</label><br />
-          <input type="checkbox" value="Private" />
-          <label for="Private" class="textform">Local programs</label><br />
-          <input type="checkbox" value="Private" />
-          <label for="Private" class="textform">Regional programs</label><br />
+          <input
+            v-model="typepackage_filter"
+            v-on:change="show_package_filters()"
+            type="radio"
+            id="type_standard"
+            name="typepackage"
+            value="Standard"
+          />
+          <label for="type_standard" class="textform">Standard</label><br />
+          <input
+            v-model="typepackage_filter"
+            v-on:change="show_package_filters()"
+            type="radio"
+            id="type_specials"
+            name="typepackage"
+            value="Special"
+          />
+          <label for="type_specials" class="textform">Special</label><br />
+          <input
+            v-model="typepackage_filter"
+            v-on:change="show_package_filters()"
+            type="radio"
+            id="type_itinerant_trips"
+            name="typepackage"
+            value="Itinerant trips"
+          />
+          <label for="type_itinerant_trips" class="textform"
+            >Itinerant trips</label
+          ><br />
+          <input
+            v-model="typepackage_filter"
+            v-on:change="show_package_filters()"
+            type="radio"
+            id="type_stay_trips"
+            name="typepackage"
+            value="Stay trips"
+          />
+          <label for="type_stay_trips" class="textform">Stay trips</label><br />
+          <input
+            v-model="typepackage_filter"
+            v-on:change="show_package_filters()"
+            type="radio"
+            id="type_generals"
+            name="typepackage"
+            value="Generals"
+          />
+          <label for="type_generals" class="textform">Generals</label><br />
+          <input
+            v-model="typepackage_filter"
+            v-on:change="show_package_filters()"
+            type="radio"
+            id="type_specific"
+            name="typepackage"
+            value="Specific"
+          />
+          <label for="type_specific" class="textform">Specific</label><br />
+          <input
+            v-model="typepackage_filter"
+            v-on:change="show_package_filters()"
+            type="radio"
+            id="type_local_programs"
+            name="typepackage"
+            value="Local programs"
+          />
+          <label for="type_local_programs" class="textform"
+            >Local programs</label
+          ><br />
+          <input
+            v-model="typepackage_filter"
+            v-on:change="show_package_filters()"
+            type="radio"
+            id="type_regional_programs"
+            name="typepackage"
+            value="Regional programs"
+          />
+          <label for="type_regional_programs" class="textform"
+            >Regional programs</label
+          ><br />
         </form>
       </div>
     </div>
@@ -87,6 +183,7 @@ import PackageCard from "../components/PackageCard.vue";
 import { PackageService } from "../services/Package.service";
 
 const packageService = new PackageService();
+const packages = ref([]);
 
 // lifecyle hooks
 onMounted(() => {
@@ -95,7 +192,31 @@ onMounted(() => {
   });
 });
 
-const packages = ref([]);
+const price_filter = ref(5000);
+const time_filter = ref(30);
+const typetour_filter = ref(null);
+const typepackage_filter = ref(null);
+
+const show_package_filters = () => {
+  const price_value = price_filter ? price_filter.value.toString() : null;
+  const time_value = time_filter ? time_filter.value.toString() : null;
+  const typetour_value = typetour_filter.value
+    ? typetour_filter.value.toString()
+    : null;
+  const typepackage_value = typepackage_filter.value
+    ? typepackage_filter.value.toString()
+    : null;
+
+  packageService
+    .filterPackage(price_value, time_value, typetour_value, typepackage_value)
+    .then((response) => {
+      packages.value = response.data;
+      console.log(
+        "🚀 ~ file: Home.vue ~ line 214 ~ .then ~ packages.value",
+        packages.value
+      );
+    });
+};
 </script>
 
 <style scoped>
@@ -108,7 +229,7 @@ const packages = ref([]);
   background-color: #161d2f;
   border-radius: 5px;
   width: 315px;
-  height: 713px;
+  height: 800px;
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 10px;
@@ -156,6 +277,7 @@ const packages = ref([]);
 }
 .title1 {
   color: #ffffff;
+  text-align: center;
 }
 .title2 {
   border-bottom: 2px solid #fc4747;
@@ -172,15 +294,15 @@ const packages = ref([]);
   color: #ffffff;
   display: flex;
   flex-direction: row;
-  gap: 170px;
-  padding-left: 15px;
+  gap: 230px;
+  padding-left: 2px;
 }
 .tim-ran {
   font-size: 12px;
   color: #ffffff;
   display: flex;
   flex-direction: row;
-  gap: 150px;
+  gap: 195px;
   padding-left: 2px;
 }
 .forms {

@@ -7,7 +7,7 @@
       <div class="icons-container" v-if="isAgency">
         <!-- Rutas -->
         <!-- Create Package -->
-        <router-link to="/">
+        <router-link to="/agency/mypackages">
           <i class="pi pi-home"></i>
         </router-link>
         <!-- My Packages -->
@@ -36,7 +36,6 @@
 <script setup>
 import { useRoute } from "vue-router";
 const router = useRoute();
-// print the current route
 
 const isAgencyFn = () => {
   return router.path.includes("agency");
@@ -45,8 +44,6 @@ const isAgencyFn = () => {
 const isAgency = isAgencyFn();
 
 console.log(isAgency);
-
-// <!-- 4 -> 1 rem -->
 </script>
 
 <style scoped>

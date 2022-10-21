@@ -51,6 +51,7 @@ import { getAuthLoginErrors } from "../utils/authUtils";
 import { TravellerService } from "../services/Traveller.service";
 
 const travellerService = new TravellerService();
+
 const router = useRouter();
 
 const handleLogin = async (e) => {
@@ -58,7 +59,6 @@ const handleLogin = async (e) => {
 
   console.log("handleLogin");
 
-  // Your login logic here
   const loginErrors = getAuthLoginErrors(email.value, password.value);
 
   errors.value = loginErrors;

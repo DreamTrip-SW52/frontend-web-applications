@@ -39,17 +39,19 @@
 
     <div class="login-to-signup">
       Don't have an account?
-      <router-link to="/signup" class="link">Sign up</router-link>
+      <router-link to="/agency/signup" class="link">Sign up</router-link>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { getAuthLoginErrors } from "../utils/authUtils";
 import { TravelAgencyService } from "../services/TravelAgency.service";
 
 const travelAgencyService = new TravelAgencyService();
+const router = useRouter();
 
 const handleLogin = async (e) => {
   e.preventDefault();
@@ -71,6 +73,9 @@ const handleLogin = async (e) => {
       console.log("Travel Agency not found");
 
     localStorage.setItem("currentUser", JSON.stringify(data[0].id));
+
+    // Redirect to mypackages
+    router.push("/agency/mypackages");
 
     // Usuario encontrado
     console.table(data);
