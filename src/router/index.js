@@ -5,6 +5,8 @@ import Login from "../views/Login.vue";
 import Home from "../views/Home.vue";
 import PackageDetails from "../views/PackageDetails.vue";
 import CustomPackage from "../views/CustomPackage.vue";
+import EconomicFollow from "../views/EconomicFollow.vue";
+import SecurityInformation from "../views/SecurityInformation.vue"
 import AgencySignUp from "../views/AgencySignUp.vue";
 import AgencyLogin from "../views/AgencyLogin.vue";
 import TransportForm from "../components/custom_package/TransportForm.vue";
@@ -79,6 +81,16 @@ const routes = [
         meta: { requiresAuth: true },
       },
     ],
+  },
+  {
+    path: "/economic-follow",
+    component: EconomicFollow,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/security",
+    component: SecurityInformation,
+    meta: { requiresAuth: true },
   },
   {
     path: "/agency",
