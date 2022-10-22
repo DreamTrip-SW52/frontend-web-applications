@@ -285,14 +285,14 @@ const writeReview = () => {
     date: String,
     rating: Number,
     comment: String,
-    userId: Number,
+    travellerId: Number,
   };
 
   review.packageId = parseInt(params.id);
   review.date = strDate;
   review.rating = rating.value;
   review.comment = comment.value;
-  review.userId = 1;
+  review.travellerId = localStorage.getItem("currentUser");
 
   console.log(review);
 
