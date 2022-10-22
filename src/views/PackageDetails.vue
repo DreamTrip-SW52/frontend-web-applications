@@ -1,7 +1,7 @@
 <template>
   <!-- {{ $route.params.id }} -->
 
-  <main class="grid w-full ml-4" v-if="packageData !== {}">
+  <main class="grid w-full ml-4 text-white" v-if="packageData !== {}">
     <section id="center" class="col-8">
       <header>
         <span class="primary text-lg font-medium">DreamTrip</span> /

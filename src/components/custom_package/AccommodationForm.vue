@@ -1,10 +1,10 @@
 <template>
   <main class="px-6">
     <header>
-      <h1 class="text-4xl text-center mt-8">Accomodation</h1>
+      <h1 class="text-4xl text-center mt-8 text-white">Accomodation</h1>
     </header>
     <form class="flex flex-column align-items-center py-4 gap-4 mt-4">
-      <section class="mt-2 flex flex-column justify-content-center">
+      <section class="mt-2 flex flex-column justify-content-center text-white">
         <div id="main-form" class="flex justify-content-center">
           <div id="price" class="flex flex-column">
             <label>Price</label>

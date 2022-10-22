@@ -21,7 +21,7 @@
           <div>300</div>
           <div>5000</div>
         </div>
-        <p>Price: {{ price_filter }}</p>
+        <p class="text-white">Price: {{ price_filter }}</p>
       </div>
 
       <div class="conftime">
@@ -40,7 +40,7 @@
           <div>3 days</div>
           <div>30 days</div>
         </div>
-        <p>Time: {{ time_filter }}</p>
+        <p class="text-white">Time: {{ time_filter }}</p>
       </div>
 
       <div class="type">
@@ -154,8 +154,7 @@
 
     <div class="content">
       <div class="content-filter">
-        <p class="content-filter-title">Sort by</p>
-        <button class="option-button">Choose an option:</button>
+        <h1 class="text-white">Packages</h1>
       </div>
 
       <template v-for="myPackage in packages">
@@ -251,7 +250,6 @@ const show_package_filters = () => {
   flex-direction: row;
   gap: 10px;
   align-items: center;
-  justify-content: flex-end;
 }
 .content-filter-title {
   font-style: normal;

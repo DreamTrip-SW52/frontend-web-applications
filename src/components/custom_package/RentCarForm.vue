@@ -1,9 +1,11 @@
 <template>
   <main class="px-6">
     <header>
-      <h1 class="text-4xl text-center mt-8">Rent Car</h1>
+      <h1 class="text-4xl text-center mt-8 text-white">Rent Car</h1>
     </header>
-    <form class="flex flex-column align-items-center py-4 gap-4 mt-4">
+    <form
+      class="flex flex-column align-items-center py-4 gap-4 mt-4 text-white"
+    >
       <section class="mt-2 flex flex-column justify-content-center">
         <div id="main-form" class="flex justify-content-center">
           <div id="price" class="flex flex-column">
@@ -66,7 +68,7 @@
                     Price: S/.{{ result.price }}
                   </li>
                   <li class="text-xl font-medium">
-                    Pickup Address {{ result['addres-pick-up'] }}
+                    Pickup Address {{ result["addres-pick-up"] }}
                   </li>
                   <li class="text-xl font-medium">Brand: {{ result.brand }}</li>
                 </ul>
@@ -96,11 +98,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { CarService } from '../../services/Car.service';
+import { ref } from "vue";
+import { CarService } from "../../services/Car.service";
 
 // emits
-const emit = defineEmits(['prevPage', 'nextPage']);
+const emit = defineEmits(["prevPage", "nextPage"]);
 
 // refs
 const filteredCar = ref([]);
@@ -109,25 +111,25 @@ const displayDialog = ref(false);
 const formData = ref({
   price: [50, 200],
   capacity: [4, 5],
-  brand: '',
+  brand: "",
 });
 const brands = ref([
-  { brand: 'Toyota', value: 'Toyota' },
-  { brand: 'Suzuki', value: 'Suzuki' },
-  { brand: 'Chevrolet', value: 'Chevrolet' },
-  { brand: 'Honda', value: 'Honda' },
-  { brand: 'BMW', value: 'Toyota' },
-  { brand: 'KIA', value: 'KIA' },
-  { brand: 'Nissan', value: 'Nissan' },
-  { brand: 'Hyundai', value: 'Hyundai' },
+  { brand: "Toyota", value: "Toyota" },
+  { brand: "Suzuki", value: "Suzuki" },
+  { brand: "Chevrolet", value: "Chevrolet" },
+  { brand: "Honda", value: "Honda" },
+  { brand: "BMW", value: "Toyota" },
+  { brand: "KIA", value: "KIA" },
+  { brand: "Nissan", value: "Nissan" },
+  { brand: "Hyundai", value: "Hyundai" },
 ]);
 
 // classes
 const carService = new CarService();
 
 // functions
-const prevPage = () => emit('prevPage', { pageIndex: 3 });
-const nextPage = () => emit('nextPage', { pageIndex: 1 });
+const prevPage = () => emit("prevPage", { pageIndex: 3 });
+const nextPage = () => emit("nextPage", { pageIndex: 1 });
 const openDialog = () => (displayDialog.value = true);
 const parseProxy = (proxy) => JSON.parse(JSON.stringify(proxy));
 const save = (id) => {
@@ -141,8 +143,8 @@ const parseMultiSelectIntoValue = (items) => {
   return newItems;
 };
 const find = () => {
-  const travelAgencyId = localStorage.getItem('travelAgencyId');
-  const locationId = localStorage.getItem('locationId');
+  const travelAgencyId = localStorage.getItem("travelAgencyId");
+  const locationId = localStorage.getItem("locationId");
   const price = parseProxy(formData.value.price);
   const capacity = parseProxy(formData.value.capacity);
   const brand = parseMultiSelectIntoValue(parseProxy(formData.value.brand))[0];
