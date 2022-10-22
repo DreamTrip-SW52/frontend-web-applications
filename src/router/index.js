@@ -18,7 +18,7 @@ import MyPackages from "../views/MyPackages.vue";
 import Statistics from "../views/Statistics.vue";
 import Additionaldata from "../views/Additionaldata.vue";
 import TypeOfUser from "../views/TypeOfUser.vue";
-
+import Profile from "@/views/Profile.vue"
 const routes = [
   {
     path: "/",
@@ -127,6 +127,11 @@ const routes = [
     name: "NotFound",
     component: NotFound,
   },
+  {
+    path: "/profile",
+    component: Profile,
+    meta: { requiresAuth: true }
+  }
 ];
 
 const router = createRouter({

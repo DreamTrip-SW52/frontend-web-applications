@@ -34,9 +34,11 @@
         </router-link>
       </div>
       <!-- Perfil -->
-      <div class="avatar">
-        <img src="../assets/avatar.png" />
-      </div>
+      <router-link to="/profile">
+        <div class="avatar">
+          <img src="../assets/avatar.png" />
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
