@@ -152,6 +152,16 @@
       "photo": "",
       "dni": "312412",
       "id": 5
+    },
+    {
+      "email": "cokijlmf@gmail.com",
+      "password": "pizza",
+      "name": "Jorge",
+      "lastname": "Mercado",
+      "phone": "999888777",
+      "dni": "84759988",
+      "photo": "",
+      "id": 6
     }
   ],
   "travelAgency": [
@@ -283,6 +293,11 @@
           "name": "Car",
           "amount": "50",
           "id": 3
+        },
+        {
+          "name": "Tour",
+          "amount": "150",
+          "id": 4
         }
       ]
     },
