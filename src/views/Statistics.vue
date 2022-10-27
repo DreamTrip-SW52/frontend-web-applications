@@ -18,7 +18,7 @@
     <Card class="card">
       <template #title class="text-white"> Quantity of Views </template>
       <template #content>
-        <!-- {{ views }} -->
+        {{ views }}
       </template>
     </Card>
     <br />
@@ -41,10 +41,11 @@ import { PackageService } from "@/services/Package.service";
 import { ReviewService } from "@/services/Review.service";
 
 const reviewService = new ReviewService();
+const packageService = new PackageService();
 
 const reviewInfo = ref({});
 const stars = ref(0);
-// const views = ref(0);
+const views = ref(0);
 // const purchasedTickets = ref(0);
 
 const router = useRouter();
@@ -65,6 +66,9 @@ onMounted(() => {
   reviewService.getReviewByPackageId(params.id).then((response) => {
     reviewInfo.value = response.data;
     getRating(JSON.parse(JSON.stringify(reviewInfo.value)));
+  });
+  packageService.getPackageById(params.id).then((response) => {
+    views.value = response.data.views;
   });
 });
 </script>

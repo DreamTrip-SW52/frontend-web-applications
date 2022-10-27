@@ -3,6 +3,7 @@
     {
       "id": 1,
       "travelAgencyId": 1,
+      "views": 2,
       "transport": {
         "type": "flights",
         "id": 1
@@ -67,6 +68,7 @@
     {
       "id": 2,
       "travelAgencyId": 2,
+      "views": 0,
       "accommodationId": 2,
       "transport": {
         "type": "bus",
