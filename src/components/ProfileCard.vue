@@ -16,8 +16,14 @@
             />
           </div>
         </div>
-
-
+        <div class="field">
+          <div v-for="(card, index) of creditCards" class="credit-card">
+            <span>Card #{{ index }}.</span>
+            <span>Card number: {{ card.cardNumber }}</span>
+            <span>Expired date: {{ card.expirationDate }}</span>
+            <span>CCC code: {{ card.securityCode }}</span>
+          </div>
+        </div>
       </div>
       <div class="actions">
         <Button type="button" @click="changeValues = !changeValues">
@@ -27,14 +33,13 @@
         <Button type="submit" @click="onSubmit" v-if="changeValues" >Save</Button>
       </div>
     </form>
-
     <form id="password-form">
       <div class="fields">
         <div class="change-password field" >
           <div>
-            <small class="change-password-link" @click="changePassword('hide')" >
-              <span v-if="hidePassword">Change password?</span>
-              <span v-else>Cancel</span>
+            <small>
+              <span class="change-password-link" @click="changePassword('hide')" v-if="hidePassword">Change password?</span>
+              <span class="change-password-link" @click="changePassword('hide')" v-else>Cancel</span>
             </small>
           </div>
           <div v-if="!hidePassword" v-for="field of passwordFields" >
@@ -54,16 +59,32 @@
         </div>
       </div>
     </form>
+    <div class="fields">
+      <div class="field">
+        <div>
+          <small>
+            <span  class="change-password-link" @click="hideCreditForm = !hideCreditForm" v-if="hideCreditForm">Add new credit card?</span>
+            <span  class="change-password-link" @click="hideCreditForm = !hideCreditForm" v-else>Cancel</span>
+          </small>
+        </div>
+        <div>
+          <PayMethods v-if="!hideCreditForm" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
 
 
-import {IUser, User} from '@/interfaces/User'
+import { IUser, User} from '@/interfaces/User'
 import { FormFields } from "@/interfaces/FormField";
 import { ref } from "vue";
 import {TravellerService} from "@/services/Traveller.service";
+import {CreditCards} from "@/interfaces/CreditCard";
+import {CreditCardsService} from "@/services/CreditCards.service";
+import PayMethods from "@/components/pay/PayMethods.vue"
 
 const props = defineProps( {
   id: {
@@ -78,11 +99,14 @@ const props = defineProps( {
   }
 )
 let user = ref(IUser);
-
+let creditCards = CreditCards;
 const userApiService = new TravellerService();
+const cardsApiService = new CreditCardsService();
 if(props.user === undefined){
-  const response = await userApiService.getById(props.id);
-  user = response.data;
+  const userResponse = await userApiService.getById(props.id);
+  user = userResponse.data;
+  const cardsResponse = await cardsApiService.getByUserId(user.id);
+  creditCards = cardsResponse.data;
 }
 
 let changeValues = ref(false);
@@ -110,6 +134,7 @@ function normalField(label){
 let formFields = FormFields;
 let passwordFields = FormFields;
 let passwordErrors = ref([]);
+let hideCreditForm = ref(true);
 formFields = [
   { label: 'name',
     title: 'Name',
@@ -233,6 +258,7 @@ function validatePassword() {
   if(passwordFields[0].value !== passwordFields[1].value)
     passwordErrors.value = [{message: 'Not same password'}]
 }
+
 function resetPasswordErrors() {
   passwordErrors.value = [];
 }
@@ -244,11 +270,11 @@ function resetPasswordErrors() {
   min-width: 50rem;
 }
 
-.container > form, .field, .fields, .field div, .profile-image {
+.container > form, .field, .fields, .field div, .profile-image, .credit-card {
   display: grid;
 }
 
-.fields, .profile-image {
+.fields, .profile-image, .credit-card {
   grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-items: center;

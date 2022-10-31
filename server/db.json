@@ -212,6 +212,14 @@
       "date": "16/09/22",
       "rating": 4,
       "comment": "Good"
+    },
+    {
+      "packageId": 1,
+      "date": "22/9/2022",
+      "rating": 4,
+      "comment": "Good travel with an interesting tour",
+      "travellerId": "1",
+      "id": 5
     }
   ],
   "accommodations": [
@@ -592,5 +600,8 @@
       "id": 25,
       "name": "Ucayali"
     }
+  ],
+  "credit-cards": [
+
   ]
 }
