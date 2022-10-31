@@ -19,9 +19,9 @@ import CascadeSelect from "primevue/cascadeselect";
 import Card from "primevue/card";
 import ScrollTop from "primevue/scrolltop";
 import ScrollPanel from "primevue/scrollpanel";
+import Tooltip from 'primevue/tooltip';
 import App from "./App.vue";
 import router from "./router";
-
 // Primeflex
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
@@ -29,6 +29,8 @@ import "primeicons/primeicons.css";
 import "/node_modules/primeflex/primeflex.css";
 
 import "./assets/main.css";
+import {VueRestrictedInputDirective} from "vue-restricted-input";
+
 
 const app = createApp(App);
 
@@ -163,4 +165,8 @@ app.component("CascadeSelect", CascadeSelect);
 app.component("Card", Card);
 app.component("ScrollTop", ScrollTop);
 app.component("ScrollPanel", ScrollPanel);
+
+app.directive('mask', VueRestrictedInputDirective);
+app.directive('tooltip', Tooltip);
+
 app.mount("#app");
