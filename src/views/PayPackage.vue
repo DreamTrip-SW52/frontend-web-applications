@@ -3,7 +3,20 @@
     <h1 class="title-pay-package">Pay</h1>
   </header>
   <div class="pay-package">
-    <div></div>
+    <PayMethods>
+      <div class="creditcard-details">
+        <h2 class="creditcard-details-title">Package Details</h2>
+        <div class="creditcard-card-text">
+          <p class="creditcard-text">{{ cardNumber }}</p>
+        </div>
+        <div class="creditcard-card-text">
+          <p class="creditcard-text">{{ expirationDate }}</p>
+        </div>
+        <div class="creditcard-card-text">
+          <p class="creditcard-text">{{ securityCode }}</p>
+        </div>
+      </div>
+    </PayMethods>
     <template v-if="packageData !== {}">
       <div class="package-details">
         <h2 class="package-details-title">Package Details</h2>
@@ -23,6 +36,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { PackageService } from '../services/Package.service';
+import { CreditCards } from '@/interfaces/CreditCard';
+import { CreditCardsService } from '@/services/CreditCards.service';
+import PayMethods from '@/components/pay/PayMethods.vue';
 
 const packageService = new PackageService();
 const packages = ref([]);
@@ -46,6 +62,18 @@ onMounted(() => {
   text-align: center;
   color: #ffffff;
   font-size: 32px;
+}
+
+.creditcard-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.creditcard-card-text {
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 200px;
+  height: 81px;
 }
 
 .package-details {
