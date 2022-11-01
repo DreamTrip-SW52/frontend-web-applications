@@ -32,7 +32,9 @@
 
       {{ JSON.stringify(packageData.value) }}
     </div>
-    <button class="pay-buttom">Pay</button>
+    <router-link to="/home">
+      <button class="pay-buttom">Pay</button>
+    </router-link>
   </div>
 </template>
 
