@@ -7,8 +7,8 @@ export class CreditCardsService {
   getById(id) {
     return http.get(this.baseGet + `/${id}`);
   }
-  getByUserId(userId){
-    return http.get(this.baseGet + `?userId=${userId}`)
+  getByUser(userId, userType){
+    return http.get(this.baseGet + `?userId=${userId}&userType=${userType}`)
   }
 
   create(data) {

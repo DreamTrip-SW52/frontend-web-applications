@@ -57,6 +57,10 @@ const props = defineProps({
   creditCards: {
     type: Array,
     required: true
+  },
+  userType: {
+    type: String,
+    required: true
   }
 })
 const emitEvents = defineEmits()
@@ -138,6 +142,7 @@ function validateCreditCard(creditCard){
 
 //receive object
 function addCreditCard(card){
+  card.userType = props.userType;
   creditCardsService.create(card).then();
 }
 //receive string values

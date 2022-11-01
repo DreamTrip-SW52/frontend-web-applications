@@ -4,7 +4,8 @@ interface ICreditCard {
     userId: number,
     cardNumber: string,
     securityCode: string,
-    expirationDate: string
+    expirationDate: string,
+    userType: string,
 }
 interface CreditCardsConstructor {
     new(arrayLength?: number): ICreditCard[];

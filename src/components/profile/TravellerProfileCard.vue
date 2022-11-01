@@ -66,7 +66,7 @@
           </small>
         </div>
         <div>
-          <CreditCardForm v-on:add-card="addedCard" :credit-cards="creditCards" :id="user.id" v-if="!hideCreditForm" />
+          <CreditCardForm v-on:add-card="addedCard" :user-type="TRAVELLER" :credit-cards="creditCards" :id="user.id" v-if="!hideCreditForm" />
         </div>
       </div>
     </div>
@@ -84,6 +84,8 @@ import CreditCardForm from "@/components/credit_cards/AddCreditCardForm.vue"
 import ChangePassword from '@/components/profile/ChangePassword.vue';
 import ShowCreditCard from '@/components/credit_cards/ShowCreditCard.vue'
 
+const TRAVELLER = 'traveller';
+
 const props = defineProps( {
   id: {
     type: String,
@@ -96,6 +98,7 @@ const props = defineProps( {
     }
   }
 )
+
 let user = ref(ITraveller);
 let creditCards = ref(CreditCards);
 const userApiService = new TravellerService();
@@ -103,7 +106,7 @@ const cardsApiService = new CreditCardsService();
 if(props.user === undefined){
   const userResponse = await userApiService.getById(props.id);
   user = userResponse.data;
-  const cardsResponse = await cardsApiService.getByUserId(user.id);
+  const cardsResponse = await cardsApiService.getByUser(user.id, TRAVELLER);
   creditCards.value = cardsResponse.data;
 }
 
