@@ -156,7 +156,7 @@
   ],
   "travelAgency": [
     {
-      "name": "Despegar",
+      "name": "Trivago Travelling",
       "ruc": "123",
       "email": "despegar@hotmail.com",
       "password": "123",
@@ -584,6 +584,24 @@
     {
       "id": 25,
       "name": "Ucayali"
+    }
+  ],
+  "credit_cards": [
+    {
+      "id": 1,
+      "userId": 1,
+      "cardNumber": "1111 1111 1111 1111",
+      "expirationDate": "11/1111",
+      "securityCode": "111",
+      "userType": "traveller"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "cardNumber": "1111 1111 1111 1111",
+      "expirationDate": "11/1111",
+      "securityCode": "111",
+      "userType": "agency"
     }
   ]
 }
