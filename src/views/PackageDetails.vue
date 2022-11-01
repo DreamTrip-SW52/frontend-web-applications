@@ -84,7 +84,9 @@
         </div>
         <Calendar v-model="calendar" :inline="true" />
         <div class="text-center">
-          <router-link :to="`/paypackage/${id}`">
+          <router-link
+            :to="`/paypackage/${router.currentRoute.value.params.id}`"
+          >
             <Button label="Buy" style="width: 8rem" />
           </router-link>
         </div>
@@ -294,7 +296,7 @@ const writeReview = () => {
   review.date = strDate;
   review.rating = rating.value;
   review.comment = comment.value;
-  review.travellerId = localStorage.getItem("currentUser");
+  review.travellerId = localStorage.getItem('currentUser');
 
   console.log(review);
 
