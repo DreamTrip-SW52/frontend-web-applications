@@ -586,7 +586,13 @@
       "name": "Ucayali"
     }
   ],
-  "credit-cards": [
-
+  "credit_cards": [
+    {
+      "id": 1,
+      "userId": 1,
+      "cardNumber": "1111 1111 1111 1111",
+      "expirationDate": "11/1111",
+      "securityCode": "111"
+    }
   ]
 }

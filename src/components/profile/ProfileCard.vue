@@ -2,7 +2,7 @@
   <div class="container">
     <div class="profile-image">
       <img v-if="user.photo !== ''" :src="user.photo" alt="profile image" />
-      <img  src="../assets/avatar.png" alt="profile image">
+      <img src="../../assets/avatar.png" alt="profile image">
     </div>
     <form id="profile-form">
       <div class="fields">
@@ -16,14 +16,7 @@
             />
           </div>
         </div>
-        <div class="field">
-          <div v-for="(card, index) of creditCards" class="credit-card">
-            <span>Card #{{ index }}.</span>
-            <span>Card number: {{ card.cardNumber }}</span>
-            <span>Expired date: {{ card.expirationDate }}</span>
-            <span>CCC code: {{ card.securityCode }}</span>
-          </div>
-        </div>
+
       </div>
       <div class="actions">
         <Button type="button" @click="changeValues = !changeValues">
@@ -33,42 +26,47 @@
         <Button type="submit" @click="onSubmit" v-if="changeValues" >Save</Button>
       </div>
     </form>
-    <form id="password-form">
-      <div class="fields">
-        <div class="change-password field" >
-          <div>
-            <small>
-              <span class="change-password-link" @click="changePassword('hide')" v-if="hidePassword">Change password?</span>
-              <span class="change-password-link" @click="changePassword('hide')" v-else>Cancel</span>
-            </small>
-          </div>
-          <div v-if="!hidePassword" v-for="field of passwordFields" >
-            <label :for="field.label"> {{ field.title }}</label>
-            <InputText
-                :id="field.label" :placeholder="field.placeholder" :type="field.type"
-                :required="field.requerid" v-model="field.value"
-                :minlength="8" :value="field.value" @keydown="resetPasswordErrors"
-            />
-          </div>
-          <div id="errors">
-            <small class="p-error" v-for="error of passwordErrors"> {{ error.message && error?.message }}</small>
-          </div>
-          <div class="actions" v-if="!hidePassword">
-            <Button type="submit" @click="changePassword('submit')" >Change password</Button>
-          </div>
-        </div>
-      </div>
-    </form>
+
     <div class="fields">
       <div class="field">
         <div>
           <small>
-            <span  class="change-password-link" @click="hideCreditForm = !hideCreditForm" v-if="hideCreditForm">Add new credit card?</span>
-            <span  class="change-password-link" @click="hideCreditForm = !hideCreditForm" v-else>Cancel</span>
+            <span class="change-password-link" @click="hidePassword = !hidePassword" v-if="hidePassword">Change password?</span>
+            <span class="change-password-link" @click="hidePassword = !hidePassword" v-else>Cancel</span>
+          </small>
+        </div>
+        <ChangePassword v-on:change-password="assignNewPassword" v-if="!hidePassword" />
+      </div>
+    </div>
+
+    <div class="fields">
+      <div class="field">
+        <div>
+          <small>
+            <span class="change-password-link" @click="hideCreditCards = !hideCreditCards" v-if="hideCreditCards">Show credit cards?</span>
+            <span class="change-password-link" @click="hideCreditCards = !hideCreditCards" v-else>Hide</span>
+          </small>
+        </div>
+        <div class="credit-card" v-if="!hideCreditCards" v-for="(card, index) of creditCards">
+          <div class="flex gap-8">
+            <span>Card #{{ index + 1 }}</span>
+            <small><span @click="removeCard(index, card)" class="click-link">remove card</span></small>
+          </div>
+          <ShowCreditCard :credit-card="card" />
+        </div>
+      </div>
+    </div>
+
+    <div class="fields">
+      <div class="field">
+        <div>
+          <small>
+            <span class="click-link" @click="hideCreditForm = !hideCreditForm" v-if="hideCreditForm">Add new credit card?</span>
+            <span class="click-link" @click="hideCreditForm = !hideCreditForm" v-else>Cancel</span>
           </small>
         </div>
         <div>
-          <PayMethods v-if="!hideCreditForm" />
+          <CreditCardForm v-on:add-card="addedCard" :credit-cards="creditCards" :id="user.id" v-if="!hideCreditForm" />
         </div>
       </div>
     </div>
@@ -76,15 +74,15 @@
 </template>
 
 <script setup>
-
-
 import { IUser, User} from '@/interfaces/User'
 import { FormFields } from "@/interfaces/FormField";
 import { ref } from "vue";
 import {TravellerService} from "@/services/Traveller.service";
 import {CreditCards} from "@/interfaces/CreditCard";
 import {CreditCardsService} from "@/services/CreditCards.service";
-import PayMethods from "@/components/pay/PayMethods.vue"
+import CreditCardForm from "@/components/credit_cards/AddCreditCardForm.vue"
+import ChangePassword from '@/components/profile/ChangePassword.vue';
+import ShowCreditCard from '@/components/credit_cards/ShowCreditCard.vue'
 
 const props = defineProps( {
   id: {
@@ -99,18 +97,19 @@ const props = defineProps( {
   }
 )
 let user = ref(IUser);
-let creditCards = CreditCards;
+let creditCards = ref(CreditCards);
 const userApiService = new TravellerService();
 const cardsApiService = new CreditCardsService();
 if(props.user === undefined){
   const userResponse = await userApiService.getById(props.id);
   user = userResponse.data;
   const cardsResponse = await cardsApiService.getByUserId(user.id);
-  creditCards = cardsResponse.data;
+  creditCards.value = cardsResponse.data;
 }
 
 let changeValues = ref(false);
 let hidePassword = ref(true);
+let hideCreditCards = ref(true);
 
 function onSubmit() {
   changeValues.value = false;
@@ -126,14 +125,11 @@ function setStorableUser() {
   console.log(user);
 }
 
-
 function normalField(label){
   return label !== 'password' && label !== 'email' && label !== 'type';
 }
 
 let formFields = FormFields;
-let passwordFields = FormFields;
-let passwordErrors = ref([]);
 let hideCreditForm = ref(true);
 formFields = [
   { label: 'name',
@@ -196,71 +192,21 @@ formFields = [
   }
 ]
 
-passwordFields = [
-  {
-    label: 'password',
-    title: 'New password',
-    value: '',
-    disable: true,
-    placeholder: 'Enter new password',
-    requerid: true,
-    type: 'password'
-  },
-  {
-    label: 'confirmPassword',
-    title: 'Confirm Password',
-    value: '',
-    disable: true,
-    placeholder: 'Confirm new password',
-    requerid: true,
-    type: 'password'
-  }
-]
-
-function changePassword(type) {
-  if(type === 'submit'){
-    validatePassword()
-    if(passwordErrors.value.length === 0) {
-      assignNewPassword();
-      hidePassword.value = !hidePassword.value
-    }
-  }
-  else {
-    resetPasswordValues()
-    passwordErrors.value = []
-    hidePassword.value = !hidePassword.value
-  }
-
+function addedCard(card){
+  creditCards.value.push(card);
+  hideCreditForm.value = !hideCreditForm.value;
 }
 
-function assignNewPassword() {
-  user.password = passwordFields[0].value;
-  userApiService.update(user.id, user).then(() => {
-    resetPasswordValues()
-
-  });
+function assignNewPassword(password){
+  user.password = password;
+  userApiService.update(user.id, user).then();
+  hidePassword.value = !hidePassword.value;
 }
 
-function resetPasswordValues() {
-  for(let field of passwordFields){
-    field.value = '';
-    field.value = '';
-  }
-}
-
-function validatePassword() {
-  for(let field of passwordFields) {
-    if (field.value === '') {
-      passwordErrors.value = [{message: 'Please, fill the field'}]
-      return
-    }
-  }
-  if(passwordFields[0].value !== passwordFields[1].value)
-    passwordErrors.value = [{message: 'Not same password'}]
-}
-
-function resetPasswordErrors() {
-  passwordErrors.value = [];
+function removeCard(index, card){
+  creditCards.value.splice(index, 1);
+  hideCreditCards.value = !hideCreditCards.value;
+  cardsApiService.delete(card.id).then();
 }
 
 </script>
@@ -270,11 +216,11 @@ function resetPasswordErrors() {
   min-width: 50rem;
 }
 
-.container > form, .field, .fields, .field div, .profile-image, .credit-card {
+.container > form, .field, .fields, .field div, .profile-image {
   display: grid;
 }
 
-.fields, .profile-image, .credit-card {
+.fields, .profile-image {
   grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-items: center;
@@ -289,11 +235,11 @@ function resetPasswordErrors() {
   margin: 0.8rem auto 0 auto;
 }
 
-.change-password-link {
+.change-password-link, .click-link {
   color:  #3b82f6;
   text-decoration: underline;
 }
-  .change-password-link:hover {
+  .change-password-link:hover, .click-link:hover {
     cursor: pointer;
   }
 
@@ -303,13 +249,8 @@ function resetPasswordErrors() {
   justify-content: center;
 }
 
-#errors {
-  margin: 0 auto 0 auto;
-}
-
 .profile-image, .profile-image > img {
   height: 10rem;
-
 }
 
 .profile-image {
