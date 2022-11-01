@@ -32,6 +32,7 @@
         <router-link to="/security">
           <i class="pi pi-shield"></i>
         </router-link>
+        <!-- Notification -->
       </div>
       <!-- Perfil -->
       <router-link to="/profile">
@@ -44,11 +45,11 @@
 </template>
 
 <script setup>
-import { useRoute } from "vue-router";
+import { useRoute } from 'vue-router';
 const router = useRoute();
 
 const isAgencyFn = () => {
-  return router.path.includes("agency");
+  return router.path.includes('agency');
 };
 
 const isAgency = isAgencyFn();
