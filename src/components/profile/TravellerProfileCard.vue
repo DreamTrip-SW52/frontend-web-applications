@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div class="profile-image">
-      <img v-if="user.photo !== ''" :src="user.photo" alt="profile image" />
-      <img src="../../assets/avatar.png" alt="profile image">
+      <img v-if="user.photo !== undefined && user.photo !== ''" :src="user.photo" alt="profile image" />
+      <img v-else src="../../assets/avatar.png" alt="profile image">
     </div>
     <form id="profile-form">
       <div class="fields">
@@ -74,7 +74,7 @@
 </template>
 
 <script setup>
-import { IUser, User} from '@/interfaces/User'
+import { ITraveller, Traveller } from '@/interfaces/Traveller'
 import { FormFields } from "@/interfaces/FormField";
 import { ref } from "vue";
 import {TravellerService} from "@/services/Traveller.service";
@@ -91,12 +91,12 @@ const props = defineProps( {
     required: false
   },
   user: {
-    type: User,
+    type: Traveller,
     required: false
     }
   }
 )
-let user = ref(IUser);
+let user = ref(ITraveller);
 let creditCards = ref(CreditCards);
 const userApiService = new TravellerService();
 const cardsApiService = new CreditCardsService();
@@ -166,14 +166,14 @@ formFields = [
     title: 'DNI',
     value: '',
     disable: true,
-    placeholder: 'User DNI',
+    placeholder: 'Traveller DNI',
     requerid: true,
     type: 'text',
     editable: false
   },
   {
     label: 'type',
-    title: 'User Type',
+    title: 'Traveller Type',
     value: '',
     disable: true,
     placeholder: 'Example user',

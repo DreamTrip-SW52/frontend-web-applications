@@ -6,7 +6,8 @@
           <Navbar />
         </div>
         <div class="profile">
-          <ProfileCard :id="id" />
+          <AgencyProfileCard :id="id" v-if="isAgency" />
+          <TravellerProfileCard :id="id" v-else />
         </div>
       </div>
     </template>
@@ -16,8 +17,14 @@
 
 <script setup>
 import Navbar from '@/components/Navbar.vue';
-import ProfileCard from '@/components/profile/ProfileCard.vue'
+import TravellerProfileCard from '@/components/profile/TravellerProfileCard.vue'
+import AgencyProfileCard from '@/components/profile/AgencyProfileCard.vue'
+import {useRoute} from "vue-router";
 const id = localStorage.getItem('currentUser');
+const router = useRoute();
+
+const isAgency = router.path.includes('agency');
+
 </script>
 
 <style scoped>

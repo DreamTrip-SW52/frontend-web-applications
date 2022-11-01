@@ -120,6 +120,11 @@ const routes = [
         component: Statistics,
         meta: { requiresAuth: false },
       },
+      {
+        path: "profile",
+        component: Profile,
+        meta: { requiresAuth: true }
+      }
     ],
   },
   {
