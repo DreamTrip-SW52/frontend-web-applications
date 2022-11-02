@@ -31,9 +31,6 @@ export class PackageService {
     }
 
     const encodedURL = encodeURI(url);
-    //const response = await fetch(url);
-    //const packagesData = await response.json();
-    //return packagesData;
     console.log(encodedURL);
     return http.get(encodedURL);
   }
@@ -50,6 +47,12 @@ export class PackageService {
   increaseViewsById(travelAgencyId, Nviews) {
     return http.patch(`/packages/${travelAgencyId}`, {
       views: Nviews,
+    });
+  }
+
+  increaseSalesById(travelAgencyId, Nsales) {
+    return http.patch(`/packages/${travelAgencyId}`, {
+      sales: Nsales,
     });
   }
 }

@@ -27,7 +27,7 @@
         Quantity of Purchased Tickets
       </template>
       <template #content>
-        <!-- {{ purchasedTickets }} -->
+        {{ purchasedTickets }}
       </template>
     </Card>
   </div>
@@ -46,7 +46,7 @@ const packageService = new PackageService();
 const reviewInfo = ref({});
 const stars = ref(0);
 const views = ref(0);
-// const purchasedTickets = ref(0);
+const purchasedTickets = ref(0);
 
 const router = useRouter();
 
@@ -69,6 +69,7 @@ onMounted(() => {
   });
   packageService.getPackageById(params.id).then((response) => {
     views.value = response.data.views;
+    purchasedTickets.value = response.data.sales;
   });
 });
 </script>
