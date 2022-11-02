@@ -7,7 +7,7 @@
       <div class="icons-container" v-if="isAgency">
         <!-- Rutas -->
         <!-- Create Package -->
-        <router-link to="/agency/mypackages">
+        <router-link to="/agency/publishservices">
           <i class="pi pi-home"></i>
         </router-link>
         <!-- My Packages -->
