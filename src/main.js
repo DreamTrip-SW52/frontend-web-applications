@@ -31,7 +31,6 @@ import "/node_modules/primeflex/primeflex.css";
 import "./assets/main.css";
 import {VueRestrictedInputDirective} from "vue-restricted-input";
 
-
 const app = createApp(App);
 
 app.use(createPinia());
@@ -166,7 +165,10 @@ app.component("Card", Card);
 app.component("ScrollTop", ScrollTop);
 app.component("ScrollPanel", ScrollPanel);
 
+
+
 app.directive('mask', VueRestrictedInputDirective);
 app.directive('tooltip', Tooltip);
+
 
 app.mount("#app");

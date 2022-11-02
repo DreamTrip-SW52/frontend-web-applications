@@ -1,15 +1,14 @@
 import http from "./common";
 export class CreditCardsService {
-  baseGet = "/credit-cards";
+  baseGet = "/credit_cards";
   getAll() {
     return http.get(this.baseGet);
   }
   getById(id) {
     return http.get(this.baseGet + `/${id}`);
   }
-
-  getByUserId(userId){
-    return http.get(this.baseGet + `?userId=${userId}`)
+  getByUser(userId, userType){
+    return http.get(this.baseGet + `?userId=${userId}&userType=${userType}`)
   }
 
   create(data) {

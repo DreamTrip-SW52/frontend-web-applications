@@ -14,6 +14,11 @@
         <router-link to="/agency/mypackages">
           <i class="pi pi-box"></i>
         </router-link>
+        <router-link to="/agency/profile">
+          <div class="avatar">
+            <img src="../assets/avatar.png" />
+          </div>
+        </router-link>
       </div>
       <div class="icons-container" v-else>
         <!-- Home -->
@@ -32,14 +37,14 @@
         <router-link to="/security">
           <i class="pi pi-shield"></i>
         </router-link>
-        <!-- Notification -->
+        <!-- Perfil -->
+        <router-link to="/profile">
+          <div class="avatar">
+            <img src="../assets/avatar.png" />
+          </div>
+        </router-link>
       </div>
-      <!-- Perfil -->
-      <router-link to="/profile">
-        <div class="avatar">
-          <img src="../assets/avatar.png" />
-        </div>
-      </router-link>
+
     </div>
   </div>
 </template>
