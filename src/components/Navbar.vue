@@ -7,12 +7,17 @@
       <div class="icons-container" v-if="isAgency">
         <!-- Rutas -->
         <!-- Create Package -->
-        <router-link to="/agency/mypackages">
+        <router-link to="/agency/publishservices">
           <i class="pi pi-home"></i>
         </router-link>
         <!-- My Packages -->
         <router-link to="/agency/mypackages">
           <i class="pi pi-box"></i>
+        </router-link>
+        <router-link to="/agency/profile">
+          <div class="avatar">
+            <img src="../assets/avatar.png" />
+          </div>
         </router-link>
       </div>
       <div class="icons-container" v-else>
@@ -32,23 +37,24 @@
         <router-link to="/security">
           <i class="pi pi-shield"></i>
         </router-link>
+        <!-- Perfil -->
+        <router-link to="/profile">
+          <div class="avatar">
+            <img src="../assets/avatar.png" />
+          </div>
+        </router-link>
       </div>
-      <!-- Perfil -->
-      <router-link to="/profile">
-        <div class="avatar">
-          <img src="../assets/avatar.png" />
-        </div>
-      </router-link>
+
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRoute } from "vue-router";
+import { useRoute } from 'vue-router';
 const router = useRoute();
 
 const isAgencyFn = () => {
-  return router.path.includes("agency");
+  return router.path.includes('agency');
 };
 
 const isAgency = isAgencyFn();

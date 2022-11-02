@@ -6,7 +6,7 @@ import Home from "../views/Home.vue";
 import PackageDetails from "../views/PackageDetails.vue";
 import CustomPackage from "../views/CustomPackage.vue";
 import EconomicFollow from "../views/EconomicFollow.vue";
-import SecurityInformation from "../views/SecurityInformation.vue"
+import SecurityInformation from "../views/SecurityInformation.vue";
 import AgencySignUp from "../views/AgencySignUp.vue";
 import AgencyLogin from "../views/AgencyLogin.vue";
 import TransportForm from "../components/custom_package/TransportForm.vue";
@@ -18,7 +18,10 @@ import MyPackages from "../views/MyPackages.vue";
 import Statistics from "../views/Statistics.vue";
 import Additionaldata from "../views/Additionaldata.vue";
 import TypeOfUser from "../views/TypeOfUser.vue";
-import Profile from "@/views/Profile.vue"
+import Profile from "../views/Profile.vue";
+import PayPackage from "../views/PayPackage.vue";
+import PublishServices from "../views/PublishServices.vue";
+
 const routes = [
   {
     path: "/",
@@ -93,6 +96,11 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+    path: "/paypackage/:id",
+    component: PayPackage,
+    meta: { requiresAuth: true },
+  },
+  {
     path: "/agency",
     children: [
       {
@@ -113,12 +121,22 @@ const routes = [
       {
         path: "mypackages",
         component: MyPackages,
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
       },
       {
         path: "statistics/:id",
         component: Statistics,
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "publishservices",
+        component: PublishServices,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "profile",
+        component: Profile,
+        meta: { requiresAuth: true },
       },
     ],
   },
@@ -130,8 +148,8 @@ const routes = [
   {
     path: "/profile",
     component: Profile,
-    meta: { requiresAuth: true }
-  }
+    meta: { requiresAuth: true },
+  },
 ];
 
 const router = createRouter({
