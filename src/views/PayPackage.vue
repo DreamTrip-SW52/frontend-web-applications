@@ -33,16 +33,16 @@
       {{ JSON.stringify(packageData.value) }}
     </div>
     <router-link to="/home">
-      <button class="pay-buttom">Pay</button>
+      <Button class="pay-buttom" @click="pay(packageData.sales)" label="Pay" />
     </router-link>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { PackageService } from '../services/Package.service';
-import PayMethods from '@/components/pay/PayMethods.vue';
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { PackageService } from "../services/Package.service";
+import PayMethods from "@/components/pay/PayMethods.vue";
 
 const router = useRouter();
 const packageData = ref({});
@@ -51,11 +51,22 @@ const packageService = new PackageService();
 // lifecyle hooks
 onMounted(() => {
   const params = router.currentRoute.value.params;
-
   packageService.getPackageById(params.id).then((response) => {
     packageData.value = response.data;
+    console.log(
+      "🚀 ~ file: PayPackage.vue ~ line 56 ~ packageService.getPackageById ~ packageData.value",
+      packageData.value
+    );
   });
 });
+
+const pay = (packageSales) => {
+  const params = router.currentRoute.value.params;
+  const sales = packageSales + 1;
+  packageService.increaseSalesById(params.id, sales).then((response) => {
+    console.log(response);
+  });
+};
 </script>
 
 <style scoped>
@@ -106,6 +117,7 @@ onMounted(() => {
   font-size: 18px;
   color: #ffffff;
   text-align: left;
+  padding-left: 2vw;
 }
 
 .total {

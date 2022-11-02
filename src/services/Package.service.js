@@ -1,9 +1,9 @@
-const BASE_URL = 'http://localhost:3000/packages?';
-import http from './common';
+const BASE_URL = "http://localhost:3000/packages?";
+import http from "./common";
 
 export class PackageService {
   getPackages() {
-    return http.get('/packages');
+    return http.get("/packages");
   }
 
   filterPackage(
@@ -31,9 +31,6 @@ export class PackageService {
     }
 
     const encodedURL = encodeURI(url);
-    //const response = await fetch(url);
-    //const packagesData = await response.json();
-    //return packagesData;
     console.log(encodedURL);
     return http.get(encodedURL);
   }
@@ -45,5 +42,17 @@ export class PackageService {
 
   getPackageByTravelAgencyId(travelAgencyId) {
     return http.get(`/packages/?travelAgencyId=${travelAgencyId}`);
+  }
+
+  increaseViewsById(travelAgencyId, Nviews) {
+    return http.patch(`/packages/${travelAgencyId}`, {
+      views: Nviews,
+    });
+  }
+
+  increaseSalesById(travelAgencyId, Nsales) {
+    return http.patch(`/packages/${travelAgencyId}`, {
+      sales: Nsales,
+    });
   }
 }

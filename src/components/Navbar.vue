@@ -14,10 +14,9 @@
         <router-link to="/agency/mypackages">
           <i class="pi pi-box"></i>
         </router-link>
+        <!-- Agency Profile -->
         <router-link to="/agency/profile">
-          <div class="avatar">
-            <img src="../assets/avatar.png" />
-          </div>
+          <i class="pi pi-user"></i>
         </router-link>
       </div>
       <div class="icons-container" v-else>
@@ -39,22 +38,19 @@
         </router-link>
         <!-- Perfil -->
         <router-link to="/profile">
-          <div class="avatar">
-            <img src="../assets/avatar.png" />
-          </div>
+          <i class="pi pi-user"></i>
         </router-link>
       </div>
-
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router';
+import { useRoute } from "vue-router";
 const router = useRoute();
 
 const isAgencyFn = () => {
-  return router.path.includes('agency');
+  return router.path.includes("agency");
 };
 
 const isAgency = isAgencyFn();
@@ -81,22 +77,12 @@ console.log(isAgency);
 
 .icons-container {
   display: flex;
+  align-items: center;
   flex: 1 1 auto;
   flex-direction: column;
-  /* justify-content: space-between; */
   height: 100%;
   margin-top: 76px;
   gap: 1.5rem;
-}
-
-.avatar {
-  width: 32px;
-  height: 32px;
-}
-
-.avatar > img {
-  max-width: 100%;
-  border-radius: 50%;
 }
 
 .logo {

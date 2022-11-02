@@ -3,6 +3,7 @@
     {
       "id": 1,
       "travelAgencyId": 1,
+      "views": 21,
       "transport": {
         "type": "flights",
         "id": 1
@@ -62,11 +63,13 @@
             "phone_number": "900 468 138"
           }
         ]
-      }
+      },
+      "sales": 6
     },
     {
       "id": 2,
       "travelAgencyId": 2,
+      "views": 1,
       "accommodationId": 2,
       "transport": {
         "type": "bus",
@@ -99,7 +102,8 @@
             "phone_number": "(01) 7260130"
           }
         ]
-      }
+      },
+      "sales": 1
     }
   ],
   "travellers": [
@@ -109,7 +113,7 @@
       "name": "Patrick",
       "lastname": "Perez",
       "phone": "987312423",
-      "photo": "",
+      "photo": "https://i.postimg.cc/tTFyyJjz/user.png",
       "dni": "4124124",
       "id": 1
     },
@@ -119,7 +123,7 @@
       "name": "Rodrigo",
       "lastname": "Rodriguez",
       "phone": "933312323",
-      "photo": "",
+      "photo": "https: //st2.depositphotos.com/2959013/12445/i/600/depositphotos_124459794-stock-photo-man-driving-a-truck.jpg",
       "dni": "1234124",
       "id": 2
     },
@@ -129,7 +133,7 @@
       "name": "Jose",
       "lastname": "Rodriguez",
       "phone": "987312323",
-      "photo": "",
+      "photo": "https://i.postimg.cc/jdT1LDZn/client.png",
       "dni": "3123124",
       "id": 3
     },
@@ -617,6 +621,14 @@
       "expirationDate": "11/1111",
       "securityCode": "111",
       "userType": "agency"
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "cardNumber": "1231 2312 3123 1231",
+      "expirationDate": "12/2025",
+      "securityCode": "123",
+      "userType": "traveller"
     }
   ]
 }

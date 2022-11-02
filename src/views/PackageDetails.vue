@@ -298,8 +298,6 @@ const writeReview = () => {
   review.comment = comment.value;
   review.travellerId = localStorage.getItem('currentUser');
 
-  console.log(review);
-
   reviewService.addReview(review);
   closeDialogWriteReview();
 };
@@ -318,6 +316,14 @@ onMounted(() => {
 
   packageService.getPackageById(params.id).then((response) => {
     packageData.value = response.data;
+    const views = packageData.value.views + 1;
+    console.log(
+      "🚀 ~ file: PackageDetails.vue ~ line 316 ~ packageService.getPackageById ~ views",
+      views
+    );
+    packageService.increaseViewsById(params.id, views).then((response) => {
+      console.log(response);
+    });
   });
   imageService.getImageByPackageId(params.id).then((response) => {
     imageData.value = response.data;
