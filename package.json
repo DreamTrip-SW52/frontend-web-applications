@@ -16,6 +16,7 @@
     "primeicons": "^6.0.1",
     "primevue": "^3.17.0",
     "vue": "^3.2.38",
+    "vue-restricted-input": "^1.0.2",
     "vue-router": "^4.1.5"
   },
   "devDependencies": {

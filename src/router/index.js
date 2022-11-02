@@ -19,6 +19,7 @@ import Statistics from "../views/Statistics.vue";
 import Additionaldata from "../views/Additionaldata.vue";
 import TypeOfUser from "../views/TypeOfUser.vue";
 import Profile from "../views/Profile.vue";
+import PayPackage from "../views/PayPackage.vue";
 import PublishServices from "../views/PublishServices.vue";
 
 const routes = [
@@ -95,6 +96,11 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+    path: "/paypackage/:id",
+    component: PayPackage,
+    meta: { requiresAuth: true },
+  },
+  {
     path: "/agency",
     children: [
       {
@@ -125,6 +131,11 @@ const routes = [
       {
         path: "publishservices",
         component: PublishServices,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "profile",
+        component: Profile,
         meta: { requiresAuth: true },
       },
     ],
