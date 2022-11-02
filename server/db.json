@@ -3,7 +3,7 @@
     {
       "id": 1,
       "travelAgencyId": 1,
-      "views": 28,
+      "views": 36,
       "transport": {
         "type": "flights",
         "id": 1
@@ -64,7 +64,7 @@
           }
         ]
       },
-      "sales": 7
+      "sales": 8
     },
     {
       "id": 2,
@@ -224,14 +224,6 @@
       "comment": "Good travel with an interesting tour",
       "travellerId": "1",
       "id": 5
-    },
-    {
-      "packageId": 1,
-      "date": "1/10/2022",
-      "rating": 2,
-      "comment": "Bad package",
-      "travellerId": "7",
-      "id": 6
     }
   ],
   "accommodations": [
@@ -300,11 +292,6 @@
       "travelerId": 1,
       "new_bills": [
         {
-          "name": "Hotel",
-          "amount": "200",
-          "id": 1
-        },
-        {
           "name": "Car",
           "amount": "50",
           "id": 3
@@ -318,6 +305,11 @@
           "name": "More Food",
           "amount": "100",
           "id": 5
+        },
+        {
+          "name": "Hotel",
+          "amount": "204",
+          "id": 4
         }
       ]
     },
