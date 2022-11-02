@@ -3,7 +3,7 @@
     {
       "id": 1,
       "travelAgencyId": 1,
-      "views": 21,
+      "views": 28,
       "transport": {
         "type": "flights",
         "id": 1
@@ -64,7 +64,7 @@
           }
         ]
       },
-      "sales": 6
+      "sales": 7
     },
     {
       "id": 2,
@@ -224,6 +224,14 @@
       "comment": "Good travel with an interesting tour",
       "travellerId": "1",
       "id": 5
+    },
+    {
+      "packageId": 1,
+      "date": "1/10/2022",
+      "rating": 2,
+      "comment": "Bad package",
+      "travellerId": "7",
+      "id": 6
     }
   ],
   "accommodations": [
@@ -297,11 +305,6 @@
           "id": 1
         },
         {
-          "name": "Food",
-          "amount": "120",
-          "id": 2
-        },
-        {
           "name": "Car",
           "amount": "50",
           "id": 3
@@ -310,6 +313,11 @@
           "name": "Tour",
           "amount": "150",
           "id": 4
+        },
+        {
+          "name": "More Food",
+          "amount": "100",
+          "id": 5
         }
       ]
     },
@@ -628,6 +636,14 @@
       "cardNumber": "1231 2312 3123 1231",
       "expirationDate": "12/2025",
       "securityCode": "123",
+      "userType": "traveller"
+    },
+    {
+      "id": 5,
+      "userId": 7,
+      "cardNumber": "1232 1312 3123 1231",
+      "expirationDate": "12/2025",
+      "securityCode": "232",
       "userType": "traveller"
     }
   ]

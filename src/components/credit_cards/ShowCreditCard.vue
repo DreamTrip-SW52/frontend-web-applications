@@ -9,37 +9,41 @@
       <span>{{ showCard.expirationDate }}</span>
     </div>
     <div class="flex gap-2">
-      <span>CCC code: </span>
+      <span>CVV code: </span>
       <span>{{ transformCvv() }}</span>
     </div>
   </div>
 </template>
 
 <script setup>
-import {CreditCard, CreditCardConstructor} from "@/interfaces/CreditCard";
+import { CreditCard, CreditCardConstructor } from "@/interfaces/CreditCard";
 const props = defineProps({
   creditCard: {
     type: CreditCardConstructor,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 let showCard = CreditCard;
 showCard = props.creditCard;
 function transformNumber() {
-  let mask = ' **** **** **';
-  return  showCard.cardNumber.substring(0, 4) + mask + showCard.cardNumber.substring(showCard.cardNumber.length - 2, showCard.cardNumber.length);
+  let mask = " **** **** **";
+  return (
+    showCard.cardNumber.substring(0, 4) +
+    mask +
+    showCard.cardNumber.substring(
+      showCard.cardNumber.length - 2,
+      showCard.cardNumber.length
+    )
+  );
 }
 
-function transformCvv(){
-  return showCard.securityCode[0] + '**';
+function transformCvv() {
+  return showCard.securityCode[0] + "**";
 }
-
 </script>
 
 <style scoped>
-.grid{
+.grid {
   display: grid;
 }
-
-
 </style>
