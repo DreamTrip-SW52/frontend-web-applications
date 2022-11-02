@@ -50,11 +50,11 @@
 </template>
 
 <script setup>
-import { useRoute } from "vue-router";
+import { useRoute } from 'vue-router';
 const router = useRoute();
 
 const isAgencyFn = () => {
-  return router.path.includes("agency");
+  return router.path.includes('agency');
 };
 
 const isAgency = isAgencyFn();

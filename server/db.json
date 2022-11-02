@@ -152,6 +152,16 @@
       "photo": "",
       "dni": "312412",
       "id": 5
+    },
+    {
+      "email": "cokijlmf@gmail.com",
+      "password": "pizza",
+      "name": "Jorge",
+      "lastname": "Mercado",
+      "phone": "999888777",
+      "dni": "84759988",
+      "photo": "",
+      "id": 6
     }
   ],
   "travelAgency": [
@@ -291,6 +301,11 @@
           "name": "Car",
           "amount": "50",
           "id": 3
+        },
+        {
+          "name": "Tour",
+          "amount": "150",
+          "id": 4
         }
       ]
     },
@@ -358,8 +373,8 @@
       "typeOfTrip": "Round trip",
       "passengers": 200,
       "class": "express",
-      "departDate": "20/10/22",
-      "returnDate": "23/10/22",
+      "departDate": "20/10/23",
+      "returnDate": "23/10/23",
       "details": [
         {
           "type": "go",
@@ -397,8 +412,8 @@
       "typeOfTrip": "One way",
       "passengers": 40,
       "class": "vip",
-      "departDate": "24/10/22",
-      "returnDate": "30/10/22",
+      "departDate": "24/10/23",
+      "returnDate": "30/10/23",
       "details": [
         {
           "type": "go",
@@ -425,8 +440,8 @@
       "from": "Lima",
       "to": "Cuzco",
       "class": "express",
-      "departDate": "12/03/22",
-      "returnDate": "14/03/22",
+      "departDate": "12/03/23",
+      "returnDate": "14/03/23",
       "locationId": 8
     }
   ],
@@ -437,8 +452,8 @@
       "typeOfTrip": "Round trip",
       "passengers": 30,
       "class": "express",
-      "departDate": "12/03/22",
-      "returnDate": "14/03/22",
+      "departDate": "12/03/23",
+      "returnDate": "14/03/23",
       "details": [
         {
           "type": "go",
