@@ -3,6 +3,7 @@
 
   <main class="grid w-full ml-4 text-white" v-if="packageData !== {}">
     <section id="center" class="col-8">
+      <router-link to="/home"><h2 class="return-home">&larr;</h2> </router-link>
       <header>
         <span class="primary text-lg font-medium">DreamTrip</span> /
         <span class="text-lg font-medium">{{ packageData.name }}</span>
@@ -182,16 +183,16 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
-import Accommodations from "../components/package_details/Accommodations.vue";
-import Transport from "../components/package_details/Transport.vue";
-import Tour from "../components/package_details/Tour.vue";
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import Accommodations from '../components/package_details/Accommodations.vue';
+import Transport from '../components/package_details/Transport.vue';
+import Tour from '../components/package_details/Tour.vue';
 
 // Services
-import { PackageService } from "../services/Package.service";
-import { ReviewService } from "../services/Review.service";
-import { ImageService } from "../services/Image.service";
+import { PackageService } from '../services/Package.service';
+import { ReviewService } from '../services/Review.service';
+import { ImageService } from '../services/Image.service';
 
 /** Static **/
 
@@ -207,31 +208,31 @@ const imageData = ref({});
 // Breadcrumb
 const items = [
   {
-    label: "ACCOMMODATIONS",
-    onClick: () => (breadcrumbView.value = "accomodations"),
+    label: 'ACCOMMODATIONS',
+    onClick: () => (breadcrumbView.value = 'accomodations'),
   },
-  { label: "TRANSPORTS", onClick: () => (breadcrumbView.value = "transports") },
-  { label: "TOURS", onClick: () => (breadcrumbView.value = "tours") },
+  { label: 'TRANSPORTS', onClick: () => (breadcrumbView.value = 'transports') },
+  { label: 'TOURS', onClick: () => (breadcrumbView.value = 'tours') },
 ];
 
 /** States **/
 // accomodations | flights | tours | ...
-const breadcrumbView = ref("accomodations");
+const breadcrumbView = ref('accomodations');
 
 // Carousel
 const responsiveOptions = ref([
   {
-    breakpoint: "1024px",
+    breakpoint: '1024px',
     numVisible: 3,
     numScroll: 3,
   },
   {
-    breakpoint: "600px",
+    breakpoint: '600px',
     numVisible: 2,
     numScroll: 2,
   },
   {
-    breakpoint: "480px",
+    breakpoint: '480px',
     numVisible: 1,
     numScroll: 1,
   },
@@ -269,16 +270,16 @@ const closeDialogWriteReview = () => {
   displayDialogWriteReview.value = false;
 };
 
-const comment = ref("");
+const comment = ref('');
 const rating = ref(0);
 
 const writeReview = () => {
   const currentDate = new Date();
   const strDate =
     currentDate.getDate() +
-    "/" +
+    '/' +
     currentDate.getMonth() +
-    "/" +
+    '/' +
     currentDate.getFullYear();
   const params = router.currentRoute.value.params;
 
@@ -294,7 +295,7 @@ const writeReview = () => {
   review.date = strDate;
   review.rating = rating.value;
   review.comment = comment.value;
-  review.travellerId = localStorage.getItem("currentUser");
+  review.travellerId = localStorage.getItem('currentUser');
 
   reviewService.addReview(review);
   closeDialogWriteReview();
@@ -316,7 +317,7 @@ onMounted(() => {
     packageData.value = response.data;
     const views = packageData.value.views + 1;
     console.log(
-      "🚀 ~ file: PackageDetails.vue ~ line 316 ~ packageService.getPackageById ~ views",
+      '🚀 ~ file: PackageDetails.vue ~ line 316 ~ packageService.getPackageById ~ views',
       views
     );
     packageService.increaseViewsById(params.id, views).then((response) => {
@@ -334,6 +335,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.return-home {
+  color: #fc4747;
+}
+
 header {
   background: #5a698f;
   padding: 14px 0 14px 48px;
@@ -363,7 +368,7 @@ header {
 }
 
 .p-breadcrumb-chevron ul li.p-breadcrumb-chevron {
-  color: "#fc4747" !important;
+  color: '#fc4747' !important;
 }
 
 .image-container {
