@@ -1,4 +1,4 @@
-import {ArrayConstructor, ObjectConstructor} from "./GenericConstructors";
+import {IArrayConstructor, IObjectConstructor} from "./GenericConstructors";
 
 interface IRentCar {
   id: number,
@@ -12,8 +12,8 @@ interface IRentCar {
   dropOff: string
 }
 
-interface RentCarsConstructor extends ArrayConstructor<IRentCar>{}
-interface RentCarConstructor extends ObjectConstructor<IRentCar>{}
+interface RentCarsConstructor extends IArrayConstructor<IRentCar>{}
+interface RentCarConstructor extends IObjectConstructor<IRentCar>{}
 
 export var RentCar: IRentCar;
 export var RentCars: IRentCar[];

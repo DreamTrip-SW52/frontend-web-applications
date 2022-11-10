@@ -230,19 +230,28 @@
       </div>
       <div class="column">
         <div class="accommodation gap-2">
-          <h2>Accommodation</h2>
+          <h2>{{ACCOMMODATION}}</h2>
           <div v-for="field of accommodationFields" class="flex gap-4 justify-content-between align-items-center">
             <label  :for="field.label">{{ field.title }}</label>
             <InputText :id="field.label" v-if="field.type !== 'calendar'"
                        :required="field.requerid" v-model="field.value"
                        :type="field.type" v-mask="field.mask"  />
-            <Calendar :id="field.label" v-else input-id="single"
-                      v-model="field.value" selection-mode="single"
-                      :manual-input="false" :min-date="TODAY_DATE" />
+            <div v-else>
+              <Calendar v-if="!checkField(field)" :id="field.label"
+                        v-model="field.value" selection-mode="single"
+                        :min-date="TODAY_DATE" :manual-input="false"
+                        @date-select="checkInSelect" />
+
+              <Calendar v-else-if="checkField(field) && selectCheckIn" :id="field.label"
+                        v-model="field.value" selection-mode="single" :min-date="nextDate"
+                        :disabled-dates="[nextDate]" :manual-input="false" />
+
+              <InputText v-else disabled/>
+            </div>
           </div>
         </div>
         <div class="tour gap-2">
-          <h2>Tour</h2>
+          <h2>{{ TOUR }}</h2>
           <div v-for="field of tourFields" class="flex gap-4 justify-content-between align-items-center">
             <label :for="field.label">{{ field.title }}</label>
             <InputText :id="field.label" :required="field.requerid" v-model="field.value" :type="field.type" v-mask="field.mask"  />
@@ -251,7 +260,7 @@
       </div>
       <div class="column">
         <div class="rent-car gap-2">
-          <h2>Rent car</h2>
+          <h2>{{ RENT_CAR }}</h2>
           <div v-for="field of rentCarFields" class="flex gap-4 justify-content-between align-items-center">
             <label :for="field.label">{{ field.title }}</label>
             <InputText v-mask="field.mask" v-if="field.type !== 'calendar'" :id="field.label" :required="field.requerid" v-model="field.value" :type="field.type"  />
@@ -259,10 +268,14 @@
           </div>
         </div>
       </div>
-
     </div>
-    <div class="complete-width text-center">
-      <Button label="Submit" />
+    <div class="complete-width text-center actions">
+      <div class="errors" >
+        <div class="accommodation-error" v-for="error of errors">
+          <small> {{ error.message}} on {{ error.on }}</small>
+        </div>
+      </div>
+      <Button @click="submit" label="Submit" />
     </div>
   </div>
 </template>
@@ -271,18 +284,35 @@
 import Navbar from "../components/Navbar.vue";
 import { ref } from "vue";
 import {FormFields} from "@/interfaces/FormField";
+import {Accommodation} from "@/interfaces/Accomodation";
+import {Tour} from "@/interfaces/Tour";
+import {RentCar} from "@/interfaces/RentCar";
+import moment from "moment";
 
-
-//for accommodation information
+//const's
 const PRICE_MASK = ref('{{0000}}')
 const TEXT_MASK = allCharacterMask(600);
 const CAPACITY_MASK = '{{000}}'
-
 const TODAY_DATE = new Date();
+const MINIMUM_CHECK_DAYS = 1;
+const ACCOMMODATION = 'Accommodation';
+const TOUR = 'Tour';
+const RENT_CAR = 'Rent Car';
+
+//variables
+let accommodation = Accommodation;
+let tour = Tour;
+let rentCar = RentCar;
+let errors = ref([]);
+let selectCheckIn = ref(false)
+let nextDate = ref(TODAY_DATE);
+
+//for accommodation information
 let accommodationFields = ref(FormFields);
+const accommodationLabel = 'accommodation-'
 accommodationFields.value = [
   {
-    label: 'details',
+    label: accommodationLabel + 'details',
     title: 'Details',
     value: '',
     requerid: true,
@@ -291,7 +321,7 @@ accommodationFields.value = [
     mask: TEXT_MASK
   },
   {
-    label: 'check-in',
+    label: accommodationLabel + 'check-in',
     title: 'Check in',
     value: '',
     requerid: true,
@@ -299,7 +329,7 @@ accommodationFields.value = [
     type: 'calendar'
   },
   {
-    label: 'check-out',
+    label: accommodationLabel + 'check-out',
     title: 'Check out',
     value: '',
     requerid: true,
@@ -307,7 +337,7 @@ accommodationFields.value = [
     type: 'calendar'
   },
   {
-    label: 'location',
+    label: accommodationLabel + 'location',
     title: 'Location',
     value: '',
     requerid: true,
@@ -316,7 +346,7 @@ accommodationFields.value = [
     mask: TEXT_MASK
   },
   {
-    label: 'price',
+    label: accommodationLabel + 'price',
     title: 'Price',
     value: '',
     requerid: true,
@@ -335,11 +365,21 @@ function allCharacterMask(size) {
   return mask;
 }
 
+function checkInSelect(date) {
+  selectCheckIn.value = true;
+  nextDate.value = date;
+}
+
+function checkField(field) {
+  return field.label === accommodationLabel + 'check-out';
+}
+
 //for tour information
 let tourFields = ref(FormFields);
+const tourLabel = 'tour-';
 tourFields.value = [
   {
-    label: 'details',
+    label: tourLabel + 'details',
     title: 'Details',
     value: '',
     requerid: true,
@@ -348,7 +388,7 @@ tourFields.value = [
     mask: TEXT_MASK
   },
   {
-    label: 'location',
+    label: tourLabel + 'location',
     title: 'Location',
     value: '',
     requerid: true,
@@ -357,7 +397,7 @@ tourFields.value = [
     mask: TEXT_MASK
   },
   {
-    label: 'meeting-point',
+    label: tourLabel + 'meeting-point',
     title: 'Meeting point',
     value: '',
     requerid: true,
@@ -366,7 +406,7 @@ tourFields.value = [
     mask: TEXT_MASK
   },
   {
-    label: 'price',
+    label: tourLabel + 'price',
     title: 'Price',
     value: '',
     requerid: true,
@@ -378,10 +418,10 @@ tourFields.value = [
 
 //for rent car information
 let rentCarFields = ref(FormFields);
-
+const rentCarLabel = 'rent-car-';
 rentCarFields.value = [
   {
-    label: 'name',
+    label: rentCarLabel + 'name',
     title: 'Name',
     value: '',
     requerid: true,
@@ -390,7 +430,7 @@ rentCarFields.value = [
     mask: TEXT_MASK
   },
   {
-    label: 'brand',
+    label: rentCarLabel + 'brand',
     title: 'Brand',
     value: '',
     requerid: true,
@@ -399,7 +439,7 @@ rentCarFields.value = [
     mask: TEXT_MASK
   },
   {
-    label: 'address',
+    label: rentCarLabel + 'address',
     title: 'Address',
     value: '',
     requerid: true,
@@ -408,16 +448,16 @@ rentCarFields.value = [
     mask: TEXT_MASK
   },
   {
-    label: 'capacity',
+    label: rentCarLabel + 'capacity',
     title: 'Capacity',
-    value: '',
+    value: '1',
     requerid: true,
     placeholder: '',
     type: 'text',
     mask: CAPACITY_MASK
   },
   {
-    label: 'photo',
+    label: rentCarLabel + 'photo',
     title: 'Photo',
     value: '',
     requerid: true,
@@ -426,7 +466,7 @@ rentCarFields.value = [
     mask: TEXT_MASK
   },
   {
-    label: 'price',
+    label: rentCarLabel + 'price',
     title: 'Price',
     value: '',
     requerid: true,
@@ -435,7 +475,7 @@ rentCarFields.value = [
     mask: PRICE_MASK
   },
   {
-    label: 'pick-up',
+    label: rentCarLabel + 'pick-up',
     title: 'Pick up hour',
     value: '',
     requerid: true,
@@ -443,7 +483,7 @@ rentCarFields.value = [
     type: 'calendar'
   },
   {
-    label: 'drop-off',
+    label: rentCarLabel + 'drop-off',
     title: 'Drop off hour',
     value: '',
     requerid: true,
@@ -452,9 +492,119 @@ rentCarFields.value = [
   }
 ]
 
-//mask validation function
-function putNumberMask() {
+//util functions
+function formatDate(format, date) {
+  return moment(String(date)).format(format);
+}
 
+function firstLetterUpper(string) {
+  let value = string;
+  if(value.length > 1)
+    value = value[0].toUpperCase();
+  value += string.substring(1, string.length);
+  return value;
+}
+
+function fromKebabToLowerCamelCase(kebabValue) {
+  let separator = String(kebabValue).split('-');
+  let property = '';
+  for(let i = 0; i < separator.length; ++i){
+    if(i > 0)
+      property += firstLetterUpper(separator[i]);
+    else property += separator[i];
+  }
+  return property;
+}
+
+function onKeyDown() {
+
+}
+
+//functions for set
+function setStorableObject(formFields, separatorLabel, hasDateValues, formatDateValue) {
+  let separator = [];
+  let property = '';
+  let object = {};
+  for(let field of formFields){
+    separator = field.label.split(separatorLabel);
+    property = separator.pop();
+
+    if(hasDateValues && field.type === 'calendar' && field.value !== ''){
+      if(!formatDateValue)
+        formatDateValue = 'DD/MM/YYYY'
+      field.value = formatDate(formatDateValue, field.value);
+    }
+
+
+    if(property.includes('-'))
+      property = fromKebabToLowerCamelCase(property);
+
+    object[property] = field.value;
+  }
+
+  return object;
+}
+
+function setStorableAccommodation() {
+  accommodation = setStorableObject(accommodationFields.value, accommodationLabel, true);
+  console.log('accommodation', accommodation);
+}
+
+function setStorableTour() {
+  tour = setStorableObject(tourFields.value, tourLabel);
+  console.log('tour', tour);
+}
+
+function setStorableRentCar() {
+  rentCar = setStorableObject(rentCarFields.value, rentCarLabel, true, 'h:mm A');
+  console.log('rent car', rentCar);
+}
+
+//functions for validate data
+function validateFillFields(formFields, on) {
+  for(let field of formFields){
+    if(field.value === ''){
+      errors.value.push({type: 'not-fill', message: 'Please, fill all fields', on: on})
+      return
+    }
+  }
+}
+
+function validateAccommodationCheckDates() {
+  let checkIn = accommodationFields.value[1].value;
+  let checkOut = accommodationFields.value[2].value;
+  if(moment(checkIn).isSameOrAfter(checkOut))
+    errors.value.push({ type: 'value-error', message: 'Error with dates', on: ACCOMMODATION })
+}
+
+function validateRentCarHours() {
+  let pickUp = rentCarFields.value[6].value;
+  let dropOff = rentCarFields.value[7].value;
+  if(pickUp !== '' && dropOff !== '') {
+    if(moment(pickUp).isSameOrAfter(dropOff))
+      errors.value.push({ type: 'value-error', message: 'Error with hors', on: RENT_CAR })
+  }
+}
+
+//submit button
+function submit() {
+  //reset errors
+  errors.value = [];
+  //start validate
+  validateFillFields(accommodationFields.value, ACCOMMODATION);
+  validateFillFields(tourFields.value, TOUR)
+  validateFillFields(rentCarFields.value, RENT_CAR);
+
+  validateAccommodationCheckDates();
+  validateRentCarHours();
+
+  //validate errors
+  if(errors.value.length !== 0) return
+
+  //start set objects
+  setStorableAccommodation();
+  setStorableTour();
+  setStorableRentCar();
 }
 
 //
@@ -617,10 +767,14 @@ const save = () => {};
 </script>
 
 <style scoped>
-.tour, .accommodation, .rent-car {
+.tour, .accommodation, .rent-car  {
   display: grid;
   grid-template-columns: 1fr;
 }
+.errors {
+  margin-bottom: 1rem;
+}
+
 input {
   background: #fff;
   border-radius: 6px;
@@ -635,5 +789,9 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+.errors {
+  color: red;
 }
 </style>

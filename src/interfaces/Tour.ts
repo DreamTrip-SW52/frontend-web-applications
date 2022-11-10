@@ -1,16 +1,16 @@
-import {ArrayConstructor, ObjectConstructor} from "./GenericConstructors";
+import {IArrayConstructor, IObjectConstructor} from "./GenericConstructors";
 
 interface ITour {
   id: number,
   details: string,
   location: string,
-  meeting_point: string,
+  meetingPoint: string,
   price: number,
-  package_id: number
+  packageId: number
 }
 
-interface ToursConstructor extends ArrayConstructor<ITour>{}
-interface TourConstructor extends ObjectConstructor<ITour>{}
+interface ToursConstructor extends IArrayConstructor<ITour>{}
+interface TourConstructor extends IObjectConstructor<ITour>{}
 
 export var Tour: ITour;
 export var Tours: ITour[];
