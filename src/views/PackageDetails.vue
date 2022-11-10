@@ -297,7 +297,21 @@ const writeReview = () => {
   review.comment = comment.value;
   review.travellerId = localStorage.getItem('currentUser');
 
-  reviewService.addReview(review);
+  reviewService.getReviewTravellerByPackageId(params.id).then((response) => {
+    let reviewBypackageID = response.data;
+    let findID = false;
+    for (let i = 0; i < response.data.length; i++) {
+      if (response.data[i].travellerId == localStorage.getItem('currentUser')) {
+        findID = true;
+      }
+    }
+    if (findID == true) {
+      alert('error');
+    } else {
+      reviewService.addReview(review);
+    }
+  });
+
   closeDialogWriteReview();
 };
 

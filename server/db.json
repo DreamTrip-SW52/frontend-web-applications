@@ -3,7 +3,7 @@
     {
       "id": 1,
       "travelAgencyId": 1,
-      "views": 36,
+      "views": 39,
       "transport": {
         "type": "flights",
         "id": 1
@@ -69,7 +69,7 @@
     {
       "id": 2,
       "travelAgencyId": 2,
-      "views": 1,
+      "views": 4,
       "accommodationId": 2,
       "transport": {
         "type": "bus",
@@ -224,6 +224,22 @@
       "comment": "Good travel with an interesting tour",
       "travellerId": "1",
       "id": 5
+    },
+    {
+      "packageId": 1,
+      "date": "10/10/2022",
+      "rating": 5,
+      "comment": "This is a travel package has everything promised and the services are good",
+      "travellerId": "6",
+      "id": 6
+    },
+    {
+      "packageId": 2,
+      "date": "10/10/2022",
+      "rating": 5,
+      "comment": "Good package",
+      "travellerId": "6",
+      "id": 7
     }
   ],
   "accommodations": [
