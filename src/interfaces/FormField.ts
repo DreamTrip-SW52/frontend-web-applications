@@ -5,7 +5,8 @@ export interface IFormField {
     requerid: boolean,
     placeholder: string,
     disable?: boolean,
-    type: string
+    type: string,
+    mask?: string
 }
 
 interface FormFieldConstructor {
