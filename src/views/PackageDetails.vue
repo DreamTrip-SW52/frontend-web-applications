@@ -3,7 +3,9 @@
 
   <main class="grid w-full ml-4 text-white" v-if="packageData !== {}">
     <section id="center" class="col-8">
-      <router-link to="/home"><h2 class="return-home">&larr;</h2> </router-link>
+      <router-link to="/home"
+        ><i class="pi pi-arrow-left icons"></i>
+      </router-link>
       <header>
         <span class="primary text-lg font-medium">DreamTrip</span> /
         <span class="text-lg font-medium">{{ packageData.name }}</span>
