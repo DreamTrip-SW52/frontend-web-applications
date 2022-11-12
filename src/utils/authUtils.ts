@@ -1,88 +1,46 @@
 import { IAuthLoginErrors, IAuthRegisterErrors, IAuthAdditionalDataRegisterErrors, IAuthAgencyRegisterErrors } from "../interfaces/Auth";
 
 function validateEmail(email: string) {
-	const re = /\S+@\S+\.\S+/;
+	const re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 	return re.test(email);
 }
 
 function validatePassword(password: string) {
-	const re = /\S+@\S+\.\S+/;
-	return re.test(password);
+	return true;
 }
 
 export function getAuthLoginErrors(
 	email: string,
 	password: string
 ): IAuthLoginErrors {
-	if (email === "" && password === "") {
-		return {
-			email: {
-				error: email === "" ? true : false,
-				message: email === "" ? "Email is required" : "",
-			},
-			password: {
-				error: password === "" ? true : false,
-				message: password === "" ? "Password is required" : "",
-			},
-		};
-	} else if (email === "") {
-		return {
-			email: {
-				error: true,
-				message: "Email is required",
-			},
-			password: {
-				error: false,
-				message: "",
-			},
-		};
-	} else if (password === "") {
-		return {
-			email: {
-				error: false,
-				message: "",
-			},
-			password: {
-				error: true,
-				message: "Password is required",
-			},
-		};
-	} else {
-		if (!validateEmail(email)) {
-			return {
-				email: {
-					error: true,
-					message: "Invalid email",
-				},
-				password: {
-					error: false,
-					message: "",
-				}
-			};
-		}
-		else if (!validatePassword(password)) {
-			return {
-				email: {
-					error: false,
-					message: "Invalid email",
-				},
-				password: {
-					error: true,
-					message: "Invalid password",
-				}
-			};
-		}
-		return {
-			email: {
-				error: false,
-				message: "",
-			},
-			password: {
-				error: false,
-				message: "",
-			},
-		};
+	var obj = {
+		email: {
+			error: false,
+			message: "",
+		},
+		password: {
+			error: false,
+			message: "",
+		},
+	};
+
+	if (email === "") {
+		obj['email'].message = "Email is requested."
+		obj['email'].error = true
+	} else if (!validateEmail(email)){
+		obj['email'].message = "Email is incorrect."
+		obj['email'].error = true
 	}
+
+	if (password === "") {
+		obj['password'].message = "Password is requested."
+		obj['password'].error = true
+	} else if (!validatePassword(password)){
+	    obj['password'].message = "Password is incorrect."
+	    obj['password'].error = true
+    }
+
+	return obj;
 }
 
 export function getAuthRegisterErrors(

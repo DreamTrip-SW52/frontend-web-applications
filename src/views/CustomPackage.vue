@@ -39,6 +39,10 @@ const items = ref([
     label: 'Rent Car',
     to: 'rent',
   },
+  {
+    label: 'BuyPackage',
+    to: '/buypackage/:id',
+  },
 ]);
 
 const formObject = ref({});

@@ -1,9 +1,9 @@
-const BASE_URL = "http://localhost:3000/packages?";
-import http from "./common";
+const BASE_URL = 'http://localhost:3000/packages?';
+import http from './common';
 
 export class PackageService {
   getPackages() {
-    return http.get("/packages");
+    return http.get('/packages');
   }
 
   filterPackage(

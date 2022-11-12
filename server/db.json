@@ -3,7 +3,7 @@
     {
       "id": 1,
       "travelAgencyId": 1,
-      "views": 39,
+      "views": 84,
       "transport": {
         "type": "flights",
         "id": 1
@@ -69,7 +69,7 @@
     {
       "id": 2,
       "travelAgencyId": 2,
-      "views": 4,
+      "views": 5,
       "accommodationId": 2,
       "transport": {
         "type": "bus",
@@ -166,6 +166,16 @@
       "dni": "84759988",
       "photo": "",
       "id": 6
+    },
+    {
+      "email": "cokijlmf@outlook.com",
+      "password": "victor",
+      "name": "Jose",
+      "lastname": "Fassioli",
+      "phone": "915789320",
+      "dni": "45786233",
+      "photo": "",
+      "id": 7
     }
   ],
   "travelAgency": [
@@ -226,20 +236,20 @@
       "id": 5
     },
     {
-      "packageId": 1,
-      "date": "10/10/2022",
-      "rating": 5,
-      "comment": "This is a travel package has everything promised and the services are good",
-      "travellerId": "6",
-      "id": 6
-    },
-    {
       "packageId": 2,
       "date": "10/10/2022",
       "rating": 5,
       "comment": "Good package",
       "travellerId": "6",
       "id": 7
+    },
+    {
+      "packageId": 1,
+      "date": "12/10/2022",
+      "rating": 5,
+      "comment": "Good package",
+      "travellerId": "6",
+      "id": 8
     }
   ],
   "accommodations": [
