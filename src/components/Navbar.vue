@@ -18,6 +18,9 @@
         <router-link to="/agency/profile">
           <i class="pi pi-user"></i>
         </router-link>
+        <router-link to="/">
+          <i class="pi pi-power-off"></i>
+        </router-link>
       </div>
       <div class="icons-container" v-else>
         <!-- Home -->
@@ -40,17 +43,21 @@
         <router-link to="/profile">
           <i class="pi pi-user"></i>
         </router-link>
+        <!-- Sing out -->
+        <router-link to="/">
+          <i class="pi pi-power-off"></i>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRoute } from "vue-router";
+import { useRoute } from 'vue-router';
 const router = useRoute();
 
 const isAgencyFn = () => {
-  return router.path.includes("agency");
+  return router.path.includes('agency');
 };
 
 const isAgency = isAgencyFn();

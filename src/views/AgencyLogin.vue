@@ -45,18 +45,17 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { getAuthLoginErrors } from "../utils/authUtils";
-import { TravelAgencyService } from "../services/TravelAgency.service";
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { getAuthLoginErrors } from '../utils/authUtils';
+import { TravelAgencyService } from '../services/TravelAgency.service';
 
 const travelAgencyService = new TravelAgencyService();
 const router = useRouter();
 
 const handleLogin = async (e) => {
   e.preventDefault();
-
-  console.log("handleLogin");
+  console.log('handleLogin');
 
   // Your login logic here
   const loginErrors = getAuthLoginErrors(email.value, password.value);
@@ -70,12 +69,12 @@ const handleLogin = async (e) => {
     );
 
     if (Array.isArray(data) && data.length === 0)
-      console.log("Travel Agency not found");
+      console.log('Travel Agency not found');
 
-    localStorage.setItem("currentUser", JSON.stringify(data[0].id));
+    localStorage.setItem('currentUser', JSON.stringify(data[0].id));
 
     // Redirect to mypackages
-    router.push("/agency/mypackages");
+    router.push('/agency/mypackages');
 
     // Usuario encontrado
     console.table(data);
@@ -85,16 +84,16 @@ const handleLogin = async (e) => {
 let errors = ref({
   email: {
     error: false,
-    message: "",
+    message: '',
   },
   password: {
     error: false,
-    message: "",
+    message: '',
   },
 });
 
-const email = ref("");
-const password = ref("");
+const email = ref('');
+const password = ref('');
 const display = false;
 </script>
 
