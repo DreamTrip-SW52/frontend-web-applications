@@ -3,7 +3,7 @@
     {
       "id": 1,
       "travelAgencyId": 1,
-      "views": 84,
+      "views": 87,
       "transport": {
         "type": "flights",
         "id": 1
@@ -176,6 +176,16 @@
       "dni": "45786233",
       "photo": "",
       "id": 7
+    },
+    {
+      "email": "test@gmail.com",
+      "password": "pass12345",
+      "name": "",
+      "lastname": "",
+      "phone": "",
+      "dni": "",
+      "photo": "",
+      "id": 8
     }
   ],
   "travelAgency": [
@@ -192,6 +202,13 @@
       "email": "fake@gmail.com",
       "password": "123",
       "id": 2
+    },
+    {
+      "name": "Fake",
+      "ruc": "123412412412",
+      "email": "testing@mail.com",
+      "password": "pass123",
+      "id": 3
     }
   ],
   "reviews": [
@@ -250,6 +267,14 @@
       "comment": "Good package",
       "travellerId": "6",
       "id": 8
+    },
+    {
+      "packageId": 1,
+      "date": "14/10/2022",
+      "rating": 2,
+      "comment": "Good",
+      "travellerId": "8",
+      "id": 9
     }
   ],
   "accommodations": [
