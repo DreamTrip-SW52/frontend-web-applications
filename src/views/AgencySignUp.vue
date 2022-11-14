@@ -81,10 +81,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { IAuthAgencyRegisterErrors } from '../utils/authUtils';
-import { TravelAgencyService } from '../services/TravelAgency.service';
-import { useRouter } from 'vue-router';
+import { ref } from "vue";
+import { IAuthAgencyRegisterErrors } from "../utils/authUtils";
+import { TravelAgencyService } from "../services/TravelAgency.service";
+import { useRouter } from "vue-router";
 
 const travelAgencyService = new TravelAgencyService();
 const router = useRouter();
@@ -115,7 +115,7 @@ const handleRegister = async (e) => {
 
   if (Array.isArray(data) && data.length > 0) {
     errors.value.email.error = true;
-    errors.value.email.message = 'Email already exists';
+    errors.value.email.message = "Email already exists";
     return;
   }
 
@@ -134,38 +134,38 @@ const handleRegister = async (e) => {
     });
 
     localStorage.clear();
-    router.push('/agency/login');
+    router.push("/agency/login");
   }
 };
 
 const errors = ref({
   name: {
     error: false,
-    message: '',
+    message: "",
   },
   ruc: {
     error: false,
-    message: '',
+    message: "",
   },
   email: {
     error: false,
-    message: '',
+    message: "",
   },
   password: {
     error: false,
-    message: '',
+    message: "",
   },
   confirmPassword: {
     error: false,
-    message: '',
+    message: "",
   },
 });
 
-const name = ref('');
-const ruc = ref('');
-const email = ref('');
-const password = ref('');
-const confirmPassword = ref('');
+const name = ref("");
+const ruc = ref("");
+const email = ref("");
+const password = ref("");
+const confirmPassword = ref("");
 </script>
 
 <style scoped>

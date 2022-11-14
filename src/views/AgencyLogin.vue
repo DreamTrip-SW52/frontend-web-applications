@@ -12,14 +12,22 @@
           class="input"
           :class="errors.email.error && 'p-invalid'"
           v-model="email"
-        /><br /><br />
+        />
+        <small class="p-error" v-if="errors.email.error">{{
+          errors.email.message
+        }}</small>
+        <br /><br />
         <InputText
           type="password"
           placeholder="Password"
           class="input"
           :class="errors.password.error && 'p-invalid'"
           v-model="password"
-        /><br /><br />
+        />
+        <small class="p-error" v-if="errors.password.error">{{
+          errors.password.message
+        }}</small>
+        <br /><br />
         <div>
           <button
             type="submit"
@@ -45,19 +53,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { getAuthLoginErrors } from '../utils/authUtils';
-import { TravelAgencyService } from '../services/TravelAgency.service';
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { getAuthLoginErrors } from "../utils/authUtils";
+import { TravelAgencyService } from "../services/TravelAgency.service";
 
 const travelAgencyService = new TravelAgencyService();
 const router = useRouter();
 
 const handleLogin = async (e) => {
   e.preventDefault();
-  console.log('handleLogin');
 
-  // Your login logic here
+  console.log("handleLogin");
+
   const loginErrors = getAuthLoginErrors(email.value, password.value);
 
   errors.value = loginErrors;
@@ -68,32 +76,30 @@ const handleLogin = async (e) => {
       password.value
     );
 
-    if (Array.isArray(data) && data.length === 0)
-      console.log('Travel Agency not found');
-
-    localStorage.setItem('currentUser', JSON.stringify(data[0].id));
-
-    // Redirect to mypackages
-    router.push('/agency/mypackages');
-
-    // Usuario encontrado
-    console.table(data);
+    if (Array.isArray(data) && data.length === 0) {
+      console.log("Travel Agency not found");
+      alert("Incorrect Data");
+    } else {
+      localStorage.setItem("currentUser", JSON.stringify(data[0].id));
+      // Redirect to mypackages
+      router.push("/agency/mypackages");
+    }
   }
 };
 
 let errors = ref({
   email: {
     error: false,
-    message: '',
+    message: "",
   },
   password: {
     error: false,
-    message: '',
+    message: "",
   },
 });
 
-const email = ref('');
-const password = ref('');
+const email = ref("");
+const password = ref("");
 const display = false;
 </script>
 

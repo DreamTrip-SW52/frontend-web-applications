@@ -73,6 +73,7 @@
 import { ref } from "vue";
 import { TravellerService } from "../services/Traveller.service";
 import { useRouter } from "vue-router";
+import { IAuthAdditionalDataRegisterErrors } from "../utils/authUtils";
 
 const travellerService = new TravellerService();
 const router = useRouter();
@@ -80,19 +81,28 @@ const router = useRouter();
 const handleAdditional = async (e) => {
   e.preventDefault();
 
+  const registerErrors = IAuthAdditionalDataRegisterErrors(
+    name.value,
+    lastname.value,
+    phone.value,
+    dni.value
+  );
+
+  errors.value = registerErrors;
+
   if (
-    errors.name?.error ||
-    errors.lastname?.error ||
-    errors.phone?.error ||
-    errors.dni?.error
+    registerErrors.name?.error ||
+    registerErrors.lastname?.error ||
+    registerErrors.phone?.error ||
+    registerErrors.dni?.error
   )
     return;
 
   if (
-    !errors?.name?.error &&
-    !errors?.lastname?.error &&
-    !errors?.phone?.error &&
-    !errors?.dni?.error
+    !registerErrors?.name?.error &&
+    !registerErrors?.lastname?.error &&
+    !registerErrors?.phone?.error &&
+    !registerErrors?.dni?.error
   ) {
     travellerService.create({
       email: localStorage.getItem("email"),
@@ -109,7 +119,7 @@ const handleAdditional = async (e) => {
   }
 };
 
-let errors = ref({
+const errors = ref({
   name: {
     name: false,
     message: "",

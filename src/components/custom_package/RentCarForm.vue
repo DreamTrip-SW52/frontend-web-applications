@@ -129,12 +129,17 @@ const carService = new CarService();
 
 // functions
 const prevPage = () => emit("prevPage", { pageIndex: 3 });
+
 const nextPage = () => emit("nextPage", { pageIndex: 1 });
+
 const openDialog = () => (displayDialog.value = true);
+
 const parseProxy = (proxy) => JSON.parse(JSON.stringify(proxy));
+
 const save = (id) => {
   // localStorage.setItem('carSelected', JSON.stringify(id));
 };
+
 const parseMultiSelectIntoValue = (items) => {
   const newItems = [];
   items.forEach((item) => {
@@ -142,6 +147,7 @@ const parseMultiSelectIntoValue = (items) => {
   });
   return newItems;
 };
+
 const find = () => {
   const travelAgencyId = localStorage.getItem("travelAgencyId");
   const locationId = localStorage.getItem("locationId");

@@ -3,7 +3,7 @@
     {
       "id": 1,
       "travelAgencyId": 1,
-      "views": 87,
+      "views": 88,
       "transport": {
         "type": "flights",
         "id": 1
@@ -186,6 +186,16 @@
       "dni": "",
       "photo": "",
       "id": 8
+    },
+    {
+      "email": "testing@gmail.com",
+      "password": "pass123",
+      "name": "Sebastián",
+      "lastname": "Lévano",
+      "phone": "96346874",
+      "dni": "782122135",
+      "photo": "",
+      "id": 9
     }
   ],
   "travelAgency": [

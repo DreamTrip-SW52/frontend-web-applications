@@ -17,31 +17,31 @@
 </template>
 
 <script setup>
-import Navbar from '../components/Navbar.vue';
+import Navbar from "../components/Navbar.vue";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
 const router = useRouter();
 const items = ref([
   {
-    label: 'Transport',
-    to: './',
+    label: "Transport",
+    to: "./",
   },
   {
-    label: 'Accommodation',
-    to: 'accommodation',
+    label: "Accommodation",
+    to: "./accommodation",
   },
   {
-    label: 'Tour',
-    to: 'tour',
+    label: "Tour",
+    to: "./tour",
   },
   {
-    label: 'Rent Car',
-    to: 'rent',
+    label: "Rent Car",
+    to: "./rent",
   },
   {
-    label: 'BuyPackage',
-    to: '/buypackage/:id',
+    label: "BuyPackage",
+    to: "buypackage/:id",
   },
 ]);
 

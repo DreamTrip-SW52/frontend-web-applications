@@ -225,7 +225,9 @@ const transportService = new TransportService();
 
 // functions
 const nextPage = () => emit("nextPage", { pageIndex: 0 });
+
 const openDialog = () => (displayDialog.value = true);
+
 const save = (id) => {
   const typeOfTransport = formData.value.transport;
   transportService
@@ -238,7 +240,9 @@ const save = (id) => {
       localStorage.setItem("locationId", JSON.stringify(locationId));
     });
 };
+
 const parseProxy = (proxy) => JSON.parse(JSON.stringify(proxy));
+
 const find = () => {
   const typeOfTransport = formData.value.transport;
   const typeOfTrip = formData.value.typeOfTrip;

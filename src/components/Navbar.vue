@@ -19,7 +19,7 @@
           <i class="pi pi-user"></i>
         </router-link>
         <router-link to="/">
-          <i class="pi pi-power-off"></i>
+          <i class="pi pi-power-off" @click="removeCredentials"></i>
         </router-link>
       </div>
       <div class="icons-container" v-else>
@@ -28,7 +28,7 @@
           <i class="pi pi-home"></i>
         </router-link>
         <!-- Custom Packages -->
-        <router-link to="/custom-packages">
+        <router-link to="/custom-packages/">
           <i class="pi pi-box"></i>
         </router-link>
         <!-- Economic Follow -->
@@ -45,7 +45,7 @@
         </router-link>
         <!-- Sing out -->
         <router-link to="/">
-          <i class="pi pi-power-off"></i>
+          <i class="pi pi-power-off" @click="removeCredentials"></i>
         </router-link>
       </div>
     </div>
@@ -53,11 +53,15 @@
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router';
+import { useRoute } from "vue-router";
 const router = useRoute();
 
 const isAgencyFn = () => {
-  return router.path.includes('agency');
+  return router.path.includes("agency");
+};
+
+const removeCredentials = () => {
+  localStorage.removeItem("currentUser");
 };
 
 const isAgency = isAgencyFn();

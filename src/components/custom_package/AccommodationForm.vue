@@ -84,11 +84,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { AccommodationService } from '../../services/Accommodation.service';
+import { ref } from "vue";
+import { AccommodationService } from "../../services/Accommodation.service";
 
 // emits
-const emit = defineEmits(['prevPage', 'nextPage']);
+const emit = defineEmits(["prevPage", "nextPage"]);
 
 // classes
 const accommodationService = new AccommodationService();
@@ -100,24 +100,29 @@ const selectedServices = ref([]);
 const filteredAccommodation = ref([]);
 const resultAccomodation = ref([]);
 const services = ref([
-  { service: 'WiFi', value: 'WiFi' },
-  { service: 'Room Service', value: 'Room Service' },
-  { service: 'Restaurant', value: 'Restaurant' },
-  { service: 'Bar', value: 'Bar' },
-  { service: 'Entertaiment Zone', value: 'Entertaiment Zone' },
-  { service: 'Swimming Pool', value: 'Swimming Pool' },
-  { service: 'Spa', value: 'Spa' },
-  { service: 'Parking', value: 'Parking' },
-  { service: 'Air conditioning', value: 'Air conditioning' },
+  { service: "WiFi", value: "WiFi" },
+  { service: "Room Service", value: "Room Service" },
+  { service: "Restaurant", value: "Restaurant" },
+  { service: "Bar", value: "Bar" },
+  { service: "Entertaiment Zone", value: "Entertaiment Zone" },
+  { service: "Swimming Pool", value: "Swimming Pool" },
+  { service: "Spa", value: "Spa" },
+  { service: "Parking", value: "Parking" },
+  { service: "Air conditioning", value: "Air conditioning" },
 ]);
 
 // functions
-const prevPage = () => emit('prevPage', { pageIndex: 1 });
-const nextPage = () => emit('nextPage', { pageIndex: 1 });
+const prevPage = () => emit("prevPage", { pageIndex: 1 });
+
+const nextPage = () => emit("nextPage", { pageIndex: 1 });
+
 const openDialog = () => (displayDialog.value = true);
+
 const save = (id) =>
-  localStorage.setItem('accommodationSelected', JSON.stringify(id));
+  localStorage.setItem("accommodationSelected", JSON.stringify(id));
+
 const parseProxy = (proxy) => JSON.parse(JSON.stringify(proxy));
+
 const parseSelectedServices = (services) => {
   const parsedServices = [];
   services.forEach((service) => {
@@ -125,11 +130,13 @@ const parseSelectedServices = (services) => {
   });
   return parsedServices;
 };
+
 const find = () => {
-  const travelAgencyId = localStorage.getItem('travelAgencyId');
-  const locationId = localStorage.getItem('locationId');
+  const travelAgencyId = localStorage.getItem("travelAgencyId");
+  const locationId = localStorage.getItem("locationId");
   accommodationService
-    .filterAccommodation(price.value, travelAgencyId,locationId).then((response) => {
+    .filterAccommodation(price.value, travelAgencyId, locationId)
+    .then((response) => {
       resultAccomodation.value = [];
       const results = [];
 

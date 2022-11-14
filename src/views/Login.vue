@@ -12,14 +12,22 @@
           class="input"
           :class="errors.email.error && 'p-invalid'"
           v-model="email"
-        /><br /><br />
+        />
+        <small class="p-error" v-if="errors.email.error">{{
+          errors.email.message
+        }}</small>
+        <br /><br />
         <InputText
           type="password"
           placeholder="Password"
           class="input"
           :class="errors.password.error && 'p-invalid'"
           v-model="password"
-        /><br /><br />
+        />
+        <small class="p-error" v-if="errors.password.error">{{
+          errors.password.message
+        }}</small>
+        <br /><br />
         <div>
           <button
             type="submit"
@@ -45,10 +53,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { getAuthLoginErrors } from '../utils/authUtils';
-import { TravellerService } from '../services/Traveller.service';
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { getAuthLoginErrors } from "../utils/authUtils";
+import { TravellerService } from "../services/Traveller.service";
 
 const travellerService = new TravellerService();
 
@@ -57,50 +65,42 @@ const router = useRouter();
 const handleLogin = async (e) => {
   e.preventDefault();
 
-  console.log('handleLogin');
+  console.log("handleLogin");
 
-  console.log(email.value);
   const loginErrors = getAuthLoginErrors(email.value, password.value);
 
   errors.value = loginErrors;
 
-  console.log(
-    'EXPRESION LOGICA',
-    !loginErrors?.email?.error,
-    !loginErrors?.password?.error
-  );
   if (!loginErrors?.email?.error && !loginErrors?.password?.error) {
     const { data } = await travellerService.loginWithEmailAndPassword(
       email.value,
       password.value
     );
 
-    if (Array.isArray(data) && data.length === 0)
-      console.log('Traveller not found');
-
-    localStorage.setItem('currentUser', JSON.stringify(data[0].id));
-
-    // Redirect to home page
-    router.push('/home');
-
-    // Usuario encontrado
-    console.log('Traveller found', data);
+    if (Array.isArray(data) && data.length === 0) {
+      console.log("Traveller not found");
+      alert("Incorrect Data");
+    } else {
+      localStorage.setItem("currentUser", JSON.stringify(data[0].id));
+      // Redirect to home page
+      router.push("/home");
+    }
   }
 };
 
 let errors = ref({
   email: {
     error: false,
-    message: '',
+    message: "",
   },
   password: {
     error: false,
-    message: '',
+    message: "",
   },
 });
 
-const email = ref('');
-const password = ref('');
+const email = ref("");
+const password = ref("");
 const display = false;
 </script>
 
