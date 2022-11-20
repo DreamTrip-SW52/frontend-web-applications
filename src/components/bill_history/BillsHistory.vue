@@ -15,43 +15,55 @@
 
     <div class="form-wrapper mt-4">
       <InputText v-model="newBill.name" placeholder="Name" />
-      <InputText v-model="newBill.amount" placeholder="Amount" />
+      <InputText v-model="newBill.price" placeholder="Price" />
       <Button label="Add new bill" @click="addNewBill" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { reactive } from "vue";
-import BillRecord from "./BillRecord.vue";
-import { CurrentTravelService } from "../../services/CurrentTravel.service";
+import { reactive } from 'vue';
+import BillRecord from './BillRecord.vue';
+import { CurrentTravelService } from '../../services/CurrentTravel.service';
 
 const currentTravelService = new CurrentTravelService();
 
 defineProps({
   bills: Array,
 });
-const emit = defineEmits(["update"]);
+const emit = defineEmits(['update']);
 
-const userId = JSON.parse(localStorage.getItem("currentUser"));
+const userId = JSON.parse(localStorage.getItem('currentUser'));
 const newBill = reactive({
-  name: "",
-  amount: "",
+  name: '',
+  price: '',
 });
 
 const addNewBill = async () => {
-  await currentTravelService.createNewBill(userId, newBill);
+  const bill = {
+    name: newBill.name,
+    price: newBill.price,
+    travelerId: userId,
+  };
+  console.log(
+    '🚀 ~ file: BillsHistory.vue ~ line 49 ~ addNewBill ~ bill',
+    bill
+  );
+
+  await currentTravelService.createBill(bill);
   updateData();
-  newBill.name = "";
-  newBill.amount = "";
+  newBill.name = '';
+  newBill.price = '';
 };
 
 const handleDelete = async (billId) => {
-  await currentTravelService.deleteBill(userId, billId);
+  await currentTravelService.deleteBill(billId);
   updateData();
 };
 
-const updateData = () => emit("update");
+const updateData = () => {
+  emit('update');
+};
 </script>
 
 <style scoped>
@@ -60,7 +72,6 @@ const updateData = () => emit("update");
   border-radius: 5px;
   background-color: #161d2f;
   width: 100%;
-  /* height: 180px; */
 }
 
 .card-wrapper {

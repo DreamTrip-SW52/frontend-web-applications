@@ -57,8 +57,8 @@
 
 <script setup>
 import { ref } from "vue";
-import { TravellerService } from "@/services/Traveller.service";
-import { FormFields } from "@/interfaces/FormField";
+// import { TravelerService } from "@/services/Traveler.service";
+// import { FormFields } from "@/interfaces/FormField";
 import { CreditCard } from "@/interfaces/CreditCard";
 const props = defineProps({
   id: {

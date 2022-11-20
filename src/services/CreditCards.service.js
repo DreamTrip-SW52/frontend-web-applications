@@ -1,25 +1,38 @@
-import http from "./common";
+import http from './common';
+
 export class CreditCardsService {
-  baseGet = "/credit_cards";
-  getAll() {
-    return http.get(this.baseGet);
-  }
-  getById(id) {
-    return http.get(this.baseGet + `/${id}`);
-  }
-  getByUser(userId, userType){
-    return http.get(this.baseGet + `?userId=${userId}&userType=${userType}`)
+  travelerPath = '/travelercards';
+  agencyPath = '/agencycard';
+
+  getByTravelerId(id) {
+    return http.get(this.travelerPath + `/travelerid/${id}`);
   }
 
-  create(data) {
-    return http.post(this.baseGet, data);
+  createTravelerCard(card) {
+    return http.post(this.travelerPath, JSON.stringify(card));
   }
 
-  update(id, data) {
-    return http.put(this.baseGet + `/${id}`, data);
+  updateTravelerCardById(id, travelerCard) {
+    return http.put(this.travelerPath + `/${id}`);
   }
 
-  delete(id) {
-    return http.delete(this.baseGet +`/${id}`);
+  deleteTravelerCard(id) {
+    return http.delete(this.travelerPath + `/${id}`);
+  }
+
+  getByAgencyId(id) {
+    return http.get(this.agencyPath + `/agencyid/${id}`);
+  }
+
+  createAgencyCard(card) {
+    return http.post(this.agencyPath, JSON.stringify(card));
+  }
+
+  updateAgencyCardById(id, agencyCard) {
+    return http.put(this.agencyPath + `/${id}`);
+  }
+
+  deleteAgencyCard(id) {
+    return http.delete(this.agencyPath + `/${id}`);
   }
 }

@@ -1,4 +1,10 @@
 <template>
+  <!-- <pre>TransportData: {{ transportData }}</pre>
+  <pre>Details:{{ details }}</pre>
+  <pre>Transport {{ transport }}</pre>
+  <pre>TransportClass {{ transportClass }}</pre>
+  <prev>LocationGo {{ locationGo }}</prev>
+  <prev>LocationBack {{ locationBack }}</prev> -->
   <div class="flex flex-column gap-6 mt-4">
     <section id="about">
       <div class="text-center mb-4">
@@ -6,28 +12,31 @@
         <span>About</span>
       </div>
       <ul class="flex flex-column flex-wrap gap-2">
-        <li>{{ transportData?.typeOfTrip }}</li>
-        <li>{{ details?.from?.tag }} -> {{ details?.to?.tag }}</li>
+        <li>{{ details?.typeOfTrip }}</li>
+        <li>{{ locationGo?.department }} -> {{ locationBack?.department }}</li>
       </ul>
     </section>
     <section id="flight-details">
       <div class="text-center mb-4">
         <i class="pi pi-info-circle"></i>
-        <span>Flight Details</span>
+        <span>Transport Details</span>
       </div>
       <!-- cards -->
       <div class="flex flex-column gap-3">
         <!-- render the flight cards -->
         <FlightCard
-          v-for="flight in transportData?.details"
-          :key="flight.id"
-          :source="flight"
+          :key="transport.id"
+          :typeOfTrip="details.typeOfTrip"
+          :details="transport"
+          :go="locationGo"
+          :back="locationBack"
+          :transportData="transportData"
         ></FlightCard>
       </div>
       <!-- cards end -->
       <div class="mt-5">
         <p class="text-right text-2xl font-medium">
-          Total: S/. {{ transportData?.price }}
+          Total: S/. {{ details?.price }}
         </p>
       </div>
     </section>
@@ -42,25 +51,68 @@ import { TransportService } from '../../services/Transport.service';
 const transportService = new TransportService();
 const transportData = ref({});
 const details = ref({});
+const transport = ref({});
+const transportClass = ref({});
+const locationGo = ref({});
+const locationBack = ref({});
 
 const props = defineProps({
-  type: {
-    type: String,
-    required: true,
-  },
   id: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
 
-onMounted(() => {
-  transportService
-    .getTransportByTypeAndId(props.type, props.id)
-    .then((response) => {
-      transportData.value = response.data;
-      details.value = response.data.details[0];
-    });
+const getLocationByTripGo = async () => {
+  const tripGoId = details.value.tripGoId;
+  const location = await transportService.getTripGoById(tripGoId);
+  const locationName = await transportService.getLocationById(
+    location.data.locationId
+  );
+  locationGo.value = locationName.data;
+};
+
+const getLocationByTripBack = async () => {
+  const tripBackId = details.value.tripBackId;
+  const location = await transportService.getTripBackById(tripBackId);
+  const locationName = await transportService.getLocationById(
+    location.data.locationId
+  );
+  locationBack.value = locationName.data;
+};
+
+onMounted(async () => {
+  const packageId = props.id;
+
+  const transportDetails = await transportService.getTransportById(packageId);
+
+  transportData.value = transportDetails.data;
+
+  const isRoundTrip = await transportService.getRoundTripByPackageId(packageId);
+  const isOneWay = await transportService.getOneWayByPackageId(packageId);
+
+  isRoundTrip.data
+    ? (details.value = {
+        ...isRoundTrip.data,
+        typeOfTrip: 'Round Trip',
+      })
+    : (details.value = {
+        ...isOneWay.data,
+        typeOfTrip: 'One Way',
+      });
+
+  const transportD = await transportService.getTransportById(
+    details.value.transportId
+  );
+  transport.value = transportD.data;
+
+  const transportClassD = await transportService.getTransportClassById(
+    details.value.transportClassId
+  );
+  transportClass.value = transportClassD.data;
+
+  await getLocationByTripGo();
+  await getLocationByTripBack();
 });
 </script>
 

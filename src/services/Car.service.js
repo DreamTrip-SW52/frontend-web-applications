@@ -1,30 +1,17 @@
 import http from './common';
 
 export class CarService {
+  basePath = '/rentcars';
+
   getCars() {
-    return http.get('/cars');
+    return http.get(this.basePath);
   }
 
   getCarById(id) {
-    return http.get(`/cars/${id}`);
+    return http.get(this.basePath + `/${id}`);
   }
 
-  filterCar(travelAgencyId, locationId) {
-    return http.get(`/cars?travelAgencyId=${travelAgencyId}&locationId=${locationId}`);
+  filterCar(priceMin, priceMax, capacityMin, capacityMax, brand) {
+    return http.get(this.basePath + `/filters/${priceMin}/${priceMax}/${capacityMin}/${capacityMax}/${brand}`);
   }
-
-  // filterCar(prices, brand, capacity, travelAgencyId, locationId) {
-  // 	const capacityMin = capacity[0];
-  // 	const capacityMax = capacity[1];
-
-  //   const priceMin = prices[0];
-  //   const priceMax = prices[1];
-
-  //   const URL = `/cars?brand=${brand}&capacity_gte=${capacityMin}&capacity_lte=${capacityMax}&price_gte=${priceMin}&price_lte=${priceMax}`;
-
-  //   //ENCODE URL
-  //   const encodedURL = encodeURI(URL);
-
-  //   return http.get(encodedURL);
-  // }
 }

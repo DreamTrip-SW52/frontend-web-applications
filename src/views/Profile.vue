@@ -1,6 +1,6 @@
 <template>
-  <suspense>
-    <template #default>
+<!--  <suspense>-->
+<!--    <template #default>-->
       <div class="profile-container">
         <div class="nav-bar">
           <Navbar />
@@ -10,9 +10,9 @@
           <TravellerProfileCard :id="id" v-else />
         </div>
       </div>
-    </template>
-    <template #fallback>Loading...</template>
-  </suspense>
+<!--    </template>-->
+<!--    <template #fallback>Loading...</template>-->
+<!--  </suspense>-->
 </template>
 
 <script setup>
@@ -20,6 +20,7 @@ import Navbar from '@/components/Navbar.vue';
 import TravellerProfileCard from '@/components/profile/TravellerProfileCard.vue'
 import AgencyProfileCard from '@/components/profile/AgencyProfileCard.vue'
 import {useRoute} from "vue-router";
+
 const id = localStorage.getItem('currentUser');
 const router = useRoute();
 

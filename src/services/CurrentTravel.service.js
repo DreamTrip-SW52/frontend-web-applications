@@ -1,44 +1,36 @@
 import http from './common';
 
 export class CurrentTravelService {
-  async getCurrentTravel(travelerId) {
-    const response = await http.get(`/current-travels/?travelerId=${travelerId}`);
+  purchasedPackagePath = '/purchasedPackage';
+  economicFollowingPath = '/economicfollowings';
+  healthCenterPath = '/healthcenter';
+  policeStationPath = '/policestation';
 
-    return response?.data?.[0];
+  getCurrentTravelByTravelerId(travelerId) {
+    return http.get(this.purchasedPackagePath + `/active/${travelerId}`);
   }
 
-  async getByTravelerId(travelerId) {
-    const currentTravel = await this.getCurrentTravel(travelerId);
-
-    return http.get(`/packages/${currentTravel?.packageId}`);
+  getBillsByTravelerId(travelerId) {
+    return http.get(this.economicFollowingPath + `/travelerid/${travelerId}`);
   }
 
-  async createNewBill(travelerId, newBill) {
-    const currentTravel = await this.getCurrentTravel(travelerId);
-    currentTravel?.new_bills?.push({
-      ...newBill,
-      id: currentTravel?.new_bills?.length + 1,
-    });
-
-    await http.put(`/current-travels/${currentTravel?.id}`, { ...currentTravel });
+  createBill(billData) {
+    return http.post(this.economicFollowingPath, billData);
   }
 
-  async deleteBill(travelerId, billId) {
-    const currentTravel = await this.getCurrentTravel(travelerId);
-    const idx = currentTravel?.new_bills?.findIndex(bill => bill?.id === billId);
-    currentTravel?.new_bills?.splice(idx, 1);
-
-    await http.put(`/current-travels/${currentTravel?.id}`, { ...currentTravel });
+  deleteBill(id) {
+    return http.delete(this.economicFollowingPath + `/${id}`);
   }
 
-  async editBill(travelerId, billId, modifiedBill) {
-    const currentTravel = await this.getCurrentTravel(travelerId);
-    const idx = currentTravel?.new_bills?.findIndex(bill => bill?.id === billId);
-    currentTravel.new_bills[idx] = {
-      ...modifiedBill,
-      id: currentTravel?.new_bills?.[idx]?.id,
-    };
+  getHospitalsByLocationId(locationId){
+    return http.get(this.healthCenterPath + `/type/Hospital/location/${locationId}`);
+  }
 
-    await http.put(`/current-travels/${currentTravel?.id}`, { ...currentTravel });
+  getClinicsByLocationId(locationId){
+    return http.get(this.healthCenterPath + `/type/Clinic/location/${locationId}`);
+  }
+
+  getPoliceStationsByLocationId(locationId){
+    return http.get(this.policeStationPath + `/locationid/${locationId}`);
   }
 }

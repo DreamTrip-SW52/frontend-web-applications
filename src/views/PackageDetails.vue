@@ -1,6 +1,4 @@
 <template>
-  <!-- {{ $route.params.id }} -->
-
   <main class="grid w-full ml-4 text-white" v-if="packageData !== {}">
     <section id="center" class="col-8">
       <router-link to="/home"
@@ -17,7 +15,7 @@
         <div class="flex justify-content-center gap-6 my-4">
           <div class="text-center">
             <i class="pi pi-map-marker icons"></i>
-            <p>{{ packageData.location }}</p>
+            <p>{{ packageData.locationAddress }}</p>
           </div>
           <div class="text-center">
             <i class="pi pi-clock icons"></i>
@@ -29,7 +27,7 @@
           </div>
           <div class="text-center">
             <i class="pi pi-calendar icons"></i>
-            <p>{{ packageData.disponibility }}</p>
+            <p>{{ packageData.disponibility || '24/7' }}</p>
           </div>
         </div>
         <!-- Carrousel -->
@@ -42,13 +40,16 @@
         >
           <template #header> </template>
           <template #item="slotProps">
-            <div class="image-container">
-              <img :src="slotProps.data.src" class="w-full" />
-            </div>
+            <img
+              :src="slotProps.data.src"
+              :alt="slotProps.data.alt"
+              class="w-full bg-no-repeat"
+            />
           </template>
         </Carousel>
 
         <!-- FinCarrousel -->
+        <pre>{{ breadcrumbView }}</pre>
 
         <div class="px-0 md:px-4">
           <Breadcrumb :model="items">
@@ -61,16 +62,13 @@
           <!-- accomodation - tour - transport  -->
           <div>
             <div v-if="breadcrumbView === 'accomodations'">
-              <Accommodations :id="packageData.accommodationId" />
+              <Accommodations :id="router.currentRoute.value.params.id" />
             </div>
             <div v-if="breadcrumbView === 'tours'">
-              <Tour :id="packageData.tourId" />
+              <Tour :id="router.currentRoute.value.params.id" />
             </div>
             <div v-if="breadcrumbView === 'transports'">
-              <Transport
-                :type="packageData.transport.type"
-                :id="packageData.transport.id"
-              />
+              <Transport :id="router.currentRoute.value.params.id" />
             </div>
           </div>
         </div>
@@ -80,7 +78,7 @@
     <section id="right" class="col-4 p-2 flex flex-column gap-8 white">
       <div class="text-center calendar-container flex flex-column gap-4 p-4">
         <h2>Booking online</h2>
-        <h2>S/.{{ packageData.total }}</h2>
+        <h2>S/.{{ packageData.price }}</h2>
         <div class="text-left">
           <p>Choose a date</p>
           <p>Available day</p>
@@ -107,106 +105,146 @@
           </div>
         </div>
 
-        <div class="text-right my-2">
-          <Button
-            label="Write/Modify Review"
-            class="p-button-text underline white"
-            @click="openDialogWriteReview"
-          />
-        </div>
-        <Dialog v-model:visible="displayDialogWriteReview" :modal="true">
-          <div class="flex justify-content-between">
-            <p>Rate this travel package</p>
-            <Rating v-model="rating" :cancel="false" />
-          </div>
-          <br />
-          <Textarea
-            v-model="comment"
-            :autoResize="true"
-            rows="3"
-            cols="60"
-            placeholder="Write your comment"
-          />
-          <br /><br />
-          <div class="flex justify-content-between">
+        <!--        {{JSON.stringify(reviews,null,4)}}-->
+
+        <div id="no-review-no-show" v-if="reviews.length > 0">
+          <div class="text-right my-2">
             <Button
-              label="Cancel"
-              class="p-button-danger"
-              @click="closeDialogWriteReview"
+              label="Write/Modify Review"
+              class="p-button-text underline white"
+              @click="openDialogWriteReview"
             />
-            <Button label="Submit" @click="writeReview" />
           </div>
-        </Dialog>
 
-        <!-- 
-          <Dialog v-model:visible="displayDialogModifyReview" :modal="false">
-          <div class="flex justify-content-between">
-            <p>Rate this travel package</p>
-            <Rating v-model="rating" :cancel="false" />
-          </div>
-          <br />
-          <Textarea
-            v-model="comment"
-            :autoResize="true"
-            rows="3"
-            cols="60"
-            placeholder= review.comment 
-          />
-          <br /><br />
-          <div class="flex justify-content-between">
-            <Button
-              label="Cancel"
-              class="p-button-danger"
-              @click="closeDialogModifyReview"
-            />
-            <Button label="Submit" @click="ModifyReview" />
-          </div>
-        </Dialog>
-        "Write review"
-         -->
-
-        <!-- reseñas -->
-
-        <ul class="list-none flex flex-column gap-4">
-          <li
-            v-for="review in reviews.slice(0, 3)"
-            class="pr-6"
-            :key="review.id"
-          >
-            <Rating
-              :modelValue="review.rating"
-              :readonly="true"
-              :cancel="false"
-            />
+          <Dialog v-model:visible="displayDialogWriteReview" :modal="true">
+            <div class="flex justify-content-between">
+              <p>Rate this travel package</p>
+              <Rating v-model="rating" :cancel="false" />
+            </div>
             <br />
-            For {{ review.traveller.name }} the {{ review.date }}
-            <br />
-            <span class="font-light">{{ review.comment }}</span>
-          </li>
-        </ul>
+            <Textarea
+              v-model="comment"
+              :autoResize="true"
+              rows="3"
+              cols="60"
+              placeholder="Write your comment"
+            />
+            <br /><br />
+            <div class="flex justify-content-between">
+              <Button
+                label="Cancel"
+                class="p-button-danger"
+                @click="closeDialogWriteReview"
+              />
+              <Button label="Submit" @click="writeReview" />
+            </div>
+          </Dialog>
 
-        <div class="text-right my-2">
-          <Button
-            label="See more"
-            class="p-button-text underline white"
-            @click="openDialogSeeMore"
-          />
-        </div>
-        <Dialog v-model:visible="displayDialogSeeMore">
+          <!--
+            <Dialog v-model:visible="displayDialogModifyReview" :modal="false">
+            <div class="flex justify-content-between">
+              <p>Rate this travel package</p>
+              <Rating v-model="rating" :cancel="false" />
+            </div>
+            <br />
+            <Textarea
+              v-model="comment"
+              :autoResize="true"
+              rows="3"
+              cols="60"
+              placeholder= review.comment
+            />
+            <br /><br />
+            <div class="flex justify-content-between">
+              <Button
+                label="Cancel"
+                class="p-button-danger"
+                @click="closeDialogModifyReview"
+              />
+              <Button label="Submit" @click="ModifyReview" />
+            </div>
+          </Dialog>
+          "Write review"
+           -->
+
+          <!-- reseñas -->
+
           <ul class="list-none flex flex-column gap-4">
-            <li v-for="review in reviews" class="pr-6" :key="review.id">
+            <li
+              v-for="review in reviews.slice(0, 3)"
+              class="pr-6"
+              :key="review.id"
+            >
               <Rating
-                :modelValue="review.rating"
+                :modelValue="review.stars"
                 :readonly="true"
                 :cancel="false"
               />
               <br />
-              For {{ review.traveller.name }} the {{ review.date }}
+              For {{ review.travelerName }} the {{ review.date }}
               <br />
               <span class="font-light">{{ review.comment }}</span>
             </li>
           </ul>
-        </Dialog>
+
+          <div class="text-right my-2">
+            <Button
+              label="See more"
+              class="p-button-text underline white"
+              @click="openDialogSeeMore"
+            />
+          </div>
+          <Dialog v-model:visible="displayDialogSeeMore">
+            <ul class="list-none flex flex-column gap-4">
+              <li v-for="review in reviews" class="pr-6" :key="review.id">
+                <Rating
+                  :modelValue="review.rating"
+                  :readonly="true"
+                  :cancel="false"
+                />
+                <br />
+                For {{ review.travelerName }} the {{ review.date }}
+                <br />
+                <span class="font-light">{{ review.comment }}</span>
+              </li>
+            </ul>
+          </Dialog>
+        </div>
+
+        <div v-else>
+          <p class="text-center">No reviews yet</p>
+          <div class="text-center">
+            <Button
+              label="Write Review"
+              class="p-button-text underline white"
+              @click="openDialogWriteReview"
+            />
+
+            <Dialog v-model:visible="displayDialogWriteReview" :modal="true">
+              <div class="flex justify-content-between">
+                <p>Rate this travel package</p>
+                <Rating v-model="rating" :cancel="false" />
+              </div>
+              <br />
+              <Textarea
+                v-model="comment"
+                :autoResize="true"
+                rows="3"
+                cols="60"
+                placeholder="Write your comment"
+              />
+              <br /><br />
+              <div class="flex justify-content-between">
+                <Button
+                  label="Cancel"
+                  class="p-button-danger"
+                  @click="closeDialogWriteReview"
+                />
+                <Button label="Submit" @click="writeReview" />
+              </div>
+            </Dialog>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -223,11 +261,13 @@ import Tour from '../components/package_details/Tour.vue';
 import { PackageService } from '../services/Package.service';
 import { ReviewService } from '../services/Review.service';
 import { ImageService } from '../services/Image.service';
+import { TravelerService } from '../services/Traveler.service';
 
 /** Static **/
 
 //Router
 const router = useRouter();
+const { id } = router.currentRoute.value.params;
 
 const packageService = new PackageService();
 const imageService = new ImageService();
@@ -281,30 +321,30 @@ const getRating = () => {
     total += review.rating;
   });
 
-  const result = Math.floor(total / reviews.value.length);
+  const result =
+    reviews.value.length === 0 ? 0 : Math.floor(total / reviews.value.length);
   averageReviews.value = result;
 };
 
 /*** Reviews ***/
 
-// Write review
-
+// service
 const reviewService = new ReviewService();
-const reviews = ref([]);
+const travelerService = new TravelerService();
+
+// variables
 let validation = null;
 
-const displayDialogWriteReview = ref(false);
-const openDialogWriteReview = () => {
-  displayDialogWriteReview.value = true;
-};
-const closeDialogWriteReview = () => {
-  displayDialogWriteReview.value = false;
-};
-
+// state
+const reviews = ref([]);
 const comment = ref('');
 const rating = ref(0);
-
+const displayDialogWriteReview = ref(false);
 let addReviewButtonLabel = ref('');
+
+// function
+const openDialogWriteReview = () => (displayDialogWriteReview.value = true);
+const closeDialogWriteReview = () => (displayDialogWriteReview.value = false);
 const computedText = computed(() => addReviewButtonLabel.value);
 const checkUserHasReview = (id) => {
   reviewService.getReviewTravellerByPackageId(id).then((response) => {
@@ -322,7 +362,6 @@ const checkUserHasReview = (id) => {
     }
   });
 };
-
 const writeReview = () => {
   const currentDate = new Date();
   const strDate =
@@ -335,17 +374,20 @@ const writeReview = () => {
 
   const review = {
     packageId: Number,
-    date: String,
-    rating: Number,
+    // date: String,
+    stars: Number,
     comment: String,
-    travellerId: Number,
+    travelerId: Number,
   };
 
   review.packageId = parseInt(params.id);
-  review.date = strDate;
-  review.rating = rating.value;
+  // review.date = strDate;
+  review.stars = rating.value;
   review.comment = comment.value;
-  review.travellerId = localStorage.getItem('currentUser');
+  review.travelerId = localStorage.getItem('currentUser');
+
+  console.log('Escribiendo el review con datos', review);
+
   if (validation != null) {
     reviewService.updateReview(validation.id, review);
   } else {
@@ -363,50 +405,43 @@ const openDialogSeeMore = () => {
 
 /*** LifeCycle Hooks ***/
 
-onBeforeMount(() => {
-  const params = router.currentRoute.value.params;
+onBeforeMount(async () => {
+  checkUserHasReview(id)
+    ? (addReviewButtonLabel = 'Modify Review')
+    : (addReviewButtonLabel = 'Write Review');
 
-  if (checkUserHasReview(params.id) == true) {
-    addReviewButtonLabel = 'Modify Review';
-  } else {
-    addReviewButtonLabel = 'Write Review';
-  }
+  await reviewService.getReviewsByPackageId(id).then(({ data }) => {
+    const newReviews = [];
+
+    data.forEach((review) => {
+      travelerService.getById(review.travelerId).then(({ data }) => {
+        newReviews.push({
+          ...review,
+          date: new Date().toLocaleDateString(),
+          travelerName: data.name,
+        });
+      });
+    });
+
+    reviews.value = newReviews;
+
+    console.log('Reviews', newReviews);
+    getRating();
+  });
 });
 
 onMounted(() => {
-  const params = router.currentRoute.value.params;
+  packageService.getById(id).then(({ data }) => (packageData.value = data));
 
-  packageService.getPackageById(params.id).then((response) => {
-    packageData.value = response.data;
-    const views = packageData.value.views + 1;
-    console.log(
-      '🚀 ~ file: PackageDetails.vue ~ line 316 ~ packageService.getPackageById ~ views',
-      views
-    );
-    packageService.increaseViewsById(params.id, views).then((response) => {
-      console.log(response);
+  const images = [];
+  for (let i = 0; i < 5; i++) {
+    images.push({
+      src: `https://images.unsplash.com/photo-1668400121008-6134fd5b104d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80`,
+      alt: 'Random Image',
     });
-  });
-  imageService.getImageByPackageId(params.id).then((response) => {
-    imageData.value = response.data;
-  });
-  reviewService.getReviewTravellerByPackageId(params.id).then((response) => {
-    reviews.value = response.data;
-    getRating();
-  });
-  reviewService
-    .getReviewByPackageIdAndTravellerId(
-      params.id,
-      localStorage.getItem('currentUser')
-    )
-    .then((response) => {
-      if (response.data.length > 0) {
-        validation = response.data[0];
-        rating.value = validation.rating;
-        comment.value = validation.comment;
-        console.log(validation);
-      }
-    });
+  }
+
+  imageData.value = images;
 });
 </script>
 
@@ -429,7 +464,7 @@ header {
 
 @media (min-width: 1024px) {
   .inner-container {
-    padding: 0px 120px;
+    padding: 0px 80px;
   }
 }
 

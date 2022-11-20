@@ -7,13 +7,13 @@
       :id="currentTravelPackage?.id"
       :name="currentTravelPackage.name"
       :description="currentTravelPackage.description"
-      :price="currentTravelPackage.total"
-      :place="currentTravelPackage.location"
+      :price="currentTravelPackage.price"
+      :place="currentTravelPackage.locationAddress"
       :duration="currentTravelPackage.duration"
-      :img_url="currentTravelPackage.img"
+      :img_url="currentTravelPackage.image"
     />
 
-    <BillsHistory :bills="currentTravel?.new_bills" @update="fetchInitialData" />
+    <BillsHistory :bills="bills.data" @update="fetchInitialData" />
   </div>
 </template>
 
@@ -23,16 +23,30 @@ import Navbar from '../components/Navbar.vue';
 import PackageCard from '../components/PackageCard.vue';
 import BillsHistory from '../components/bill_history/BillsHistory.vue';
 import { CurrentTravelService } from '../services/CurrentTravel.service';
+import { PackageService } from '../services/Package.service';
 
 const currentTravelService = new CurrentTravelService();
+const packageService = new PackageService();
 const currentTravelPackage = ref([]);
 const currentTravel = ref({});
+const bills = ref([]);
 
 const userId = JSON.parse(localStorage.getItem('currentUser'));
 
 const fetchInitialData = async () => {
-  currentTravel.value = await currentTravelService.getCurrentTravel(userId);
-  const { data } = await currentTravelService.getByTravelerId(userId);
+  currentTravel.value = await currentTravelService.getCurrentTravelByTravelerId(
+    userId
+  );
+
+  bills.value = await currentTravelService.getBillsByTravelerId(userId);
+  console.log(
+    '🚀 ~ file: EconomicFollow.vue ~ line 42 ~ fetchInitialData ~ bills.value',
+    bills.value
+  );
+
+  const { data } = await packageService.getById(
+    JSON.parse(JSON.stringify(currentTravel.value.data)).packageId
+  );
   currentTravelPackage.value = data;
 };
 

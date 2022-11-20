@@ -2,8 +2,8 @@
   <div class="container">
     <div class="profile-image">
       <img
-        v-if="user.photo !== undefined && user.photo !== ''"
-        :src="user.photo"
+        v-if="user?.photo !== undefined && user?.photo !== ''"
+        :src="user?.photo"
         alt="profile image"
       />
       <i v-else class="pi pi-user" style="font-size: 7rem"></i>
@@ -19,7 +19,7 @@
               :type="field.type"
               :required="field.requerid"
               :disabled="field.editable ? !changeValues : true"
-              v-model="field.value"
+              v-model="user[field.label]"
               :value="user[field.label]"
               :maxlength="field.label === 'phone' ? 9 : 200"
             />
@@ -56,6 +56,7 @@
           </small>
         </div>
         <ChangePassword
+          :isAgency="false"
           v-on:change-password="assignNewPassword"
           v-if="!hidePassword"
         />
@@ -83,17 +84,17 @@
         <div
           class="credit-card"
           v-if="!hideCreditCards"
-          v-for="(card, index) of creditCards"
+          v-for="(card, index) of cards"
         >
           <div class="flex gap-8">
-            <span>Card #{{ index + 1 }}</span>
+            <span>Card # {{ index + 1 }}</span>
             <small
               ><span @click="removeCard(index, card)" class="click-link"
                 >remove card</span
               ></small
             >
           </div>
-          <ShowCreditCard :credit-card="card" />
+          <ShowCreditCard :creditCard="card" />
         </div>
       </div>
     </div>
@@ -120,7 +121,7 @@
           <CreditCardForm
             v-on:add-card="addedCard"
             :user-type="TRAVELLER"
-            :credit-cards="creditCards"
+            :credit-cards="cards"
             :id="user.id"
             v-if="!hideCreditForm"
           />
@@ -131,128 +132,139 @@
 </template>
 
 <script setup>
-import { ITraveller, Traveller } from "@/interfaces/Traveller";
-import { FormFields } from "@/interfaces/FormField";
-import { ref } from "vue";
-import { TravellerService } from "@/services/Traveller.service";
-import { CreditCards } from "@/interfaces/CreditCard";
-import { CreditCardsService } from "@/services/CreditCards.service";
-import CreditCardForm from "@/components/credit_cards/AddCreditCardForm.vue";
-import ChangePassword from "@/components/profile/ChangePassword.vue";
-import ShowCreditCard from "@/components/credit_cards/ShowCreditCard.vue";
+import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { Traveller } from '@/interfaces/Traveller';
+import { TravelerService as TravellerService } from '@/services/Traveler.service';
+import { CreditCards } from '@/interfaces/CreditCard';
+import { CreditCardsService } from '@/services/CreditCards.service';
+import CreditCardForm from '@/components/credit_cards/AddCreditCardForm.vue';
+import ChangePassword from '@/components/profile/ChangePassword.vue';
+import ShowCreditCard from '@/components/credit_cards/ShowCreditCard.vue';
 
-const TRAVELLER = "traveller";
+const TRAVELLER = 'traveller';
+const router = useRoute();
 
 const props = defineProps({
   id: {
     type: String,
-    default: localStorage.getItem("currentUser"),
-    required: false,
-  },
-  user: {
-    type: Traveller,
+    default: localStorage.getItem('currentUser'),
     required: false,
   },
 });
 
-let user = ref(ITraveller);
-let creditCards = ref(CreditCards);
-const userApiService = new TravellerService();
-const cardsApiService = new CreditCardsService();
-if (props.user === undefined) {
-  const userResponse = await userApiService.getById(props.id);
-  user = userResponse.data;
-  const cardsResponse = await cardsApiService.getByUser(user.id, TRAVELLER);
-  creditCards.value = cardsResponse.data;
-}
+let user = ref({
+  id: '',
+  name: '',
+  lastname: '',
+  email: '',
+  password: '',
+  dni: '',
+  photo: '',
+  phone: '',
+});
 
+let cards = ref(CreditCards);
+let hideCreditForm = ref(true);
 let changeValues = ref(false);
 let hidePassword = ref(true);
 let hideCreditCards = ref(true);
 
+let formFields = [
+  {
+    label: 'name',
+    title: 'Name',
+    value: '',
+    disable: true,
+    placeholder: 'Example Name',
+    requerid: true,
+    type: 'text',
+    editable: true,
+  },
+  {
+    label: 'lastname',
+    title: 'Last Name',
+    value: '',
+    disable: true,
+    placeholder: 'Example LastName',
+    requerid: true,
+    type: 'text',
+    editable: true,
+  },
+  {
+    label: 'phone',
+    title: 'Phone',
+    value: '',
+    disable: true,
+    placeholder: '123456789',
+    requerid: true,
+    type: 'text',
+    editable: true,
+  },
+  {
+    label: 'dni',
+    title: 'DNI',
+    value: '',
+    disable: true,
+    placeholder: 'Traveller DNI',
+    requerid: true,
+    type: 'text',
+    editable: false,
+  },
+  {
+    label: 'type',
+    title: 'Traveller Type',
+    value: '',
+    disable: true,
+    placeholder: 'Example user',
+    requerid: true,
+    type: 'text',
+    editable: false,
+  },
+  {
+    label: 'email',
+    title: 'Email',
+    value: '',
+    disable: true,
+    placeholder: 'example@example',
+    requerid: true,
+    type: 'email',
+  },
+];
+
+const userApiService = new TravellerService();
+const cardsApiService = new CreditCardsService();
+
+onMounted(async () => {
+  if (props.id) {
+    const { data } = await userApiService.getById(props.id);
+    user.value = data;
+
+    const response = await cardsApiService.getByTravelerId(props.id);
+
+    cards.value = response.data;
+  }
+});
+
+function normalField(label) {
+  return label !== 'password' && label !== 'email' && label !== 'type';
+}
+
 function onSubmit() {
   changeValues.value = false;
   setStorableUser();
-  userApiService.update(user.id, user);
+  userApiService.update(props.id, user.value);
 }
 
 function setStorableUser() {
   for (let field of formFields) {
-    if (field.value !== "") user[field.label] = field.value;
+    if (field.value !== '') user[field.label] = field.value;
   }
   console.log(user);
 }
 
-function normalField(label) {
-  return label !== "password" && label !== "email" && label !== "type";
-}
-
-let formFields = FormFields;
-let hideCreditForm = ref(true);
-formFields = [
-  {
-    label: "name",
-    title: "Name",
-    value: "",
-    disable: true,
-    placeholder: "Example Name",
-    requerid: true,
-    type: "text",
-    editable: true,
-  },
-  {
-    label: "lastname",
-    title: "Last Name",
-    value: "",
-    disable: true,
-    placeholder: "Example LastName",
-    requerid: true,
-    type: "text",
-    editable: true,
-  },
-  {
-    label: "phone",
-    title: "Phone",
-    value: "",
-    disable: true,
-    placeholder: "123456789",
-    requerid: true,
-    type: "text",
-    editable: true,
-  },
-  {
-    label: "dni",
-    title: "DNI",
-    value: "",
-    disable: true,
-    placeholder: "Traveller DNI",
-    requerid: true,
-    type: "text",
-    editable: false,
-  },
-  {
-    label: "type",
-    title: "Traveller Type",
-    value: "",
-    disable: true,
-    placeholder: "Example user",
-    requerid: true,
-    type: "text",
-    editable: false,
-  },
-  {
-    label: "email",
-    title: "Email",
-    value: "",
-    disable: true,
-    placeholder: "example@example",
-    requerid: true,
-    type: "email",
-  },
-];
-
 function addedCard(card) {
-  creditCards.value.push(card);
+  cards.value.push(card);
   hideCreditForm.value = !hideCreditForm.value;
 }
 
@@ -263,9 +275,9 @@ function assignNewPassword(password) {
 }
 
 function removeCard(index, card) {
-  creditCards.value.splice(index, 1);
+  cards.value.splice(index, 1);
   hideCreditCards.value = !hideCreditCards.value;
-  cardsApiService.delete(card.id).then();
+  cardsApiService.deleteByTravelerId(card.id).then();
 }
 </script>
 

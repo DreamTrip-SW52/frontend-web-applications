@@ -1,23 +1,28 @@
 import http from './common';
 
 export class AccommodationService {
+  basePath = '/accommodation';
+  servicesPerAccommodationPath = '/servicesperaccommodations';
+
   getAccommodations() {
-    return http.get('/accommodations');
+    return http.get(this.basePath);
   }
 
-  getAccommodationById(id) {
-    return http.get(`/accommodations/${id}`);
+  getAccommodationByPackageId(id) {
+    return http.get(this.basePath + `/packageid/${id}`);
   }
 
-  filterAccommodation(prices, travelAgencyId, locationId) {
-    const priceMin = prices[0];
-    const priceMax = prices[1];
+  filterAccommodation(priceMin, priceMax) {
+    return http.get(this.basePath + `/filters/${priceMin}/${priceMax}`);
+  }
 
-    const URL = `/accommodations?price_gte=${priceMin}&price_lte=${priceMax}&travelAgencyId=${travelAgencyId}&locationId=${locationId}`;
+  getServicesPerAccommodation(accommodationId) {
+    return http.get(
+      this.servicesPerAccommodationPath + `/accommodationId/${accommodationId}`
+    );
+  }
 
-    //ENCODE URL
-    const encodedURL = encodeURI(URL);
-
-    return http.get(encodedURL);
+  getServiceByServiceId(serviceId) {
+    return http.get('/services' + `/${serviceId}`);
   }
 }

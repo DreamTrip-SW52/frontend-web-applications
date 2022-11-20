@@ -21,8 +21,8 @@ export class ReviewService {
     return http.get(`/reviews/${id}`);
   }
 
-  getReviewByPackageId(packageId) {
-    return http.get(`/reviews/?packageId=${packageId}`);
+  getReviewsByPackageId(packageId) {
+    return http.get(`/reviews/packageId/${packageId}`);
   }
 
   getReviewTravellerByPackageId(packageId) {

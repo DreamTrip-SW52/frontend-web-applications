@@ -56,9 +56,9 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { getAuthLoginErrors } from "../utils/authUtils";
-import { TravellerService } from "../services/Traveller.service";
+import { TravelerService } from "../services/Traveler.service";
 
-const travellerService = new TravellerService();
+const travellerService = new TravelerService();
 
 const router = useRouter();
 
@@ -77,13 +77,14 @@ const handleLogin = async (e) => {
       password.value
     );
 
-    if (Array.isArray(data) && data.length === 0) {
-      console.log("Traveller not found");
-      alert("Incorrect Data");
-    } else {
-      localStorage.setItem("currentUser", JSON.stringify(data[0].id));
-      // Redirect to home page
+    if (data) {
+      console.log("data", data);
+      localStorage.setItem("currentUser", JSON.stringify(data.id));
       router.push("/home");
+
+    } else {
+      console.log("Traveler not found");
+      alert("Incorrect Data");
     }
   }
 };

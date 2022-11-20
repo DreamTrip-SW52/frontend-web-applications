@@ -5,9 +5,9 @@
     <div class="card-wrapper">
       <div class="card-description p-2 border-1 border-round" v-for="place in places" :key="place.id">
         <div class="title-pack">{{ place.name }}</div>
-        <div class="des-pack">{{ place.direction }}</div>
+        <div class="des-pack">{{ place.address }}</div>
         <div class="pl-du">
-          <div>{{ place.phone_number }}</div>
+          <div>{{ place.phone }}</div>
         </div>
       </div>
     </div>

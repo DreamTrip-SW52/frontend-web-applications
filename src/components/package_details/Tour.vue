@@ -8,7 +8,7 @@
       <div>
         <p>{{ tourData?.details }}</p>
       </div>
-      <div class="flex flex-wrap justify-content-between">
+      <!-- <div class="flex flex-wrap justify-content-between">
         <div class="mt-4 px-4">
           <h4 class="mb-2 tag">OUTSTANDING OF TOUR</h4>
           <ul class="grid" v-for="item in tourData?.outstanding">
@@ -21,7 +21,7 @@
             <li class="col-6">{{ item }}</li>
           </ul>
         </div>
-      </div>
+      </div> -->
     </section>
     <section id="location">
       <div class="text-center mb-4">
@@ -47,7 +47,7 @@
       </div>
       <div>
         <iframe
-          :src="tourData?.['meeting-point']"
+          :src="tourData?.meetingPoint"
           width="100%"
           height="450"
           style="border: 0"
@@ -61,8 +61,8 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { TourService } from "../../services/Tour.service";
+import { onMounted, ref } from 'vue';
+import { TourService } from '../../services/Tour.service';
 
 const tourService = new TourService();
 const tourData = ref({});
@@ -74,11 +74,10 @@ const props = defineProps({
   },
 });
 
-onMounted(() => {
-  tourService.getTourById(props.id).then((response) => {
-    console.log(props.id);
-    tourData.value = response.data;
-  });
+onMounted(async () => {
+  const tour = await tourService.getTourByPackageId(props.id);
+  console.log('🚀 ~ file: Tour.vue ~ line 79 ~ onMounted ~ tour', tour.data);
+  tourData.value = tour.data;
 });
 </script>
 

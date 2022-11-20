@@ -8,25 +8,34 @@
       <span>Expired date: </span>
       <span>{{ showCard.expirationDate }}</span>
     </div>
-    <div class="flex gap-2">
+    <!-- <div class="flex gap-2">
       <span>CVV code: </span>
       <span>{{ transformCvv() }}</span>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script setup>
-import { CreditCard, CreditCardConstructor } from "@/interfaces/CreditCard";
+import { onMounted } from 'vue';
+import { CreditCard, CreditCardConstructor } from '@/interfaces/CreditCard';
+
 const props = defineProps({
   creditCard: {
     type: CreditCardConstructor,
     required: true,
   },
 });
-let showCard = CreditCard;
-showCard = props.creditCard;
+let showCard = props.creditCard;
+
+onMounted(() => {
+  console.log(
+    '🚀 ~ file: ShowCreditCard.vue ~ line 32 ~ onMounted ~ props.creditCard',
+    props.creditCard
+  );
+});
+
 function transformNumber() {
-  let mask = " **** **** **";
+  let mask = ' **** **** **';
   return (
     showCard.cardNumber.substring(0, 4) +
     mask +
@@ -38,7 +47,7 @@ function transformNumber() {
 }
 
 function transformCvv() {
-  return showCard.securityCode[0] + "**";
+  return showCard.securityCode[0] + '**';
 }
 </script>
 

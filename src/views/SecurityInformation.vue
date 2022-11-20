@@ -3,12 +3,9 @@
   <div class="mx-8">
     <h1 class="text-white text-center">Security Information</h1>
 
-    <SecurityCard
-      title="Police stations"
-      :places="currentTravelPackage?.security?.police_stations"
-    />
-    <SecurityCard title="Hospitals" :places="currentTravelPackage?.security?.hospitals" />
-    <SecurityCard title="Clinics" :places="currentTravelPackage?.security?.clinics" />
+    <SecurityCard title="Police stations" :places="policeStations.data" />
+    <SecurityCard title="Hospitals" :places="hospitals.data" />
+    <SecurityCard title="Clinics" :places="clinics.data" />
   </div>
 </template>
 
@@ -17,15 +14,37 @@ import { onMounted, ref } from 'vue';
 import Navbar from '../components/Navbar.vue';
 import SecurityCard from '../components/SecurityCard.vue';
 import { CurrentTravelService } from '../services/CurrentTravel.service';
+import { PackageService } from '../services/Package.service';
 
-const currentTravelPackage = ref([]);
+const policeStations = ref([]);
+const hospitals = ref([]);
+const clinics = ref([]);
 const currentTravelService = new CurrentTravelService();
+const packageService = new PackageService();
 
 onMounted(async () => {
   const userId = JSON.parse(localStorage.getItem('currentUser'));
 
-  const { data } = await currentTravelService.getByTravelerId(userId);
-  currentTravelPackage.value = data;
+  const currentTravelPackage =
+    await currentTravelService.getCurrentTravelByTravelerId(userId);
+
+  console.log(
+    '🚀 ~ file: SecurityInformation.vue ~ line 29 ~ onMounted ~ currentTravelPackage',
+    JSON.parse(JSON.stringify(currentTravelPackage.data))
+  );
+  const packageTravel = await packageService.getById(
+    JSON.parse(JSON.stringify(currentTravelPackage.data.packageId))
+  );
+
+  policeStations.value = await currentTravelService.getPoliceStationsByLocationId(
+    JSON.parse(JSON.stringify(packageTravel.data.locationId))
+  );
+  hospitals.value = await currentTravelService.getHospitalsByLocationId(
+    JSON.parse(JSON.stringify(packageTravel.data.locationId))
+  );
+  clinics.value = await currentTravelService.getClinicsByLocationId(
+    JSON.parse(JSON.stringify(packageTravel.data.locationId))
+  );
 });
 </script>
 

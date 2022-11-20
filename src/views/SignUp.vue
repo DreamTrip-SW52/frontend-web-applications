@@ -61,10 +61,10 @@
 <script setup>
 import { ref } from "vue";
 import { getAuthRegisterErrors } from "../utils/authUtils";
-import { TravellerService } from "../services/Traveller.service";
+import { TravelerService } from "../services/Traveler.service";
 import { useRouter } from "vue-router";
 
-const travellerService = new TravellerService();
+const travellerService = new TravelerService();
 const router = useRouter();
 
 const handleRegister = async (e) => {
@@ -85,9 +85,11 @@ const handleRegister = async (e) => {
   )
     return;
 
-  const { data } = await travellerService.isEmailRepeated(email.value);
+  const {data} = await travellerService.getAll();
 
-  if (Array.isArray(data) && data.length > 0) {
+  console.log("data",data)
+
+  if(data.find(traveller => traveller.email === email.value)) {
     errors.value.email.error = true;
     errors.value.email.message = "Email already exists";
     return;

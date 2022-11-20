@@ -157,20 +157,28 @@
         <h1 class="text-white">Packages</h1>
       </div>
 
+<!--      show the filters in JSON format-->
+      {{
+        JSON.stringify( {
+          price_filter: price_filter,
+          time_filter: time_filter,
+          typetour_filter: typetour_filter,
+          typepackage_filter: typepackage_filter
+        })
+      }}
       <template v-for="myPackage in packages">
         <PackageCard
           :id="myPackage.id"
           :name="myPackage.name"
           :description="myPackage.description"
-          :price="myPackage.total"
-          :place="myPackage.location"
+          :price="myPackage.price"
+          :place="myPackage.locationAddress"
           :duration="myPackage.duration"
-          :img_url="myPackage.img"
+          :img_url="myPackage.image"
           :type_of_button="'see-details'"
         />
       </template>
 
-      {{ JSON.stringify(packages.value) }}
     </div>
   </div>
 </template>
@@ -186,28 +194,25 @@ const packages = ref([]);
 
 // lifecyle hooks
 onMounted(() => {
-  packageService.getPackages().then((response) => {
+  packageService.getAll().then((response) => {
     packages.value = response.data;
   });
 });
 
 const price_filter = ref(5000);
 const time_filter = ref(30);
-const typetour_filter = ref(null);
 const typepackage_filter = ref(null);
 
 const show_package_filters = () => {
   const price_value = price_filter ? price_filter.value.toString() : null;
   const time_value = time_filter ? time_filter.value.toString() : null;
-  const typetour_value = typetour_filter.value
-    ? typetour_filter.value.toString()
-    : null;
+
   const typepackage_value = typepackage_filter.value
     ? typepackage_filter.value.toString()
     : null;
 
   packageService
-    .filterPackage(price_value, time_value, typetour_value, typepackage_value)
+    .filterPackage(price_value, time_value, typepackage_value)
     .then((response) => {
       packages.value = response.data;
       console.log(

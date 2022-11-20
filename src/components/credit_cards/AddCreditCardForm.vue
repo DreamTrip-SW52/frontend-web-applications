@@ -79,12 +79,15 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { CreditCardsService } from "@/services/CreditCards.service";
+import { ref } from 'vue';
+import { CreditCardsService } from '@/services/CreditCards.service';
+import { TravelerService } from '@/services/Traveler.service';
+import { TravelAgencyService } from '@/services/TravelAgency.service';
+
 const props = defineProps({
   id: {
     type: Number,
-    default: localStorage.getItem("currentUser"),
+    default: localStorage.getItem('currentUser'),
     required: true,
   },
   creditCards: {
@@ -106,34 +109,36 @@ const MIN_CARD_LENGTH = 16;
 const CARD_LIMIT = 3;
 
 const creditCardsService = new CreditCardsService();
+const travelerService = new TravelerService();
+const agencyService = new TravelAgencyService();
 
 let formErrors = ref([]);
 
 const securityCodeHelp =
-  "Security code is cvv code. Numbers on the back of the credit card.";
-const cvvMask = ref("{{999}}");
-const cardMask = ref("{{9999}} {{9999}} {{9999}} {{9999}}");
-const monthMask = ref("{{00}}");
-const yearMask = ref("{{0000}}");
+  'Security code is cvv code. Numbers on the back of the credit card.';
+const cvvMask = ref('{{999}}');
+const cardMask = ref('{{9999}} {{9999}} {{9999}} {{9999}}');
+const monthMask = ref('{{00}}');
+const yearMask = ref('{{0000}}');
 
-let cardNumber = ref("");
-let month = ref("");
-let year = ref("");
-let cvv = ref("");
+let cardNumber = ref('');
+let month = ref('');
+let year = ref('');
+let cvv = ref('');
 
 function onSubmit() {
-  const cardNumber = document.getElementById("card-number");
-  const month = document.getElementById("month");
-  const year = document.getElementById("year");
-  const cvv = document.getElementById("cvv");
+  const cardNumber = document.getElementById('card-number');
+  const month = document.getElementById('month');
+  const year = document.getElementById('year');
+  const cvv = document.getElementById('cvv');
 
   if (props.creditCards.length >= CARD_LIMIT) {
     formErrors.value = [
       {
         message:
-          "You have reached the limit of cards to be registered (" +
+          'You have reached the limit of cards to be registered (' +
           CARD_LIMIT +
-          ")",
+          ')',
       },
     ];
     return;
@@ -151,40 +156,40 @@ function onSubmit() {
   if (!validateCreditCard(creditCard)) return;
 
   addCreditCard(creditCard);
-  emitEvents("add-card", creditCard);
+  emitEvents('add-card', creditCard);
 }
 
 //receive html elements
 function validateForm(cardNumber, month, year, cvv) {
   if (
-    cardNumber.value === "" ||
-    month.value === "" ||
-    year.value === "" ||
-    cvv.value === ""
+    cardNumber.value === '' ||
+    month.value === '' ||
+    year.value === '' ||
+    cvv.value === ''
   )
-    formErrors.value = [{ message: "Please, fill all fields." }];
+    formErrors.value = [{ message: 'Please, fill all fields.' }];
   else if (!validateCardNumber(cardNumber.value))
-    formErrors.value = [{ message: "Insert a valid credit card number." }];
+    formErrors.value = [{ message: 'Insert a valid credit card number.' }];
   else if (!validateMonth(month.value))
-    formErrors.value = [{ message: "Insert a valid month." }];
+    formErrors.value = [{ message: 'Insert a valid month.' }];
   else if (!validateYear(year.value))
-    formErrors.value = [{ message: "Insert a valid year." }];
+    formErrors.value = [{ message: 'Insert a valid year.' }];
   else if (!validateCvv(cvv.value))
-    formErrors.value = [{ message: "Insert a valid cvv code." }];
+    formErrors.value = [{ message: 'Insert a valid cvv code.' }];
   return formErrors.value.length === 0;
 }
 
 //receive object
 function validateCreditCard(creditCard) {
   for (let item of props.creditCards) {
-    console.log("item", item);
-    console.log("card", creditCard);
+    console.log('item', item);
+    console.log('card', creditCard);
     if (
       item.cardNumber === creditCard.cardNumber &&
       item.securityCode === creditCard.securityCode &&
       item.expirationDate === creditCard.expirationDate
     ) {
-      formErrors.value = [{ message: "This credit card already exist." }];
+      formErrors.value = [{ message: 'This credit card already exist.' }];
       return false;
     }
   }
@@ -192,9 +197,46 @@ function validateCreditCard(creditCard) {
 }
 
 //receive object
-function addCreditCard(card) {
+async function addCreditCard(card) {
   card.userType = props.userType;
-  creditCardsService.create(card).then();
+
+  let userName;
+
+  if (card.userType === 'traveller') {
+    const user = await travelerService.getById(props.id);
+    userName = user.data.name;
+  } else {
+    const user = await agencyService.getById(props.id);
+    userName = user.data.name;
+  }
+
+  function collapseCardNumber(cardNumber) {
+    return cardNumber.replace(/\s/g, '');
+  }
+
+  let mappedCard = {
+    holderName: userName,
+    cardNumber: collapseCardNumber(card.cardNumber),
+    expirationDate: card.expirationDate,
+  };
+
+  if (card.userType === 'traveller') {
+    mappedCard = {
+      ...mappedCard,
+      travelerId: props.id,
+    };
+    console.log(
+      '🚀 ~ file: AddCreditCardForm.vue ~ line 221 ~ addCreditCard ~ mappedCard',
+      JSON.stringify(mappedCard)
+    );
+    const response = await creditCardsService.createTravelerCard(mappedCard);
+  } else {
+    mappedCard = {
+      ...mappedCard,
+      agencyId: props.id,
+    };
+    await creditCardsService.createAgencyCard(mappedCard);
+  }
 }
 //receive string values
 function getStorableCreditCard(cardNumber, month, year, cvv) {
@@ -202,7 +244,7 @@ function getStorableCreditCard(cardNumber, month, year, cvv) {
     id: 0,
     userId: props.id,
     cardNumber: cardNumber,
-    expirationDate: month + "/" + year,
+    expirationDate: month + '/' + year,
     securityCode: cvv,
   };
 }

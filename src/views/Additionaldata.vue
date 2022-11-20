@@ -71,11 +71,11 @@
 
 <script setup>
 import { ref } from "vue";
-import { TravellerService } from "../services/Traveller.service";
 import { useRouter } from "vue-router";
 import { IAuthAdditionalDataRegisterErrors } from "../utils/authUtils";
+import {TravelerService} from "../services/Traveler.service";
 
-const travellerService = new TravellerService();
+const travellerService = new TravelerService()
 const router = useRouter();
 
 const handleAdditional = async (e) => {

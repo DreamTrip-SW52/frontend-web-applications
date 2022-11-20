@@ -1,30 +1,33 @@
-import http from "./common";
+import http from './common';
 
 export class TravelAgencyService {
+  agencyPath = '/agencies';
+
   getAll() {
-    return http.get("/travelAgency");
+    return http.get(this.agencyPath);
   }
   getById(id) {
-    return http.get(`/travelAgency/${id}`);
+    return http.get(this.agencyPath + `/${id}`);
   }
 
-  isEmailRepeated(email) {
-    return http.get(`/travelAgency?email=${email}`);
-  }
+  // isEmailRepeated(email) {
+  //   return http.get(`/travelAgency?email=${email}`);
+  // }
 
   loginWithEmailAndPassword(email, password) {
-    return http.get(`/travelAgency?email=${email}&password=${password}`);
+    return http.get(this.agencyPath + `/emailandpassword/${email}/${password}`);
   }
 
-  create(data) {
-    return http.post("/travelAgency", data);
+  create(agency) {
+    return http.post(this.agencyPath, agency);
   }
 
-  update(id, data) {
-    return http.put(`/travelAgency/${id}`, data);
+  update(id, agency) {
+    return http.put(this.agencyPath + `/${id}`, agency);
   }
 
   delete(id) {
-    return http.delete(`/travelAgency/${id}`);
+    return http.delete(this.agencyPath + `/${id}`);
   }
 }
+

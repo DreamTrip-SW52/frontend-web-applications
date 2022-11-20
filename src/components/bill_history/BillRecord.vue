@@ -2,7 +2,7 @@
   <div class="card-description p-2 px-4 border-1 border-round">
     <div class="bill">
       <div class="title-pack">{{ bill.name }}</div>
-      <div class="des-pack">{{ bill.amount }}</div>
+      <div class="des-pack">{{ bill.price }}</div>
     </div>
 
     <Button class="p-button-danger" label="Delete" @click="$emit('delete')" />

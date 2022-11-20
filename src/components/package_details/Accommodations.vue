@@ -21,7 +21,7 @@
         :key="service.name"
         class="grid"
       >
-        <li class="col-6">{{ service }}</li>
+        <li class="col-6">{{ service.name }}</li>
       </ul>
     </section>
     <section id="conditions">
@@ -34,11 +34,11 @@
         <ul class="flex flex-column gap-2">
           <li>
             Check in:
-            {{ accommodationData?.conditions?.schedule?.["check-in"] }}
+            {{ moment(accommodationData?.checkIn).format('LL') }}
           </li>
           <li>
             Check out:
-            {{ accommodationData?.conditions?.schedule?.["check-out"] }}
+            {{ moment(accommodationData?.checkOut).format('LL') }}
           </li>
         </ul>
       </div>
@@ -64,8 +64,9 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { AccommodationService } from "../../services/Accommodation.service";
+import { onMounted, ref } from 'vue';
+import { AccommodationService } from '../../services/Accommodation.service';
+import moment from 'moment';
 
 const accommodationService = new AccommodationService();
 const accommodationData = ref({});
@@ -77,12 +78,37 @@ const props = defineProps({
   },
 });
 
-onMounted(() => {
-  console.log(props.id);
-  accommodationService.getAccommodationById(props.id).then((response) => {
-    accommodationData.value = response.data;
-    console.log(accommodationData.value);
+onMounted(async () => {
+  const accommodation = await accommodationService.getAccommodationByPackageId(
+    props.id
+  );
+
+  let resultado = {
+    ...accommodation.data,
+  };
+
+  const services = await accommodationService.getServicesPerAccommodation(
+    accommodation.data.id
+  );
+
+  const servicesPerAccommodations = await services.data.map(async (service) => {
+    return accommodationService
+      .getServiceByServiceId(service.serviceId)
+      .then((response) => {
+        return {
+          name: response.data.name,
+        };
+      });
   });
+
+  // hacer un Promise.all para obtener los servicios
+  const servicesPerAccommodationsResult = await Promise.all(
+    servicesPerAccommodations
+  );
+
+  resultado.services = servicesPerAccommodationsResult;
+
+  accommodationData.value = resultado;
 });
 </script>
 
