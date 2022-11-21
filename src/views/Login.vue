@@ -65,8 +65,6 @@ const router = useRouter();
 const handleLogin = async (e) => {
   e.preventDefault();
 
-  console.log("handleLogin");
-
   const loginErrors = getAuthLoginErrors(email.value, password.value);
 
   errors.value = loginErrors;
@@ -81,7 +79,6 @@ const handleLogin = async (e) => {
       console.log("data", data);
       localStorage.setItem("currentUser", JSON.stringify(data.id));
       router.push("/home");
-
     } else {
       console.log("Traveler not found");
       alert("Incorrect Data");

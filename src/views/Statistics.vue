@@ -61,16 +61,23 @@ const getRating = (data) => {
   stars.value = Math.floor(total / data.length);
 };
 
-onMounted(() => {
+onMounted(async () => {
   const params = router.currentRoute.value.params;
-  reviewService.getReviewByPackageId(params.id).then((response) => {
-    reviewInfo.value = response.data;
-    getRating(JSON.parse(JSON.stringify(reviewInfo.value)));
-  });
-  packageService.getPackageById(params.id).then((response) => {
-    views.value = response.data.views;
-    purchasedTickets.value = response.data.sales;
-  });
+
+  const responseReview = await reviewService.getReviewsByPackageId(params.id);
+
+  reviewInfo.value = responseReview.data;
+
+  console.log(
+    "🚀 ~ file: Statistics.vue ~ line 68 ~ onMounted ~ reviewInfo.value",
+    JSON.stringify(reviewInfo.value)
+  );
+
+  getRating(JSON.parse(JSON.stringify(reviewInfo.value)));
+
+  const responsePackage = await packageService.getById(params.id);
+  views.value = responsePackage.data.views;
+  purchasedTickets.value = responsePackage.data.sales;
 });
 </script>
 

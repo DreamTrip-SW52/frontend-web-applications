@@ -88,18 +88,18 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import { AccommodationService } from '../../services/Accommodation.service';
+import { onMounted, ref } from "vue";
+import { AccommodationService } from "../../services/Accommodation.service";
 
 onMounted(() => {
-  const locationId = localStorage.getItem('locationId');
+  const locationId = localStorage.getItem("locationId");
   if (locationId === null) {
-    alert('Please select a transport first');
+    alert("Please select a transport first");
   }
 });
 
 // emits
-const emit = defineEmits(['prevPage', 'nextPage']);
+const emit = defineEmits(["prevPage", "nextPage"]);
 
 // classes
 const accommodationService = new AccommodationService();
@@ -111,26 +111,26 @@ const selectedServices = ref([]);
 const resultAccommodation = ref([]);
 
 const services = ref([
-  { service: 'WiFi', value: 'WiFi' },
-  { service: 'Room Service', value: 'Room Service' },
-  { service: 'Restaurant', value: 'Restaurant' },
-  { service: 'Bar', value: 'Bar' },
-  { service: 'Entertaiment Zone', value: 'Entertaiment Zone' },
-  { service: 'Swimming Pool', value: 'Swimming Pool' },
-  { service: 'Spa', value: 'Spa' },
-  { service: 'Parking', value: 'Parking' },
-  { service: 'Air conditioning', value: 'Air conditioning' },
+  { service: "WiFi", value: "WiFi" },
+  { service: "Room Service", value: "Room Service" },
+  { service: "Restaurant", value: "Restaurant" },
+  { service: "Bar", value: "Bar" },
+  { service: "Entertaiment Zone", value: "Entertaiment Zone" },
+  { service: "Swimming Pool", value: "Swimming Pool" },
+  { service: "Spa", value: "Spa" },
+  { service: "Parking", value: "Parking" },
+  { service: "Air conditioning", value: "Air conditioning" },
 ]);
 
 // functions
-const prevPage = () => emit('prevPage', { pageIndex: 1 });
+const prevPage = () => emit("prevPage", { pageIndex: 1 });
 
-const nextPage = () => emit('nextPage', { pageIndex: 1 });
+const nextPage = () => emit("nextPage", { pageIndex: 1 });
 
 const openDialog = () => (displayDialog.value = true);
 
 const save = (id) =>
-  localStorage.setItem('accommodationSelected', JSON.stringify(id));
+  localStorage.setItem("accommodationId", JSON.stringify(id));
 
 const parseSelectedServices = (services) => {
   const parsedServices = [];
@@ -142,14 +142,14 @@ const parseSelectedServices = (services) => {
 
 const find = async () => {
   // const travelAgencyId = localStorage.getItem("travelAgencyId");
-  const locationId = localStorage.getItem('locationId');
+  const locationId = localStorage.getItem("locationId");
   const response = await accommodationService.filterAccommodation(
     locationId,
     price.value[0],
     price.value[1]
   );
   console.log(
-    '🚀 ~ file: AccommodationForm.vue ~ line 151 ~ find ~ response',
+    "🚀 ~ file: AccommodationForm.vue ~ line 151 ~ find ~ response",
     response.data
   );
   resultAccommodation.value = response.data;

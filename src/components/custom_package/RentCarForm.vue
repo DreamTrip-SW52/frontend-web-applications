@@ -106,18 +106,18 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import { CarService } from '../../services/Car.service';
+import { onMounted, ref } from "vue";
+import { CarService } from "../../services/Car.service";
 
 onMounted(() => {
-  const locationId = localStorage.getItem('locationId');
+  const locationId = localStorage.getItem("locationId");
   if (locationId === null) {
-    alert('Please select a transport first');
+    alert("Please select a transport first");
   }
 });
 
 // emits
-const emit = defineEmits(['prevPage', 'nextPage']);
+const emit = defineEmits(["prevPage", "nextPage"]);
 
 // refs
 const resultCars = ref([]);
@@ -125,33 +125,33 @@ const displayDialog = ref(false);
 const formData = ref({
   price: [50, 200],
   capacity: [4, 5],
-  brand: '',
+  brand: "",
 });
 const brands = ref([
-  { brand: 'Toyota', value: 'TOYOTA' },
-  { brand: 'Suzuki', value: 'SUZUKI' },
-  { brand: 'Chevrolet', value: 'CHEVROLET' },
-  { brand: 'Honda', value: 'HONDA' },
-  { brand: 'BMW', value: 'BMW' },
-  { brand: 'KIA', value: 'KIA' },
-  { brand: 'Nissan', value: 'NISSAN' },
-  { brand: 'Hyundai', value: 'HYUNDAI' },
+  { brand: "Toyota", value: "TOYOTA" },
+  { brand: "Suzuki", value: "SUZUKI" },
+  { brand: "Chevrolet", value: "CHEVROLET" },
+  { brand: "Honda", value: "HONDA" },
+  { brand: "BMW", value: "BMW" },
+  { brand: "KIA", value: "KIA" },
+  { brand: "Nissan", value: "NISSAN" },
+  { brand: "Hyundai", value: "HYUNDAI" },
 ]);
 
 // classes
 const carService = new CarService();
 
 // functions
-const prevPage = () => emit('prevPage', { pageIndex: 3 });
+const prevPage = () => emit("prevPage", { pageIndex: 3 });
 
-const nextPage = () => emit('nextPage', { pageIndex: 3 });
+const nextPage = () => emit("nextPage", { pageIndex: 3 });
 
 const openDialog = () => (displayDialog.value = true);
 
 const parseProxy = (proxy) => JSON.parse(JSON.stringify(proxy));
 
 const save = (id) => {
-  localStorage.setItem('carSelected', JSON.stringify(id));
+  localStorage.setItem("rentCarId", JSON.stringify(id));
 };
 
 const parseMultiSelectIntoValue = (items) => {
@@ -163,7 +163,7 @@ const parseMultiSelectIntoValue = (items) => {
 };
 
 const find = async () => {
-  const locationId = localStorage.getItem('locationId');
+  const locationId = localStorage.getItem("locationId");
   const price = parseProxy(formData.value.price);
   const capacity = parseProxy(formData.value.capacity);
   // const brand = parseMultiSelectIntoValue(parseProxy(formData.value.brand))[0];

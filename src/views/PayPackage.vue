@@ -41,10 +41,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { PackageService } from '../services/Package.service';
-import PayMethods from '@/components/pay/PayMethods.vue';
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { PackageService } from "../services/Package.service";
+import PayMethods from "@/components/pay/PayMethods.vue";
 
 const router = useRouter();
 const packageData = ref({});
@@ -67,20 +67,18 @@ const pay = async (packageSales, packageViews) => {
     params.id,
     packageData.value
   );
-  console.log(
-    '🚀 ~ file: PayPackage.vue ~ line 66 ~ pay ~ responsePackage',
-    responsePackage.data
-  );
+  console.log(responsePackage);
 
   // create purchased package
   const responsePurchasedPackage = await packageService.createPurchasedPackage({
     packageId: params.id,
+    customPackageId: null,
     active: false,
-    travelerId: localStorage.getItem('currentUser'),
+    travelerId: localStorage.getItem("currentUser"),
   });
   console.log(responsePurchasedPackage);
 
-  alert('Package purchased successfully');
+  alert("Package purchased successfully");
 
   // router.replace('/home');
 };

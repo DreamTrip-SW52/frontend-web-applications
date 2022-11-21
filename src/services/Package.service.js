@@ -1,9 +1,10 @@
-const BASE_URL = 'http://localhost:3000/packages?';
-import http from './common';
+const BASE_URL = "http://localhost:3000/packages?";
+import http from "./common";
 
 export class PackageService {
-  packagePath = '/package';
-  purchasedPackagePath = '/purchasedpackage';
+  packagePath = "/package";
+  purchasedPackagePath = "/purchasedpackage";
+  customPackagePath = "/custompackages";
 
   getAll() {
     return http.get(this.packagePath);
@@ -11,6 +12,10 @@ export class PackageService {
 
   createPackage(packageData) {
     return http.post(this.packagePath, JSON.stringify(packageData));
+  }
+
+  createCustomPackage(customPackageData) {
+    return http.post(this.customPackagePath, customPackageData);
   }
 
   updatePackage(id, packageData) {

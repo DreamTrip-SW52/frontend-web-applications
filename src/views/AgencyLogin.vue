@@ -59,33 +59,11 @@ import { getAuthLoginErrors } from "../utils/authUtils";
 import { TravelAgencyService } from "../services/TravelAgency.service";
 
 const travelAgencyService = new TravelAgencyService();
+
 const router = useRouter();
 
-const handleLogin = async (e) => {
-  e.preventDefault();
-
-  console.log("handleLogin");
-
-  const loginErrors = getAuthLoginErrors(email.value, password.value);
-
-  errors.value = loginErrors;
-
-  if (!loginErrors?.email?.error && !loginErrors?.password?.error) {
-    const { data } = await travelAgencyService.loginWithEmailAndPassword(
-      email.value,
-      password.value
-    );
-
-    if (Array.isArray(data) && data.length === 0) {
-      console.log("Travel Agency not found");
-      alert("Incorrect Data");
-    } else {
-      localStorage.setItem("currentUser", JSON.stringify(data[0].id));
-      // Redirect to mypackages
-      router.push("/agency/mypackages");
-    }
-  }
-};
+const email = ref("btravels@gmail.com");
+const password = ref("btravels123");
 
 let errors = ref({
   email: {
@@ -98,9 +76,30 @@ let errors = ref({
   },
 });
 
-const email = ref("");
-const password = ref("");
 const display = false;
+const handleLogin = async (e) => {
+  e.preventDefault();
+
+  const loginErrors = getAuthLoginErrors(email.value, password.value);
+
+  errors.value = loginErrors;
+
+  if (!loginErrors?.email?.error && !loginErrors?.password?.error) {
+    const { data } = await travelAgencyService.loginWithEmailAndPassword(
+      email.value,
+      password.value
+    );
+
+    if (data) {
+      console.log("data", data);
+      localStorage.setItem("currentUser", JSON.stringify(data.id));
+      router.push("/agency/mypackages");
+    } else {
+      console.log("Travel Agency not found");
+      alert("Incorrect Data");
+    }
+  }
+};
 </script>
 
 <style scoped>

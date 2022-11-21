@@ -24,35 +24,20 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { PackageService } from '../services/Package.service';
-import { TravelerService } from '../services/Traveler.service';
-import { TransportService } from '../services/Transport.service';
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { PackageService } from "../services/Package.service";
+import { TravelerService } from "../services/Traveler.service";
+import { TransportService } from "../services/Transport.service";
 
-import PayMethods from '@/components/pay/PayMethods.vue';
+import PayMethods from "@/components/pay/PayMethods.vue";
 
 const router = useRouter();
-const packageData = ref({
-  name: 'Package of ',
-  description: 'This is a custom package created by ',
-  locationAddress: '',
-  duration: 1,
-  capacity: 1,
-  price: 10,
-  image:
-    'https://blog.seccionamarilla.com.mx/wp-content/uploads/2017/11/Viajemos-todos-por-M%C3%A9xico-3.jpg',
-  custom: true,
-  views: 1,
-  sales: 1,
-  category: 'STANDARD',
-  agencyId: 1,
-  locationId: 0,
-});
 
 const packageService = new PackageService();
 const travelerService = new TravelerService();
 const transportService = new TransportService();
+
 const traveler = ref({});
 const location = ref({});
 
@@ -60,36 +45,47 @@ onMounted(() => {});
 
 const createPackage = async () => {
   const responseTraveler = await travelerService.getById(
-    localStorage.getItem('currentUser')
+    localStorage.getItem("currentUser")
   );
   traveler.value = responseTraveler.data;
 
   const responseLocation = await transportService.getLocationById(
-    localStorage.getItem('locationId')
+    localStorage.getItem("locationId")
   );
   location.value = responseLocation.data;
 
+  let customPackageData = {
+    name: "Package of " + traveler.value.name,
+    price: 0,
+    travelerId: localStorage.getItem("currentUser"),
+    locationId: localStorage.getItem("locationId"),
+    rentCarId: localStorage.getItem("rentCarId"),
+    accommodationId: localStorage.getItem("accommodationId"),
+    tourId: localStorage.getItem("tourId"),
+    roundTripId: localStorage.getItem("roundTripId"),
+    oneWayId: localStorage.getItem("oneWayId"),
+  };
+
   // complete data for package
-  packageData.value.name += traveler.value.name;
-  packageData.value.description += traveler.value.name;
-  packageData.value.locationAddress = location.value.department;
-  packageData.value.locationId = location.value.id;
   console.log(
-    '🚀 ~ file: BuyPackage.vue ~ line 77 ~ createPackage ~ packageData.value',
+    "🚀 ~ file: BuyPackage.vue ~ line 77 ~ createPackage ~ packageData.value",
     packageData.value
   );
 
-  const responsePackage = await packageService.createPackage(packageData.value);
-  console.log('Package created', responsePackage);
+  const responsePackage = await packageService.createCustomPackage(
+    customPackageData.value
+  );
+  console.log("Custom Package created", responsePackage);
 
   const responsePurchasedPackage = await packageService.purchasedPackage({
-    packageId: responsePackage.data.id,
+    packageId: null,
+    customPackageId: 1,
     active: 0,
     travelerId: traveler.value.id,
   });
-  console.log('Purchase package added', responsePurchasedPackage);
+  console.log("Purchase package added", responsePurchasedPackage);
 
-  alert('Package purchased succesfully');
+  alert("Package purchased succesfully");
 
   // router.push('/home');
 };
