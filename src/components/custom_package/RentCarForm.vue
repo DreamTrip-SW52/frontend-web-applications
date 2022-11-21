@@ -51,24 +51,24 @@
           <Dialog
             v-model:visible="displayDialog"
             :modal="true"
-            :style="{ width: '40vw' }"
+            :style="{ width: '50vw' }"
           >
             <div v-for="result in resultCars">
               <div
                 class="card-container text-white flex justify-content-between p-4 align-items-center"
               >
                 <div v-if="result.photo">
-                  {{ result.photo }}
+                  <img :src="result.photo" alt="Car Photo" />
                 </div>
                 <div v-else>
-                  <img src="https://via.placeholder.com/150" alt="" />
+                  <img src="https://via.placeholder.com/150" alt="Car photo" />
                 </div>
                 <ul>
                   <li class="text-xl font-medium">
                     Price: S/.{{ result.price }}
                   </li>
                   <li class="text-xl font-medium">
-                    Pickup Address {{ result["addres-pick-up"] }}
+                    Pickup Address: {{ result.address }}
                   </li>
                   <li class="text-xl font-medium">Brand: {{ result.brand }}</li>
                 </ul>
@@ -114,14 +114,14 @@ const formData = ref({
   brand: "",
 });
 const brands = ref([
-  { brand: "Toyota", value: "Toyota" },
-  { brand: "Suzuki", value: "Suzuki" },
-  { brand: "Chevrolet", value: "Chevrolet" },
-  { brand: "Honda", value: "Honda" },
-  { brand: "BMW", value: "Toyota" },
+  { brand: "Toyota", value: "TOYOTA" },
+  { brand: "Suzuki", value: "SUZUKI" },
+  { brand: "Chevrolet", value: "CHEVROLET" },
+  { brand: "Honda", value: "HONDA" },
+  { brand: "BMW", value: "BMW" },
   { brand: "KIA", value: "KIA" },
-  { brand: "Nissan", value: "Nissan" },
-  { brand: "Hyundai", value: "Hyundai" },
+  { brand: "Nissan", value: "NISSAN" },
+  { brand: "Hyundai", value: "HYUNDAI" },
 ]);
 
 // classes
@@ -130,14 +130,14 @@ const carService = new CarService();
 // functions
 const prevPage = () => emit("prevPage", { pageIndex: 3 });
 
-const nextPage = () => emit("nextPage", { pageIndex: 1 });
+const nextPage = () => emit("nextPage", { pageIndex: 3 });
 
 const openDialog = () => (displayDialog.value = true);
 
 const parseProxy = (proxy) => JSON.parse(JSON.stringify(proxy));
 
 const save = (id) => {
-  // localStorage.setItem('carSelected', JSON.stringify(id));
+  localStorage.setItem("carSelected", JSON.stringify(id));
 };
 
 const parseMultiSelectIntoValue = (items) => {
@@ -148,26 +148,24 @@ const parseMultiSelectIntoValue = (items) => {
   return newItems;
 };
 
-const find = () => {
-  const travelAgencyId = localStorage.getItem("travelAgencyId");
+const find = async () => {
   const locationId = localStorage.getItem("locationId");
   const price = parseProxy(formData.value.price);
   const capacity = parseProxy(formData.value.capacity);
   const brand = parseMultiSelectIntoValue(parseProxy(formData.value.brand))[0];
 
-  carService.filterCar(travelAgencyId, locationId).then((response) => {
-    filteredCar.value = response.data.filter((car) => {
-      return (
-        parseInt(car.price) >= parseInt(price[0]) &&
-        parseInt(car.price) <= parseInt(price[1]) &&
-        parseInt(car.capacity) >= parseInt(capacity[0]) &&
-        parseInt(car.capacity) <= parseInt(capacity[1]) &&
-        car.brand === brand
-      );
-    });
-    resultCars.value = filteredCar.value;
-    openDialog();
-  });
+  const response = await carService.filterCar(
+    locationId,
+    price[0],
+    price[1],
+    capacity[0],
+    capacity[1],
+    brand
+  );
+
+  resultCars.value = response.data;
+
+  openDialog();
 };
 </script>
 
@@ -188,6 +186,11 @@ label {
 #main-form {
   width: 100%;
   gap: 80px;
+}
+
+img {
+  width: 150px;
+  height: 100px;
 }
 
 .submit-btn {

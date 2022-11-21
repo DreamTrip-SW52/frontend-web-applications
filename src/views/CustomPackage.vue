@@ -41,7 +41,7 @@ const items = ref([
   },
   {
     label: "BuyPackage",
-    to: "buypackage/:id",
+    to: "./buypackage",
   },
 ]);
 

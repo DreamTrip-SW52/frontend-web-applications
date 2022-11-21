@@ -17,12 +17,6 @@
           />
         </ScrollPanel>
       </div>
-      <div clas="flex flex-row">
-        <span>Oustandings</span>
-        <ul v-for="item in tour.oustanding">
-          <li>{{ item }}</li>
-        </ul>
-      </div>
       <div class="flex flex-column">
         <div>
           <span>Price</span>
@@ -50,34 +44,39 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import { TourService } from '../../services/Tour.service';
+import { onMounted, ref } from "vue";
+import { TourService } from "../../services/Tour.service";
 
 // emits
-const emit = defineEmits(['prevPage', 'nextPage']);
+const emit = defineEmits(["prevPage", "nextPage"]);
 
 // refs
 const resultTour = ref([]);
 
+const tourService = new TourService();
+
 // lifecycle hooks
-onMounted(() => {
-  const travelAgencyId = localStorage.getItem('travelAgencyId');
-  const locationId = localStorage.getItem('locationId');
-  tourService.filterTour(travelAgencyId, locationId).then((response) => {
-    resultTour.value = response.data;
-  });
+onMounted(async () => {
+  const travelAgencyId = localStorage.getItem("travelAgencyId");
+  const locationId = localStorage.getItem("locationId");
+
+  const response = await tourService.getToursByLocationId(locationId);
+  resultTour.value = response.data;
+
+  // tourService.filterTour(travelAgencyId, locationId).then((response) => {
+  //   resultTour.value = response.data;
+  // });
 });
 
 // classes
-const tourService = new TourService();
 
 // functions
-const prevPage = () => emit('prevPage', { pageIndex: 2 });
-const nextPage = () => emit('nextPage', { pageIndex: 2 });
-const openDialog = () => (displayDialog.value = true);
-const parseProxy = (proxy) => JSON.parse(JSON.stringify(proxy));
+const prevPage = () => emit("prevPage", { pageIndex: 2 });
+
+const nextPage = () => emit("nextPage", { pageIndex: 2 });
+
 const save = (id) => {
-  localStorage.setItem('accommodationSelected', JSON.stringify(id));
+  localStorage.setItem("accommodationSelected", JSON.stringify(id));
 };
 </script>
 
@@ -86,13 +85,6 @@ const save = (id) => {
   background-color: #161d2f;
   border-radius: 8px;
 }
-
-/* .line-clamp {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-} */
 
 .max-w-30-ch {
   max-width: 40ch;

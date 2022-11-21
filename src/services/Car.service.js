@@ -1,7 +1,7 @@
-import http from './common';
+import http from "./common";
 
 export class CarService {
-  basePath = '/rentcars';
+  basePath = "/rentcars";
 
   getCars() {
     return http.get(this.basePath);
@@ -11,7 +11,10 @@ export class CarService {
     return http.get(this.basePath + `/${id}`);
   }
 
-  filterCar(priceMin, priceMax, capacityMin, capacityMax, brand) {
-    return http.get(this.basePath + `/filters/${priceMin}/${priceMax}/${capacityMin}/${capacityMax}/${brand}`);
+  filterCar(locationId, priceMin, priceMax, capacityMin, capacityMax, brand) {
+    return http.get(
+      this.basePath +
+        `/filters/${locationId}/${priceMin}/${priceMax}/${capacityMin}/${capacityMax}/${brand}`
+    );
   }
 }

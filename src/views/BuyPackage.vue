@@ -3,7 +3,7 @@
     <header>
       <h1 class="title-pay-package">Buy Package</h1>
     </header>
-    <div class="pay-package">
+    <!-- <div class="pay-package">
       <PayMethods>
         <div class="creditcard-details">
           <h2 class="creditcard-details-title">Package Details</h2>
@@ -31,15 +31,15 @@
     </div>
     <router-link to="/home">
       <Button class="pay-buttom" label="Pay" />
-    </router-link>
+    </router-link> -->
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { PackageService } from '../services/Package.service';
-import PayMethods from '@/components/pay/PayMethods.vue';
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { PackageService } from "../services/Package.service";
+import PayMethods from "@/components/pay/PayMethods.vue";
 
 const router = useRouter();
 const packageData = ref({});
@@ -47,14 +47,14 @@ const packageService = new PackageService();
 
 // lifecyle hooks
 onMounted(() => {
-  const params = router.currentRoute.value.params;
-  packageService.getPackageById(params.id).then((response) => {
-    packageData.value = response.data;
-    console.log(
-      '🚀 ~ file: PayPackage.vue ~ line 56 ~ packageService.getPackageById ~ packageData.value',
-      packageData.value
-    );
-  });
+  // const params = router.currentRoute.value.params;
+  // packageService.getPackageById(params.id).then((response) => {
+  //   packageData.value = response.data;
+  //   console.log(
+  //     "🚀 ~ file: PayPackage.vue ~ line 56 ~ packageService.getPackageById ~ packageData.value",
+  //     packageData.value
+  //   );
+  // });
 });
 
 const pay = (packageSales) => {

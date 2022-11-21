@@ -2,6 +2,8 @@
   <main class="px-6 mt-6">
     <header>
       <h1 class="text-4xl text-center text-white">Transport</h1>
+      <!-- <pre>{{ JSON.stringify(formData,null,3) }}</pre> -->
+      <pre>{{ resultTrips }}</pre>
     </header>
     <form class="flex flex-column align-items-center py-4 gap-4 mt-4">
       <section
@@ -35,7 +37,7 @@
             <RadioButton
               inputId="transport1"
               name="transport"
-              value="bus"
+              value="BUS"
               v-model="formData.transport"
             />
             <label for="transport1">Bus</label>
@@ -44,7 +46,7 @@
             <RadioButton
               inputId="transport2"
               name="transport"
-              value="flights"
+              value="FLIGHT"
               v-model="formData.transport"
             />
             <label for="transport2">Flight</label>
@@ -53,7 +55,7 @@
             <RadioButton
               inputId="transport2"
               name="transport"
-              value="trains"
+              value="TRAIN"
               v-model="formData.transport"
             />
             <label for="transport3">Train</label>
@@ -116,42 +118,47 @@
         :modal="true"
         :style="{ width: '50vw' }"
       >
-        <div v-for="result in resultTransports">
-          <div
-            class="card-container text-white flex justify-content-between p-4 align-items-center"
-          >
-            <div v-for="item in result.details">
-              <div class="flex gap-4 align-items-center">
-                <i class="pi pi-box"></i>
-                <p>{{ item.name }}</p>
-              </div>
-              <div class="flex gap-4">
-                <div class="text-center">
-                  <span>{{ item.from.abbr }}</span>
-                  <p class="font-light text-md">
-                    {{ item.from.tag }}
-                  </p>
+        <div v-if="resultTrips.length === 0">
+          <p>No hay resultados</p>
+        </div>
+        <div v-else>
+          <div v-for="result in resultTrips">
+            <div
+              class="card-container text-white flex justify-content-between p-4 align-items-center"
+            >
+              <!-- <div v-for="item in result.details">
+                <div class="flex gap-4 align-items-center">
+                  <i class="pi pi-box"></i>
+                  <p>{{ item.name }}</p>
                 </div>
-                <img
-                  src="../../assets/double-arrow-right.svg"
-                  alt=""
-                  v-if="item.type === 'go'"
-                />
-                <img
-                  src="../../assets/double-arrow-left.svg"
-                  alt=""
-                  v-if="item.type === 'back'"
-                />
-                <div class="text-center">
-                  <span>{{ item.to.abbr }}</span>
-                  <p class="font-light text-md">{{ item.to.tag }}</p>
+                <div class="flex gap-4">
+                  <div class="text-center">
+                    <span>{{ item.from.abbr }}</span>
+                    <p class="font-light text-md">
+                      {{ item.from.tag }}
+                    </p>
+                  </div>
+                  <img
+                    src="../../assets/double-arrow-right.svg"
+                    alt=""
+                    v-if="item.type === 'go'"
+                  />
+                  <img
+                    src="../../assets/double-arrow-left.svg"
+                    alt=""
+                    v-if="item.type === 'back'"
+                  />
+                  <div class="text-center">
+                    <span>{{ item.to.abbr }}</span>
+                    <p class="font-light text-md">{{ item.to.tag }}</p>
+                  </div>
                 </div>
+              </div> -->
+              <div>
+                <span class="text-xl font-medium">S/.{{ result.price }}</span>
               </div>
+              <Button label="Select" @click="save(result)" />
             </div>
-            <div>
-              <span class="text-xl font-medium">S/.{{ result.price }}</span>
-            </div>
-            <Button label="Select" @click="save(result.id)" />
           </div>
         </div>
       </Dialog>
@@ -171,19 +178,20 @@
 <script setup>
 import { ref } from "vue";
 import { TransportService } from "../../services/Transport.service";
-import moment from "moment";
+import { PackageService } from "../../services/Package.service";
 
 // emits
 const emit = defineEmits(["nextPage"]);
 
 // refs
-const filteredTransports = ref({});
-const resultTransports = ref([]);
+const resultTrips = ref([]);
+
 const displayDialog = ref(false);
+
 const classes = ref([
-  { classT: "Express", value: "express" },
-  { classT: "Commercial", value: "commercial" },
-  { classT: "VIP", value: "vip" },
+  { classT: "Express", value: "EXPRESS" },
+  { classT: "Normal", value: "NORMAL" },
+  { classT: "VIP", value: "VIP" },
 ]);
 const departments = ref([
   { department: "Amazonas", value: "Amazonas" },
@@ -222,28 +230,31 @@ const formData = ref({
 });
 // classes
 const transportService = new TransportService();
+const packageService = new PackageService();
 
 // functions
 const nextPage = () => emit("nextPage", { pageIndex: 0 });
 
 const openDialog = () => (displayDialog.value = true);
 
-const save = (id) => {
-  const typeOfTransport = formData.value.transport;
-  transportService
-    .getTransportByTypeAndId(typeOfTransport, id)
-    .then((response) => {
-      const transport = response.data;
-      const travelAgencyId = transport.travelAgencyId;
-      const locationId = transport.locationId;
-      localStorage.setItem("travelAgencyId", JSON.stringify(travelAgencyId));
-      localStorage.setItem("locationId", JSON.stringify(locationId));
-    });
+const save = (result) => {
+  const response = packageService.getById(result.packageId);
+  localStorage.setItem("locationId", JSON.stringify(response.data.locationId));
 };
 
-const parseProxy = (proxy) => JSON.parse(JSON.stringify(proxy));
+const getData = async (transportCard) => {
+  const transport = await transportService.getTransportById(transportCard.transportId);
+  const transportName = transport.data.name;
 
-const find = () => {
+  const transportClass = await transportService.getTransportClassById(
+    transportCard.transportClassId
+  );
+  const transportClassName = transportClass.data.name;
+
+  return {transportName,transportClassName}
+};
+
+const find = async () => {
   const typeOfTransport = formData.value.transport;
   const typeOfTrip = formData.value.typeOfTrip;
   const classT = formData.value.classT[0].value;
@@ -251,20 +262,46 @@ const find = () => {
   const departFrom = formData.value.departFrom[0].value;
   const goingTo = formData.value.goingTo[0].value;
 
-  transportService
-    .filterTransport(typeOfTransport, typeOfTrip, classT, date)
-    .then((response) => {
-      resultTransports.value = [];
+  let departureDate = JSON.stringify(date[0]);
+  let returnDate = JSON.stringify(date[1]);
+  departureDate = departureDate.substring(1, departureDate.length - 3);
+  returnDate = returnDate.substring(1, returnDate.length - 3);
+  let response = null;
 
-      filteredTransports.value = response.data;
-      filteredTransports.value.forEach(function (element) {
-        if (
-          element.details[0].from.tag === departFrom &&
-          element.details[0].to.tag === goingTo
-        )
-          resultTransports.value.push(element);
-      });
-    });
+  if (typeOfTrip.value === "One Way") {
+    response = await transportService.getOneWayByFilters(
+      goingTo,
+      departureDate,
+      returnDate,
+      classT,
+      typeOfTransport
+    );
+  } else {
+    response = await transportService.getRoundTripByFilters(
+      departFrom,
+      goingTo,
+      departureDate,
+      returnDate,
+      classT,
+      typeOfTransport
+    );
+  }
+
+  // make a promise all to resolve the data
+  const promises = response.data.map(async (data) => {
+    const {transportName,transportClassName} = await getData(data);
+    return {
+      ...data,
+      transportName,
+      transportClassName
+    };
+  });
+
+  const results = await Promise.all(promises);
+  console.log("🚀 ~ file: TransportForm.vue ~ line 301 ~ find ~ results", results)
+
+  resultTrips.value = results;
+
   openDialog();
 };
 </script>

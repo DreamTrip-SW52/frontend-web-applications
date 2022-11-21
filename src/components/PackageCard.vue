@@ -8,8 +8,8 @@
       <div class="title-pack">{{ name }}</div>
       <div class="des-pack">{{ description }}</div>
       <div class="pl-du">
-        <div>{{ place }}</div>
-        <div>{{ duration }}</div>
+        <h2>Place: {{ place }}</h2>
+        <h2>Duration: {{ duration }} days</h2>
       </div>
     </div>
 

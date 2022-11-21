@@ -157,13 +157,12 @@
         <h1 class="text-white">Packages</h1>
       </div>
 
-<!--      show the filters in JSON format-->
       {{
-        JSON.stringify( {
+        JSON.stringify({
           price_filter: price_filter,
           time_filter: time_filter,
           typetour_filter: typetour_filter,
-          typepackage_filter: typepackage_filter
+          typepackage_filter: typepackage_filter,
         })
       }}
       <template v-for="myPackage in packages">
@@ -178,7 +177,6 @@
           :type_of_button="'see-details'"
         />
       </template>
-
     </div>
   </div>
 </template>

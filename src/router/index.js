@@ -84,6 +84,11 @@ const routes = [
         component: RentCarForm,
         meta: { requiresAuth: true },
       },
+      {
+        path: "buypackage",
+        component: BuyPackage,
+        meta: { requiresAuth: true },
+      },
     ],
   },
   {
@@ -99,11 +104,6 @@ const routes = [
   {
     path: "/paypackage/:id",
     component: PayPackage,
-    meta: { requiresAuth: true },
-  },
-  {
-    path: "/buypackage/:id",
-    component: BuyPackage,
     meta: { requiresAuth: true },
   },
   {

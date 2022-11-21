@@ -97,8 +97,8 @@ const accommodationService = new AccommodationService();
 const displayDialog = ref(false);
 const price = ref([50, 200]);
 const selectedServices = ref([]);
-const filteredAccommodation = ref([]);
 const resultAccomodation = ref([]);
+
 const services = ref([
   { service: "WiFi", value: "WiFi" },
   { service: "Room Service", value: "Room Service" },
@@ -121,8 +121,6 @@ const openDialog = () => (displayDialog.value = true);
 const save = (id) =>
   localStorage.setItem("accommodationSelected", JSON.stringify(id));
 
-const parseProxy = (proxy) => JSON.parse(JSON.stringify(proxy));
-
 const parseSelectedServices = (services) => {
   const parsedServices = [];
   services.forEach((service) => {
@@ -131,33 +129,15 @@ const parseSelectedServices = (services) => {
   return parsedServices;
 };
 
-const find = () => {
-  const travelAgencyId = localStorage.getItem("travelAgencyId");
+const find = async () => {
+  // const travelAgencyId = localStorage.getItem("travelAgencyId");
   const locationId = localStorage.getItem("locationId");
-  accommodationService
-    .filterAccommodation(price.value, travelAgencyId, locationId)
-    .then((response) => {
-      resultAccomodation.value = [];
-      const results = [];
-
-      filteredAccommodation.value = response.data;
-
-      filteredAccommodation.value.forEach(function (element) {
-        const parsedElement = parseProxy(element);
-        const newServices = parseProxy(element.services);
-        const newSelectedServices = parseSelectedServices(
-          parseProxy(selectedServices.value)
-        );
-
-        for (let i = 0; i < newSelectedServices.length; i++) {
-          if (newServices.includes(newSelectedServices[i])) {
-            results.push(parsedElement);
-          }
-        }
-      });
-
-      resultAccomodation.value = results;
-    });
+  const response = await accommodationService.filterAccommodation(
+    locationId,
+    price[0],
+    price[1]
+  );
+  resultAccommodation.value = response.data;
 
   openDialog();
 };

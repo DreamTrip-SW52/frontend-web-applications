@@ -1,8 +1,8 @@
-import http from './common';
+import http from "./common";
 
 export class AccommodationService {
-  basePath = '/accommodation';
-  servicesPerAccommodationPath = '/servicesperaccommodations';
+  basePath = "/accommodation";
+  servicesPerAccommodationPath = "/servicesperaccommodations";
 
   getAccommodations() {
     return http.get(this.basePath);
@@ -12,8 +12,10 @@ export class AccommodationService {
     return http.get(this.basePath + `/packageid/${id}`);
   }
 
-  filterAccommodation(priceMin, priceMax) {
-    return http.get(this.basePath + `/filters/${priceMin}/${priceMax}`);
+  filterAccommodation(locationId, priceMin, priceMax) {
+    return http.get(
+      this.basePath + `/filters/${locationId}/${priceMin}/${priceMax}`
+    );
   }
 
   getServicesPerAccommodation(accommodationId) {
@@ -23,6 +25,6 @@ export class AccommodationService {
   }
 
   getServiceByServiceId(serviceId) {
-    return http.get('/services' + `/${serviceId}`);
+    return http.get("/services" + `/${serviceId}`);
   }
 }
