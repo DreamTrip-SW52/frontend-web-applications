@@ -3,7 +3,7 @@
     <header>
       <h1 class="title-pay-package">Buy Package</h1>
     </header>
-    <!-- <div class="pay-package">
+    <div class="pay-package">
       <PayMethods>
         <div class="creditcard-details">
           <h2 class="creditcard-details-title">Package Details</h2>
@@ -18,51 +18,80 @@
           </div>
         </div>
       </PayMethods>
-
-      <div class="package-details">
-        <h2 class="package-details-title">Package Details</h2>
-        <p class="details">{{ packageData.name }}</p>
-        <p class="details">Place: {{ packageData.location }}</p>
-        <p class="details">Duration: {{ packageData.duration }} days</p>
-        <div class="total">
-          <h2 class="total-title">Total: S/.{{ packageData.total }}</h2>
-        </div>
-      </div>
     </div>
-    <router-link to="/home">
-      <Button class="pay-buttom" label="Pay" />
-    </router-link> -->
+    <Button class="pay-buttom" label="Pay" @click="createPackage()" />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { PackageService } from "../services/Package.service";
-import PayMethods from "@/components/pay/PayMethods.vue";
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { PackageService } from '../services/Package.service';
+import { TravelerService } from '../services/Traveler.service';
+import { TransportService } from '../services/Transport.service';
+
+import PayMethods from '@/components/pay/PayMethods.vue';
 
 const router = useRouter();
-const packageData = ref({});
-const packageService = new PackageService();
-
-// lifecyle hooks
-onMounted(() => {
-  // const params = router.currentRoute.value.params;
-  // packageService.getPackageById(params.id).then((response) => {
-  //   packageData.value = response.data;
-  //   console.log(
-  //     "🚀 ~ file: PayPackage.vue ~ line 56 ~ packageService.getPackageById ~ packageData.value",
-  //     packageData.value
-  //   );
-  // });
+const packageData = ref({
+  name: 'Package of ',
+  description: 'This is a custom package created by ',
+  locationAddress: '',
+  duration: 1,
+  capacity: 1,
+  price: 10,
+  image:
+    'https://blog.seccionamarilla.com.mx/wp-content/uploads/2017/11/Viajemos-todos-por-M%C3%A9xico-3.jpg',
+  custom: true,
+  views: 1,
+  sales: 1,
+  category: 'STANDARD',
+  agencyId: 1,
+  locationId: 0,
 });
 
-const pay = (packageSales) => {
-  const params = router.currentRoute.value.params;
-  const sales = packageSales + 1;
-  packageService.increaseSalesById(params.id, sales).then((response) => {
-    console.log(response);
+const packageService = new PackageService();
+const travelerService = new TravelerService();
+const transportService = new TransportService();
+const traveler = ref({});
+const location = ref({});
+
+onMounted(() => {});
+
+const createPackage = async () => {
+  const responseTraveler = await travelerService.getById(
+    localStorage.getItem('currentUser')
+  );
+  traveler.value = responseTraveler.data;
+
+  const responseLocation = await transportService.getLocationById(
+    localStorage.getItem('locationId')
+  );
+  location.value = responseLocation.data;
+
+  // complete data for package
+  packageData.value.name += traveler.value.name;
+  packageData.value.description += traveler.value.name;
+  packageData.value.locationAddress = location.value.department;
+  packageData.value.locationId = location.value.id;
+  console.log(
+    '🚀 ~ file: BuyPackage.vue ~ line 77 ~ createPackage ~ packageData.value',
+    packageData.value
+  );
+
+  const responsePackage = await packageService.createPackage(packageData.value);
+  console.log('Package created', responsePackage);
+
+  const responsePurchasedPackage = await packageService.purchasedPackage({
+    packageId: responsePackage.data.id,
+    active: 0,
+    travelerId: traveler.value.id,
   });
+  console.log('Purchase package added', responsePurchasedPackage);
+
+  alert('Package purchased succesfully');
+
+  // router.push('/home');
 };
 </script>
 
@@ -75,7 +104,7 @@ const pay = (packageSales) => {
 
 .pay-package {
   display: flex;
-  flex-direction: row;
+  justify-content: center;
   gap: 70px;
 }
 
@@ -95,26 +124,6 @@ const pay = (packageSales) => {
   border-radius: 10px;
   width: 200px;
   height: 81px;
-}
-
-.package-details {
-  background-color: #161d2f;
-  border-radius: 5px;
-  width: 300px;
-  height: 100%;
-}
-
-.package-details-title {
-  text-align: center;
-  color: #ffffff;
-  font-size: 32px;
-}
-
-.details {
-  font-size: 18px;
-  color: #ffffff;
-  text-align: left;
-  padding-left: 2vw;
 }
 
 .total {

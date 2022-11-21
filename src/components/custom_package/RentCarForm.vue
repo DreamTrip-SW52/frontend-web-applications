@@ -11,8 +11,8 @@
           <div id="price" class="flex flex-column">
             <label>Price</label>
             <div class="mb-3 flex justify-content-between">
-              <span>min {{ formData.price[0] }}</span>
-              <span class="mr-4">max {{ formData.price[1] }}</span>
+              <span>S/.{{ formData.price[0] }}</span>
+              <span>S/.{{ formData.price[1] }}</span>
             </div>
             <Slider
               v-model="formData.price"
@@ -20,12 +20,16 @@
               :min="50"
               :max="1000"
             />
+            <div class="flex mt-2 justify-content-between">
+              <span>min </span>
+              <span>max </span>
+            </div>
           </div>
           <div id="capacity" class="flex flex-column">
             <label>Capacity</label>
             <div class="mb-3 flex justify-content-between">
-              <span>min {{ formData.capacity[0] }}</span>
-              <span class="mr-4">max {{ formData.capacity[1] }}</span>
+              <span>{{ formData.capacity[0] }}</span>
+              <span>{{ formData.capacity[1] }}</span>
             </div>
             <Slider
               v-model="formData.capacity"
@@ -33,6 +37,10 @@
               :min="4"
               :max="8"
             />
+            <div class="flex mt-2 justify-content-between">
+              <span>min </span>
+              <span>max </span>
+            </div>
           </div>
           <div id="brands" class="flex flex-column">
             <label>Brands</label>
@@ -98,46 +106,52 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { CarService } from "../../services/Car.service";
+import { onMounted, ref } from 'vue';
+import { CarService } from '../../services/Car.service';
+
+onMounted(() => {
+  const locationId = localStorage.getItem('locationId');
+  if (locationId === null) {
+    alert('Please select a transport first');
+  }
+});
 
 // emits
-const emit = defineEmits(["prevPage", "nextPage"]);
+const emit = defineEmits(['prevPage', 'nextPage']);
 
 // refs
-const filteredCar = ref([]);
 const resultCars = ref([]);
 const displayDialog = ref(false);
 const formData = ref({
   price: [50, 200],
   capacity: [4, 5],
-  brand: "",
+  brand: '',
 });
 const brands = ref([
-  { brand: "Toyota", value: "TOYOTA" },
-  { brand: "Suzuki", value: "SUZUKI" },
-  { brand: "Chevrolet", value: "CHEVROLET" },
-  { brand: "Honda", value: "HONDA" },
-  { brand: "BMW", value: "BMW" },
-  { brand: "KIA", value: "KIA" },
-  { brand: "Nissan", value: "NISSAN" },
-  { brand: "Hyundai", value: "HYUNDAI" },
+  { brand: 'Toyota', value: 'TOYOTA' },
+  { brand: 'Suzuki', value: 'SUZUKI' },
+  { brand: 'Chevrolet', value: 'CHEVROLET' },
+  { brand: 'Honda', value: 'HONDA' },
+  { brand: 'BMW', value: 'BMW' },
+  { brand: 'KIA', value: 'KIA' },
+  { brand: 'Nissan', value: 'NISSAN' },
+  { brand: 'Hyundai', value: 'HYUNDAI' },
 ]);
 
 // classes
 const carService = new CarService();
 
 // functions
-const prevPage = () => emit("prevPage", { pageIndex: 3 });
+const prevPage = () => emit('prevPage', { pageIndex: 3 });
 
-const nextPage = () => emit("nextPage", { pageIndex: 3 });
+const nextPage = () => emit('nextPage', { pageIndex: 3 });
 
 const openDialog = () => (displayDialog.value = true);
 
 const parseProxy = (proxy) => JSON.parse(JSON.stringify(proxy));
 
 const save = (id) => {
-  localStorage.setItem("carSelected", JSON.stringify(id));
+  localStorage.setItem('carSelected', JSON.stringify(id));
 };
 
 const parseMultiSelectIntoValue = (items) => {
@@ -149,10 +163,11 @@ const parseMultiSelectIntoValue = (items) => {
 };
 
 const find = async () => {
-  const locationId = localStorage.getItem("locationId");
+  const locationId = localStorage.getItem('locationId');
   const price = parseProxy(formData.value.price);
   const capacity = parseProxy(formData.value.capacity);
-  const brand = parseMultiSelectIntoValue(parseProxy(formData.value.brand))[0];
+  // const brand = parseMultiSelectIntoValue(parseProxy(formData.value.brand))[0];
+  const brand = formData.value.brand[0].value;
 
   const response = await carService.filterCar(
     locationId,

@@ -49,21 +49,15 @@
         </div>
       </div>
     </div>
-    <div class="actions">
-      <Button label="Add card" />
-    </div>
   </form>
 </template>
 
 <script setup>
-import { ref } from "vue";
-// import { TravelerService } from "@/services/Traveler.service";
-// import { FormFields } from "@/interfaces/FormField";
-import { CreditCard } from "@/interfaces/CreditCard";
+import { ref } from 'vue';
 const props = defineProps({
   id: {
     type: String,
-    default: localStorage.getItem("currentUser"),
+    default: localStorage.getItem('currentUser'),
     required: false,
   },
   creditCards: {
@@ -73,23 +67,12 @@ const props = defineProps({
   },
 });
 
-let creditCard = CreditCard;
 const months = createArrayNumber(1, 12);
 const years = createArrayNumber(2021, 2030);
 const securityCodeHelp =
-  "Security code is cvv code. Numbers on the back of the credit card.";
-const cvvMask = ref("{{999}}");
-const cardMask = ref("{{9999}} {{9999}} {{9999}} {{9999}}");
-
-let expiredMonth = ref("");
-let expiredYear = ref("");
-let cvvCode = ref("");
-
-function getCreditCards() {
-  return [];
-}
-
-function onSubmit() {}
+  'Security code is cvv code. Numbers on the back of the credit card.';
+const cvvMask = ref('{{999}}');
+const cardMask = ref('{{9999}} {{9999}} {{9999}} {{9999}}');
 
 function createArrayNumber(first_value, last_value) {
   let array = [];

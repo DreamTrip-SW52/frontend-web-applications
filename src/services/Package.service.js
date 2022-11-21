@@ -3,9 +3,30 @@ import http from './common';
 
 export class PackageService {
   packagePath = '/package';
+  purchasedPackagePath = '/purchasedpackage';
 
   getAll() {
     return http.get(this.packagePath);
+  }
+
+  createPackage(packageData) {
+    return http.post(this.packagePath, JSON.stringify(packageData));
+  }
+
+  updatePackage(id, packageData) {
+    return http.put(this.packagePath + `/${id}`, packageData);
+  }
+
+  getById(id) {
+    return http.get(this.packagePath + `/${id}`);
+  }
+
+  getByTravelAgencyId(travelAgencyId) {
+    return http.get(this.packagePath + `/agencyid/${travelAgencyId}`);
+  }
+
+  createPurchasedPackage(purchasedPackageData) {
+    return http.post(this.purchasedPackagePath, purchasedPackageData);
   }
 
   // filterPackage(
@@ -31,15 +52,6 @@ export class PackageService {
   //   console.log(encodedURL);
   //   return http.get(encodedURL);
   // }
-
-  getById(id) {
-    return http.get(this.packagePath + `/${id}`);
-  }
-
-  getByTravelAgencyId(travelAgencyId) {
-    return http.get(this.packagePath + `/agencyid/${travelAgencyId}`);
-  }
-
   // increaseViewsById(travelAgencyId, Nviews) {
   //   return http.patch(`/package/${travelAgencyId}`, {
   //     views: Nviews,

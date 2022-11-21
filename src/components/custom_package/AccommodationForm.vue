@@ -9,10 +9,14 @@
           <div id="price" class="flex flex-column">
             <label>Price</label>
             <div class="mb-3 flex justify-content-between">
-              <span>min {{ price[0] }}</span>
-              <span class="mr-4">max {{ price[1] }}</span>
+              <span>S/.{{ price[0] }}</span>
+              <span>S/.{{ price[1] }}</span>
             </div>
             <Slider v-model="price" :range="true" :min="50" :max="1000" />
+            <div class="flex mt-2 justify-content-between">
+              <span>min </span>
+              <span>max </span>
+            </div>
           </div>
           <div id="services" class="flex flex-column">
             <label>Services</label>
@@ -32,7 +36,7 @@
             :modal="true"
             :style="{ width: '80vw' }"
           >
-            <div v-for="result in resultAccomodation">
+            <div v-for="result in resultAccommodation">
               <div
                 class="card-container text-white flex justify-content-between p-4 align-items-center"
               >
@@ -49,12 +53,12 @@
                     />
                   </ScrollPanel>
                 </div>
-                <div clas="flex flex-row">
+                <!-- <div clas="flex flex-row">
                   <span>Services</span>
                   <ul v-for="service in result.services">
                     <li>{{ service }}</li>
                   </ul>
-                </div>
+                </div> -->
                 <div>
                   <span class="text-xl font-medium">S/.{{ result.price }}</span>
                 </div>
@@ -84,11 +88,18 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { AccommodationService } from "../../services/Accommodation.service";
+import { onMounted, ref } from 'vue';
+import { AccommodationService } from '../../services/Accommodation.service';
+
+onMounted(() => {
+  const locationId = localStorage.getItem('locationId');
+  if (locationId === null) {
+    alert('Please select a transport first');
+  }
+});
 
 // emits
-const emit = defineEmits(["prevPage", "nextPage"]);
+const emit = defineEmits(['prevPage', 'nextPage']);
 
 // classes
 const accommodationService = new AccommodationService();
@@ -97,29 +108,29 @@ const accommodationService = new AccommodationService();
 const displayDialog = ref(false);
 const price = ref([50, 200]);
 const selectedServices = ref([]);
-const resultAccomodation = ref([]);
+const resultAccommodation = ref([]);
 
 const services = ref([
-  { service: "WiFi", value: "WiFi" },
-  { service: "Room Service", value: "Room Service" },
-  { service: "Restaurant", value: "Restaurant" },
-  { service: "Bar", value: "Bar" },
-  { service: "Entertaiment Zone", value: "Entertaiment Zone" },
-  { service: "Swimming Pool", value: "Swimming Pool" },
-  { service: "Spa", value: "Spa" },
-  { service: "Parking", value: "Parking" },
-  { service: "Air conditioning", value: "Air conditioning" },
+  { service: 'WiFi', value: 'WiFi' },
+  { service: 'Room Service', value: 'Room Service' },
+  { service: 'Restaurant', value: 'Restaurant' },
+  { service: 'Bar', value: 'Bar' },
+  { service: 'Entertaiment Zone', value: 'Entertaiment Zone' },
+  { service: 'Swimming Pool', value: 'Swimming Pool' },
+  { service: 'Spa', value: 'Spa' },
+  { service: 'Parking', value: 'Parking' },
+  { service: 'Air conditioning', value: 'Air conditioning' },
 ]);
 
 // functions
-const prevPage = () => emit("prevPage", { pageIndex: 1 });
+const prevPage = () => emit('prevPage', { pageIndex: 1 });
 
-const nextPage = () => emit("nextPage", { pageIndex: 1 });
+const nextPage = () => emit('nextPage', { pageIndex: 1 });
 
 const openDialog = () => (displayDialog.value = true);
 
 const save = (id) =>
-  localStorage.setItem("accommodationSelected", JSON.stringify(id));
+  localStorage.setItem('accommodationSelected', JSON.stringify(id));
 
 const parseSelectedServices = (services) => {
   const parsedServices = [];
@@ -131,11 +142,15 @@ const parseSelectedServices = (services) => {
 
 const find = async () => {
   // const travelAgencyId = localStorage.getItem("travelAgencyId");
-  const locationId = localStorage.getItem("locationId");
+  const locationId = localStorage.getItem('locationId');
   const response = await accommodationService.filterAccommodation(
     locationId,
-    price[0],
-    price[1]
+    price.value[0],
+    price.value[1]
+  );
+  console.log(
+    '🚀 ~ file: AccommodationForm.vue ~ line 151 ~ find ~ response',
+    response.data
   );
   resultAccommodation.value = response.data;
 

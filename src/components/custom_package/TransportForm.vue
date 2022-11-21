@@ -2,8 +2,6 @@
   <main class="px-6 mt-6">
     <header>
       <h1 class="text-4xl text-center text-white">Transport</h1>
-      <!-- <pre>{{ JSON.stringify(formData,null,3) }}</pre> -->
-      <pre>{{ resultTrips }}</pre>
     </header>
     <form class="flex flex-column align-items-center py-4 gap-4 mt-4">
       <section
@@ -126,37 +124,17 @@
             <div
               class="card-container text-white flex justify-content-between p-4 align-items-center"
             >
-              <!-- <div v-for="item in result.details">
-                <div class="flex gap-4 align-items-center">
-                  <i class="pi pi-box"></i>
-                  <p>{{ item.name }}</p>
-                </div>
-                <div class="flex gap-4">
-                  <div class="text-center">
-                    <span>{{ item.from.abbr }}</span>
-                    <p class="font-light text-md">
-                      {{ item.from.tag }}
-                    </p>
-                  </div>
-                  <img
-                    src="../../assets/double-arrow-right.svg"
-                    alt=""
-                    v-if="item.type === 'go'"
-                  />
-                  <img
-                    src="../../assets/double-arrow-left.svg"
-                    alt=""
-                    v-if="item.type === 'back'"
-                  />
-                  <div class="text-center">
-                    <span>{{ item.to.abbr }}</span>
-                    <p class="font-light text-md">{{ item.to.tag }}</p>
-                  </div>
-                </div>
-              </div> -->
-              <div>
-                <span class="text-xl font-medium">S/.{{ result.price }}</span>
-              </div>
+              <ul class="flex gap-6">
+                <li class="text-lg font-medium">
+                  Company Name: {{ result.transportName }}
+                </li>
+                <li class="text-lg font-medium">
+                  Class: {{ result.transportClassName.toCapital }}
+                </li>
+                <li class="text-lg font-medium">
+                  Price: S/.{{ result.price }}
+                </li>
+              </ul>
               <Button label="Select" @click="save(result)" />
             </div>
           </div>
@@ -176,12 +154,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { TransportService } from "../../services/Transport.service";
-import { PackageService } from "../../services/Package.service";
+import { ref } from 'vue';
+import { TransportService } from '../../services/Transport.service';
+import { PackageService } from '../../services/Package.service';
 
 // emits
-const emit = defineEmits(["nextPage"]);
+const emit = defineEmits(['nextPage']);
 
 // refs
 const resultTrips = ref([]);
@@ -189,43 +167,43 @@ const resultTrips = ref([]);
 const displayDialog = ref(false);
 
 const classes = ref([
-  { classT: "Express", value: "EXPRESS" },
-  { classT: "Normal", value: "NORMAL" },
-  { classT: "VIP", value: "VIP" },
+  { classT: 'Express', value: 'EXPRESS' },
+  { classT: 'Normal', value: 'NORMAL' },
+  { classT: 'VIP', value: 'VIP' },
 ]);
 const departments = ref([
-  { department: "Amazonas", value: "Amazonas" },
-  { department: "Ancash", value: "Ancash" },
-  { department: "Apurimac", value: "Apurimac" },
-  { department: "Arequipa", value: "Arequipa" },
-  { department: "Ayacucho", value: "Ayacucho" },
-  { department: "Cajamarca", value: "Cajamarca" },
-  { department: "Callao", value: "Callao" },
-  { department: "Cuzco", value: "Cuzco" },
-  { department: "Huancavelica", value: "Huancavelica" },
-  { department: "Huanuco", value: "Huanuco" },
-  { department: "Ica", value: "Ica" },
-  { department: "Junin", value: "Junin" },
-  { department: "La Libertad", value: "La Libertad" },
-  { department: "Lambayeque", value: "Lambayeque" },
-  { department: "Lima", value: "Lima" },
-  { department: "Loreto", value: "Loreto" },
-  { department: "Madre de Dios", value: "Madre de Dios" },
-  { department: "Moquegua", value: "Moquegua" },
-  { department: "Pasco", value: "Pasco" },
-  { department: "Piura", value: "Piura" },
-  { department: "Puno", value: "Puno" },
-  { department: "San Martin", value: "San Martin" },
-  { department: "Tacna", value: "Tacna" },
-  { department: "Tumbes", value: "Tumbes" },
-  { department: "Ucayali", value: "Ucayali" },
+  { department: 'Amazonas', value: 'Amazonas' },
+  { department: 'Ancash', value: 'Ancash' },
+  { department: 'Apurimac', value: 'Apurimac' },
+  { department: 'Arequipa', value: 'Arequipa' },
+  { department: 'Ayacucho', value: 'Ayacucho' },
+  { department: 'Cajamarca', value: 'Cajamarca' },
+  { department: 'Callao', value: 'Callao' },
+  { department: 'Cuzco', value: 'Cuzco' },
+  { department: 'Huancavelica', value: 'Huancavelica' },
+  { department: 'Huanuco', value: 'Huanuco' },
+  { department: 'Ica', value: 'Ica' },
+  { department: 'Junin', value: 'Junin' },
+  { department: 'La Libertad', value: 'La Libertad' },
+  { department: 'Lambayeque', value: 'Lambayeque' },
+  { department: 'Lima', value: 'Lima' },
+  { department: 'Loreto', value: 'Loreto' },
+  { department: 'Madre de Dios', value: 'Madre de Dios' },
+  { department: 'Moquegua', value: 'Moquegua' },
+  { department: 'Pasco', value: 'Pasco' },
+  { department: 'Piura', value: 'Piura' },
+  { department: 'Puno', value: 'Puno' },
+  { department: 'San Martin', value: 'San Martin' },
+  { department: 'Tacna', value: 'Tacna' },
+  { department: 'Tumbes', value: 'Tumbes' },
+  { department: 'Ucayali', value: 'Ucayali' },
 ]);
 const formData = ref({
-  transport: "",
-  classT: "",
-  typeOfTrip: "",
-  departFrom: "",
-  goingTo: "",
+  transport: '',
+  classT: '',
+  typeOfTrip: '',
+  departFrom: '',
+  goingTo: '',
   date: [],
 });
 // classes
@@ -233,17 +211,20 @@ const transportService = new TransportService();
 const packageService = new PackageService();
 
 // functions
-const nextPage = () => emit("nextPage", { pageIndex: 0 });
+const nextPage = () => emit('nextPage', { pageIndex: 0 });
 
 const openDialog = () => (displayDialog.value = true);
 
-const save = (result) => {
-  const response = packageService.getById(result.packageId);
-  localStorage.setItem("locationId", JSON.stringify(response.data.locationId));
+const save = async (result) => {
+  const response = await packageService.getById(result.packageId);
+  localStorage.setItem('locationId', JSON.stringify(response.data.locationId));
+  alert('Transport selected, you can go to the next section');
 };
 
 const getData = async (transportCard) => {
-  const transport = await transportService.getTransportById(transportCard.transportId);
+  const transport = await transportService.getTransportById(
+    transportCard.transportId
+  );
   const transportName = transport.data.name;
 
   const transportClass = await transportService.getTransportClassById(
@@ -251,7 +232,7 @@ const getData = async (transportCard) => {
   );
   const transportClassName = transportClass.data.name;
 
-  return {transportName,transportClassName}
+  return { transportName, transportClassName };
 };
 
 const find = async () => {
@@ -268,7 +249,7 @@ const find = async () => {
   returnDate = returnDate.substring(1, returnDate.length - 3);
   let response = null;
 
-  if (typeOfTrip.value === "One Way") {
+  if (typeOfTrip.value === 'One Way') {
     response = await transportService.getOneWayByFilters(
       goingTo,
       departureDate,
@@ -289,16 +270,19 @@ const find = async () => {
 
   // make a promise all to resolve the data
   const promises = response.data.map(async (data) => {
-    const {transportName,transportClassName} = await getData(data);
+    const { transportName, transportClassName } = await getData(data);
     return {
       ...data,
       transportName,
-      transportClassName
+      transportClassName,
     };
   });
 
   const results = await Promise.all(promises);
-  console.log("🚀 ~ file: TransportForm.vue ~ line 301 ~ find ~ results", results)
+  console.log(
+    '🚀 ~ file: TransportForm.vue ~ line 301 ~ find ~ results',
+    results
+  );
 
   resultTrips.value = results;
 

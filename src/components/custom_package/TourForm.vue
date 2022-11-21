@@ -44,11 +44,11 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { TourService } from "../../services/Tour.service";
+import { onMounted, ref } from 'vue';
+import { TourService } from '../../services/Tour.service';
 
 // emits
-const emit = defineEmits(["prevPage", "nextPage"]);
+const emit = defineEmits(['prevPage', 'nextPage']);
 
 // refs
 const resultTour = ref([]);
@@ -57,26 +57,22 @@ const tourService = new TourService();
 
 // lifecycle hooks
 onMounted(async () => {
-  const travelAgencyId = localStorage.getItem("travelAgencyId");
-  const locationId = localStorage.getItem("locationId");
-
-  const response = await tourService.getToursByLocationId(locationId);
-  resultTour.value = response.data;
-
-  // tourService.filterTour(travelAgencyId, locationId).then((response) => {
-  //   resultTour.value = response.data;
-  // });
+  const locationId = localStorage.getItem('locationId');
+  if (locationId === null) {
+    alert('Please select a transport first');
+  } else {
+    const response = await tourService.getToursByLocationId(locationId);
+    resultTour.value = response.data;
+  }
 });
 
-// classes
-
 // functions
-const prevPage = () => emit("prevPage", { pageIndex: 2 });
+const prevPage = () => emit('prevPage', { pageIndex: 2 });
 
-const nextPage = () => emit("nextPage", { pageIndex: 2 });
+const nextPage = () => emit('nextPage', { pageIndex: 2 });
 
 const save = (id) => {
-  localStorage.setItem("accommodationSelected", JSON.stringify(id));
+  localStorage.setItem('accommodationSelected', JSON.stringify(id));
 };
 </script>
 

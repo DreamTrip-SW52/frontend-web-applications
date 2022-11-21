@@ -32,40 +32,57 @@
 
       {{ JSON.stringify(packageData.value) }}
     </div>
-    <router-link to="/home">
-      <Button class="pay-buttom" @click="pay(packageData.sales)" label="Pay" />
-    </router-link>
+    <Button
+      class="pay-buttom"
+      @click="pay(packageData.sales, packageData.views)"
+      label="Pay"
+    />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { PackageService } from "../services/Package.service";
-import PayMethods from "@/components/pay/PayMethods.vue";
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { PackageService } from '../services/Package.service';
+import PayMethods from '@/components/pay/PayMethods.vue';
 
 const router = useRouter();
 const packageData = ref({});
 const packageService = new PackageService();
 
 // lifecyle hooks
-onMounted(() => {
+onMounted(async () => {
   const params = router.currentRoute.value.params;
-  packageService.getPackageById(params.id).then((response) => {
-    packageData.value = response.data;
-    console.log(
-      "🚀 ~ file: PayPackage.vue ~ line 56 ~ packageService.getPackageById ~ packageData.value",
-      packageData.value
-    );
-  });
+  const response = await packageService.getById(params.id);
+  packageData.value = response.data;
 });
 
-const pay = (packageSales) => {
+const pay = async (packageSales, packageViews) => {
+  // increase sales
   const params = router.currentRoute.value.params;
-  const sales = packageSales + 1;
-  packageService.increaseSalesById(params.id, sales).then((response) => {
-    console.log(response);
+
+  packageData.value.sales = packageSales + 1;
+  packageData.value.views = packageViews + 1;
+  const responsePackage = await packageService.updatePackage(
+    params.id,
+    packageData.value
+  );
+  console.log(
+    '🚀 ~ file: PayPackage.vue ~ line 66 ~ pay ~ responsePackage',
+    responsePackage.data
+  );
+
+  // create purchased package
+  const responsePurchasedPackage = await packageService.createPurchasedPackage({
+    packageId: params.id,
+    active: false,
+    travelerId: localStorage.getItem('currentUser'),
   });
+  console.log(responsePurchasedPackage);
+
+  alert('Package purchased successfully');
+
+  // router.replace('/home');
 };
 </script>
 
