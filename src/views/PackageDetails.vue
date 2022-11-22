@@ -27,7 +27,7 @@
           </div>
           <div class="text-center">
             <i class="pi pi-calendar icons"></i>
-            <p>{{ packageData.disponibility || '24/7' }}</p>
+            <p>{{ packageData.disponibility || "24/7" }}</p>
           </div>
         </div>
         <!-- Carrousel -->
@@ -104,13 +104,17 @@
             />
           </div>
         </div>
-
-        <!--        {{JSON.stringify(reviews,null,4)}}-->
-
         <div id="no-review-no-show" v-if="reviews.length > 0">
           <div class="text-right my-2">
             <Button
-              label="Write/Modify Review"
+              v-if="checkUserHasReview()"
+              label="Modify Review"
+              class="p-button-text underline white"
+              @click="openDialogWriteReview"
+            />
+            <Button
+              v-else
+              label="Write Review"
               class="p-button-text underline white"
               @click="openDialogWriteReview"
             />
@@ -139,33 +143,6 @@
               <Button label="Submit" @click="writeReview" />
             </div>
           </Dialog>
-
-          <!--
-            <Dialog v-model:visible="displayDialogModifyReview" :modal="false">
-            <div class="flex justify-content-between">
-              <p>Rate this travel package</p>
-              <Rating v-model="rating" :cancel="false" />
-            </div>
-            <br />
-            <Textarea
-              v-model="comment"
-              :autoResize="true"
-              rows="3"
-              cols="60"
-              placeholder= review.comment
-            />
-            <br /><br />
-            <div class="flex justify-content-between">
-              <Button
-                label="Cancel"
-                class="p-button-danger"
-                @click="closeDialogModifyReview"
-              />
-              <Button label="Submit" @click="ModifyReview" />
-            </div>
-          </Dialog>
-          "Write review"
-           -->
 
           <!-- reseñas -->
 
@@ -198,7 +175,7 @@
             <ul class="list-none flex flex-column gap-4">
               <li v-for="review in reviews" class="pr-6" :key="review.id">
                 <Rating
-                  :modelValue="review.rating"
+                  :modelValue="review.stars"
                   :readonly="true"
                   :cancel="false"
                 />
@@ -251,17 +228,17 @@
 </template>
 
 <script setup>
-import { onBeforeMount, onMounted, computed, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import Accommodations from '../components/package_details/Accommodations.vue';
-import Transport from '../components/package_details/Transport.vue';
-import Tour from '../components/package_details/Tour.vue';
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+import Accommodations from "../components/package_details/Accommodations.vue";
+import Transport from "../components/package_details/Transport.vue";
+import Tour from "../components/package_details/Tour.vue";
 
 // Services
-import { PackageService } from '../services/Package.service';
-import { ReviewService } from '../services/Review.service';
-import { ImageService } from '../services/Image.service';
-import { TravelerService } from '../services/Traveler.service';
+import { PackageService } from "../services/Package.service";
+import { ReviewService } from "../services/Review.service";
+import { ImageService } from "../services/Image.service";
+import { TravelerService } from "../services/Traveler.service";
 
 /** Static **/
 
@@ -278,31 +255,31 @@ const imageData = ref({});
 // Breadcrumb
 const items = [
   {
-    label: 'ACCOMMODATIONS',
-    onClick: () => (breadcrumbView.value = 'accomodations'),
+    label: "ACCOMMODATIONS",
+    onClick: () => (breadcrumbView.value = "accomodations"),
   },
-  { label: 'TRANSPORTS', onClick: () => (breadcrumbView.value = 'transports') },
-  { label: 'TOURS', onClick: () => (breadcrumbView.value = 'tours') },
+  { label: "TRANSPORTS", onClick: () => (breadcrumbView.value = "transports") },
+  { label: "TOURS", onClick: () => (breadcrumbView.value = "tours") },
 ];
 
 /** States **/
 // accomodations | flights | tours | ...
-const breadcrumbView = ref('accomodations');
+const breadcrumbView = ref("accomodations");
 
 // Carousel
 const responsiveOptions = ref([
   {
-    breakpoint: '1024px',
+    breakpoint: "1024px",
     numVisible: 3,
     numScroll: 3,
   },
   {
-    breakpoint: '600px',
+    breakpoint: "600px",
     numVisible: 2,
     numScroll: 2,
   },
   {
-    breakpoint: '480px',
+    breakpoint: "480px",
     numVisible: 1,
     numScroll: 1,
   },
@@ -318,7 +295,7 @@ const getRating = () => {
   let total = 0;
 
   reviews.value.forEach((review) => {
-    total += review.rating;
+    total += review.stars;
   });
 
   const result =
@@ -337,56 +314,51 @@ let validation = null;
 
 // state
 const reviews = ref([]);
-const comment = ref('');
+const comment = ref("");
 const rating = ref(0);
 const displayDialogWriteReview = ref(false);
-let addReviewButtonLabel = ref('');
 
 // function
 const openDialogWriteReview = () => (displayDialogWriteReview.value = true);
 const closeDialogWriteReview = () => (displayDialogWriteReview.value = false);
-const computedText = computed(() => addReviewButtonLabel.value);
-const checkUserHasReview = (id) => {
-  reviewService.getReviewTravellerByPackageId(id).then((response) => {
-    let findID = false;
-    for (let i = 0; i < response.data.length; i++) {
-      if (response.data[i].travellerId == localStorage.getItem('currentUser')) {
-        findID = true;
-      }
-    }
-    if (findID == true) {
-      //alert('error');
-      return true;
-    } else {
-      return false;
-    }
-  });
+
+const checkUserHasReview = async () => {
+  const travelerId = localStorage.getItem("currentUser");
+  const response = await reviewService.getReviewOfPackageByTravelerId(
+    id,
+    travelerId
+  );
+  if (response.data) {
+    comment.value = response.data.comment;
+    rating.value = response.data.stars;
+    return true;
+  } else return false;
 };
+
 const writeReview = () => {
   const currentDate = new Date();
   const strDate =
     currentDate.getDate() +
-    '/' +
+    "/" +
     currentDate.getMonth() +
-    '/' +
+    "/" +
     currentDate.getFullYear();
+
   const params = router.currentRoute.value.params;
 
   const review = {
     packageId: Number,
-    // date: String,
     stars: Number,
     comment: String,
     travelerId: Number,
   };
 
   review.packageId = parseInt(params.id);
-  // review.date = strDate;
   review.stars = rating.value;
   review.comment = comment.value;
-  review.travelerId = localStorage.getItem('currentUser');
+  review.travelerId = localStorage.getItem("currentUser");
 
-  console.log('Escribiendo el review con datos', review);
+  console.log("Escribiendo el review con datos", review);
 
   if (validation != null) {
     reviewService.updateReview(validation.id, review);
@@ -405,43 +377,24 @@ const openDialogSeeMore = () => {
 
 /*** LifeCycle Hooks ***/
 
-onBeforeMount(async () => {
-  checkUserHasReview(id)
-    ? (addReviewButtonLabel = 'Modify Review')
-    : (addReviewButtonLabel = 'Write Review');
-
-  await reviewService.getReviewsByPackageId(id).then(({ data }) => {
-    const newReviews = [];
-
-    data.forEach((review) => {
-      travelerService.getById(review.travelerId).then(({ data }) => {
-        newReviews.push({
-          ...review,
-          date: new Date().toLocaleDateString(),
-          travelerName: data.name,
-        });
-      });
-    });
-
-    reviews.value = newReviews;
-
-    console.log('Reviews', newReviews);
-    getRating();
-  });
-});
-
-onMounted(() => {
-  packageService.getById(id).then(({ data }) => (packageData.value = data));
+onMounted(async () => {
+  const responsePackage = await packageService.getById(id);
+  packageData.value = responsePackage.data;
 
   const images = [];
   for (let i = 0; i < 5; i++) {
     images.push({
       src: `https://images.unsplash.com/photo-1668400121008-6134fd5b104d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80`,
-      alt: 'Random Image',
+      alt: "Random Image",
     });
   }
 
   imageData.value = images;
+
+  const response = await reviewService.getReviewsByPackageId(id);
+  reviews.value = response.data;
+
+  getRating();
 });
 </script>
 
@@ -479,7 +432,7 @@ header {
 }
 
 .p-breadcrumb-chevron ul li.p-breadcrumb-chevron {
-  color: '#fc4747' !important;
+  color: "#fc4747" !important;
 }
 
 .image-container {

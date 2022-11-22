@@ -27,11 +27,11 @@ export class ReviewService {
     return http.get(this.basePath + `/packageId/${packageId}`);
   }
 
-  // getReviewTravellerByPackageId(packageId) {
-  //   http: return http.getthis.basePath(
-  //     this.basePath + `?packageId=${packageId}&_expand=traveller`
-  //   );
-  // }
+  getReviewOfPackageByTravelerId(packageId, travelerId) {
+    return http.get(
+      this.basePath + `/packageId/${packageId}/travelerId/${travelerId}`
+    );
+  }
 
   addReview(review) {
     return http.post(this.basePath, review);

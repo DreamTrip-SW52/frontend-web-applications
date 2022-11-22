@@ -38,6 +38,10 @@ export class TransportService {
     return http.get(this.locationPath + `/${locationId}`);
   }
 
+  getLocationByDepartment(department) {
+    return http.get(this.locationPath + `/department/${department}`);
+  }
+
   getOneWayByFilters(
     to,
     departureDate,
@@ -63,6 +67,26 @@ export class TransportService {
       this.roundTripPath +
         `/filters/${from}/${to}/${departureDate}/${returnDate}/${transportClass}/${transportType}`
     );
+  }
+
+  createTripsGo(tripsGo) {
+    return http.post(this.tripsGoPath, tripsGo);
+  }
+
+  createTripsBack(tripsBack) {
+    return http.post(this.tripsBackPath, tripsBack);
+  }
+
+  createTransport(transport) {
+    return http.post(this.transportPath, transport);
+  }
+
+  createRoundTrip(roundTrip) {
+    return http.post(this.roundTripPath, roundTrip);
+  }
+
+  createOneWay(oneWay) {
+    return http.post(this.oneWayPath, oneWay);
   }
 
   // getTransportByTypeAndId(type, transportId) {

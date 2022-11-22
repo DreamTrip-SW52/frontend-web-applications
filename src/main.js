@@ -20,6 +20,8 @@ import Card from "primevue/card";
 import ScrollTop from "primevue/scrolltop";
 import ScrollPanel from "primevue/scrollpanel";
 import Tooltip from "primevue/tooltip";
+import Fieldset from "primevue/fieldset";
+
 import App from "./App.vue";
 import router from "./router";
 // Primeflex
@@ -164,6 +166,8 @@ app.component("CascadeSelect", CascadeSelect);
 app.component("Card", Card);
 app.component("ScrollTop", ScrollTop);
 app.component("ScrollPanel", ScrollPanel);
+app.component("Fieldset", Fieldset);
+
 app.directive("mask", VueRestrictedInputDirective);
 app.directive("tooltip", Tooltip);
 

@@ -132,36 +132,35 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
-import { Traveller } from '@/interfaces/Traveller';
-import { TravelerService as TravellerService } from '@/services/Traveler.service';
-import { CreditCards } from '@/interfaces/CreditCard';
-import { CreditCardsService } from '@/services/CreditCards.service';
-import CreditCardForm from '@/components/credit_cards/AddCreditCardForm.vue';
-import ChangePassword from '@/components/profile/ChangePassword.vue';
-import ShowCreditCard from '@/components/credit_cards/ShowCreditCard.vue';
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
+import { TravelerService as TravellerService } from "@/services/Traveler.service";
+import { CreditCards } from "@/interfaces/CreditCard";
+import { CreditCardsService } from "@/services/CreditCards.service";
+import CreditCardForm from "@/components/credit_cards/AddCreditCardForm.vue";
+import ChangePassword from "@/components/profile/ChangePassword.vue";
+import ShowCreditCard from "@/components/credit_cards/ShowCreditCard.vue";
 
-const TRAVELLER = 'traveller';
+const TRAVELLER = "traveller";
 const router = useRoute();
 
 const props = defineProps({
   id: {
     type: String,
-    default: localStorage.getItem('currentUser'),
+    default: localStorage.getItem("currentUser"),
     required: false,
   },
 });
 
 let user = ref({
-  id: '',
-  name: '',
-  lastname: '',
-  email: '',
-  password: '',
-  dni: '',
-  photo: '',
-  phone: '',
+  id: "",
+  name: "",
+  lastname: "",
+  email: "",
+  password: "",
+  dni: "",
+  photo: "",
+  phone: "",
 });
 
 let cards = ref(CreditCards);
@@ -172,63 +171,63 @@ let hideCreditCards = ref(true);
 
 let formFields = [
   {
-    label: 'name',
-    title: 'Name',
-    value: '',
+    label: "name",
+    title: "Name",
+    value: "",
     disable: true,
-    placeholder: 'Example Name',
+    placeholder: "Example Name",
     requerid: true,
-    type: 'text',
+    type: "text",
     editable: true,
   },
   {
-    label: 'lastname',
-    title: 'Last Name',
-    value: '',
+    label: "lastname",
+    title: "Last Name",
+    value: "",
     disable: true,
-    placeholder: 'Example LastName',
+    placeholder: "Example LastName",
     requerid: true,
-    type: 'text',
+    type: "text",
     editable: true,
   },
   {
-    label: 'phone',
-    title: 'Phone',
-    value: '',
+    label: "phone",
+    title: "Phone",
+    value: "",
     disable: true,
-    placeholder: '123456789',
+    placeholder: "123456789",
     requerid: true,
-    type: 'text',
+    type: "text",
     editable: true,
   },
   {
-    label: 'dni',
-    title: 'DNI',
-    value: '',
+    label: "dni",
+    title: "DNI",
+    value: "",
     disable: true,
-    placeholder: 'Traveller DNI',
+    placeholder: "Traveller DNI",
     requerid: true,
-    type: 'text',
+    type: "text",
     editable: false,
   },
   {
-    label: 'type',
-    title: 'Traveller Type',
-    value: '',
+    label: "type",
+    title: "Traveller Type",
+    value: "",
     disable: true,
-    placeholder: 'Example user',
+    placeholder: "Example user",
     requerid: true,
-    type: 'text',
+    type: "text",
     editable: false,
   },
   {
-    label: 'email',
-    title: 'Email',
-    value: '',
+    label: "email",
+    title: "Email",
+    value: "",
     disable: true,
-    placeholder: 'example@example',
+    placeholder: "example@example",
     requerid: true,
-    type: 'email',
+    type: "email",
   },
 ];
 
@@ -247,7 +246,7 @@ onMounted(async () => {
 });
 
 function normalField(label) {
-  return label !== 'password' && label !== 'email' && label !== 'type';
+  return label !== "password" && label !== "email" && label !== "type";
 }
 
 function onSubmit() {
@@ -258,7 +257,7 @@ function onSubmit() {
 
 function setStorableUser() {
   for (let field of formFields) {
-    if (field.value !== '') user[field.label] = field.value;
+    if (field.value !== "") user[field.label] = field.value;
   }
   console.log(user);
 }

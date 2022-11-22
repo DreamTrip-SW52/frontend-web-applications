@@ -31,10 +31,10 @@
 </template>
 
 <script setup>
-import { FormFields } from '@/interfaces/FormField';
-import { ref, onMounted } from 'vue';
-import { TravelAgencyService } from '../../services/TravelAgency.service';
-import { TravelerService } from '../../services/Traveler.service';
+import { FormFields } from "@/interfaces/FormField";
+import { ref, onMounted } from "vue";
+import { TravelAgencyService } from "../../services/TravelAgency.service";
+import { TravelerService } from "../../services/Traveler.service";
 
 const emitEvents = defineEmits();
 let passwordFields = FormFields;
@@ -46,7 +46,7 @@ const travelerService = new TravelerService();
 const props = defineProps({
   id: {
     type: Number,
-    default: localStorage.getItem('currentUser'),
+    default: localStorage.getItem("currentUser"),
     required: true,
   },
   isAgency: {
@@ -57,22 +57,22 @@ const props = defineProps({
 
 passwordFields = [
   {
-    label: 'password',
-    title: 'New password',
-    value: '',
+    label: "password",
+    title: "New password",
+    value: "",
     disable: true,
-    placeholder: 'Enter new password',
+    placeholder: "Enter new password",
     requerid: true,
-    type: 'password',
+    type: "password",
   },
   {
-    label: 'confirmPassword',
-    title: 'Confirm Password',
-    value: '',
+    label: "confirmPassword",
+    title: "Confirm Password",
+    value: "",
     disable: true,
-    placeholder: 'Confirm new password',
+    placeholder: "Confirm new password",
     requerid: true,
-    type: 'password',
+    type: "password",
   },
 ];
 
@@ -99,30 +99,29 @@ async function changePassword(type) {
 }
 
 function assignNewPassword() {
-  // emitEvents('change-password', passwordFields[0].value);
   resetPasswordValues();
 }
 
 function resetPasswordValues() {
   for (let field of passwordFields) {
-    field.value = '';
-    field.value = '';
+    field.value = "";
+    field.value = "";
   }
 }
 
 function validatePassword() {
   for (let field of passwordFields) {
-    if (field.value === '') {
-      passwordErrors.value = [{ message: 'Please, fill all fields' }];
+    if (field.value === "") {
+      passwordErrors.value = [{ message: "Please, fill all fields" }];
       return;
     } else if (field.value.length < 8) {
       passwordErrors.value = [
-        { message: 'Password must be large than 8 characters.' },
+        { message: "Password must be large than 8 characters." },
       ];
     }
   }
   if (passwordFields[0].value !== passwordFields[1].value)
-    passwordErrors.value = [{ message: 'Not same password' }];
+    passwordErrors.value = [{ message: "Not same password" }];
 }
 
 function resetPasswordErrors() {

@@ -62,8 +62,8 @@ const travelAgencyService = new TravelAgencyService();
 
 const router = useRouter();
 
-const email = ref("btravels@gmail.com");
-const password = ref("btravels123");
+const email = ref("");
+const password = ref("");
 
 let errors = ref({
   email: {

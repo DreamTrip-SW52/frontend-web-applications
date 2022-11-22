@@ -2,8 +2,8 @@
   <div class="container">
     <div class="profile-image">
       <img
-        v-if="user.photo !== undefined && user.photo !== ''"
-        :src="user.photo"
+        v-if="user?.photo !== undefined && user?.photo !== ''"
+        :src="user?.photo"
         alt="profile image"
       />
       <i v-else class="pi pi-user" style="font-size: 7rem"></i>
@@ -19,8 +19,9 @@
               :type="field.type"
               :required="field.requerid"
               :disabled="field.editable ? !changeValues : true"
-              v-model="field.value"
+              v-model="user[field.label]"
               :value="user[field.label]"
+              :maxlength="field.label === 'phone' ? 9 : 200"
             />
           </div>
         </div>
@@ -35,6 +36,7 @@
         >
       </div>
     </form>
+
     <div class="fields">
       <div class="field">
         <div>
@@ -54,6 +56,7 @@
           </small>
         </div>
         <ChangePassword
+          :isAgency="false"
           v-on:change-password="assignNewPassword"
           v-if="!hidePassword"
         />
@@ -80,18 +83,18 @@
         </div>
         <div
           class="credit-card"
-          v-if="!hideCreditCards"
-          v-for="(card, index) of creditCards"
+          v-if="!hideCreditCards && cards"
+          v-for="(card, index) of cards"
         >
           <div class="flex gap-8">
-            <span>Card #{{ index + 1 }}</span>
+            <span>Card # {{ index + 1 }}</span>
             <small
               ><span @click="removeCard(index, card)" class="click-link"
                 >remove card</span
               ></small
             >
           </div>
-          <ShowCreditCard :credit-card="card" />
+          <ShowCreditCard :creditCard="card" />
         </div>
       </div>
     </div>
@@ -118,7 +121,7 @@
           <CreditCardForm
             v-on:add-card="addedCard"
             :user-type="AGENCY"
-            :credit-cards="creditCards"
+            :credit-cards="cards"
             :id="user.id"
             v-if="!hideCreditForm"
           />
@@ -129,45 +132,47 @@
 </template>
 
 <script setup>
-import { Agency, IAgency } from "@/interfaces/Agency";
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 import { TravelAgencyService } from "@/services/TravelAgency.service";
-import { ref } from "vue";
-import { FormFields } from "@/interfaces/FormField";
-import ChangePassword from "@/components/profile/ChangePassword.vue";
 import { CreditCards } from "@/interfaces/CreditCard";
 import { CreditCardsService } from "@/services/CreditCards.service";
-import ShowCreditCard from "@/components/credit_cards/ShowCreditCard.vue";
 import CreditCardForm from "@/components/credit_cards/AddCreditCardForm.vue";
+import ChangePassword from "@/components/profile/ChangePassword.vue";
+import ShowCreditCard from "@/components/credit_cards/ShowCreditCard.vue";
+
+const AGENCY = "agency";
+const router = useRoute();
 
 const props = defineProps({
   id: {
     type: String,
     default: localStorage.getItem("currentUser"),
-    required: true,
-  },
-  user: {
-    type: Agency,
     required: false,
   },
 });
 
-const AGENCY = "agency";
+let user = ref({
+  id: "",
+  name: "",
+  lastname: "",
+  email: "",
+  password: "",
+  dni: "",
+  photo: "",
+  phone: "",
+});
 
-let user = ref(IAgency);
-let creditCards = ref(CreditCards);
-const userApiService = new TravelAgencyService();
-const cardsApiService = new CreditCardsService();
-
+let cards = ref(CreditCards);
+let hideCreditForm = ref(true);
 let changeValues = ref(false);
 let hidePassword = ref(true);
 let hideCreditCards = ref(true);
-let hideCreditForm = ref(true);
 
-let formFields = FormFields;
-formFields = [
+let formFields = [
   {
     label: "name",
-    title: "Company Name",
+    title: "Name",
     value: "",
     disable: true,
     placeholder: "Example Name",
@@ -177,10 +182,20 @@ formFields = [
   },
   {
     label: "ruc",
-    title: "Company Ruc",
+    title: "Ruc",
     value: "",
     disable: true,
-    placeholder: "Company Ruc",
+    placeholder: "12345678910",
+    requerid: true,
+    type: "text",
+    editable: true,
+  },
+  {
+    label: "type",
+    title: "Agency Type",
+    value: "",
+    disable: true,
+    placeholder: "Example user",
     requerid: true,
     type: "text",
     editable: false,
@@ -196,18 +211,19 @@ formFields = [
   },
 ];
 
-if (props.user === undefined) {
-  const userResponse = await userApiService.getById(props.id);
-  user = userResponse.data;
-  const cardsResponse = await cardsApiService.getByUser(user.id, AGENCY);
-  creditCards.value = cardsResponse.data;
-}
+const userApiService = new TravelAgencyService();
+const cardsApiService = new CreditCardsService();
 
-function assignNewPassword(password) {
-  user.password = password;
-  userApiService.update(user.id, user).then();
-  hidePassword.value = !hidePassword.value;
-}
+onMounted(async () => {
+  if (props.id) {
+    const { data } = await userApiService.getById(props.id);
+    user.value = data;
+
+    const response = await cardsApiService.getByAgencyId(props.id);
+
+    cards.value = response.data;
+  }
+});
 
 function normalField(label) {
   return label !== "password" && label !== "email" && label !== "type";
@@ -216,24 +232,31 @@ function normalField(label) {
 function onSubmit() {
   changeValues.value = false;
   setStorableUser();
-  userApiService.update(user.id, user).then();
+  userApiService.update(props.id, user.value);
 }
 
 function setStorableUser() {
   for (let field of formFields) {
     if (field.value !== "") user[field.label] = field.value;
   }
-}
-
-function removeCard(index, card) {
-  creditCards.value.splice(index, 1);
-  hideCreditCards.value = !hideCreditCards.value;
-  cardsApiService.delete(card.id).then();
+  console.log(user);
 }
 
 function addedCard(card) {
-  creditCards.value.push(card);
+  cards.value.push(card);
   hideCreditForm.value = !hideCreditForm.value;
+}
+
+function assignNewPassword(password) {
+  user.password = password;
+  userApiService.update(user.id, user).then();
+  hidePassword.value = !hidePassword.value;
+}
+
+function removeCard(index, card) {
+  cards.value.splice(index, 1);
+  hideCreditCards.value = !hideCreditCards.value;
+  cardsApiService.deleteByTravelerId(card.id).then();
 }
 </script>
 
@@ -273,7 +296,7 @@ function addedCard(card) {
   text-decoration: underline;
 }
 .change-password-link:hover,
-.click-link {
+.click-link:hover {
   cursor: pointer;
 }
 
