@@ -9,7 +9,7 @@
         <InputText
           type="email"
           placeholder="Email address"
-          class="input"
+          class="input text-white"
           :class="errors.email.error && 'p-invalid'"
           v-model="email"
         />
@@ -20,7 +20,7 @@
         <InputText
           type="password"
           placeholder="Password"
-          class="input"
+          class="input text-white"
           :class="errors.password.error && 'p-invalid'"
           v-model="password"
         />
@@ -31,7 +31,7 @@
         <InputText
           type="password"
           placeholder="Repeat Password"
-          class="input"
+          class="input text-white"
           :class="errors.confirmPassword.error && 'p-invalid'"
           v-model="confirmPassword"
         />
@@ -85,11 +85,11 @@ const handleRegister = async (e) => {
   )
     return;
 
-  const {data} = await travellerService.getAll();
+  const { data } = await travellerService.getAll();
 
-  console.log("data",data)
+  console.log("data", data);
 
-  if(data.find(traveller => traveller.email === email.value)) {
+  if (data.find((traveller) => traveller.email === email.value)) {
     errors.value.email.error = true;
     errors.value.email.message = "Email already exists";
     return;

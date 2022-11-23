@@ -1,10 +1,10 @@
-import http from './common';
+import http from "./common";
 
 export class CurrentTravelService {
-  purchasedPackagePath = '/purchasedPackage';
-  economicFollowingPath = '/economicfollowings';
-  healthCenterPath = '/healthcenter';
-  policeStationPath = '/policestation';
+  purchasedPackagePath = "/purchasedPackage";
+  economicFollowingPath = "/economicfollowings";
+  healthCenterPath = "/healthcenter";
+  policeStationPath = "/policestation";
 
   getCurrentTravelByTravelerId(travelerId) {
     return http.get(this.purchasedPackagePath + `/active/${travelerId}`);
@@ -22,15 +22,19 @@ export class CurrentTravelService {
     return http.delete(this.economicFollowingPath + `/${id}`);
   }
 
-  getHospitalsByLocationId(locationId){
-    return http.get(this.healthCenterPath + `/type/Hospital/location/${locationId}`);
+  getHospitalsByLocationId(locationId) {
+    return http.get(
+      this.healthCenterPath + `/type/Hospital/location/${locationId}`
+    );
   }
 
-  getClinicsByLocationId(locationId){
-    return http.get(this.healthCenterPath + `/type/Clinic/location/${locationId}`);
+  getClinicsByLocationId(locationId) {
+    return http.get(
+      this.healthCenterPath + `/type/Clinic/location/${locationId}`
+    );
   }
 
-  getPoliceStationsByLocationId(locationId){
+  getPoliceStationsByLocationId(locationId) {
     return http.get(this.policeStationPath + `/locationid/${locationId}`);
   }
 }

@@ -43,7 +43,7 @@
         <p class="text-white">Time: {{ time_filter }}</p>
       </div>
 
-      <div class="type">
+      <!-- <div class="type">
         <h3 class="title2">Type of tour</h3>
         <form class="forms">
           <input
@@ -65,7 +65,7 @@
           />
           <label for="type_private" class="textform">Private</label><br />
         </form>
-      </div>
+      </div> -->
 
       <div>
         <h3 class="title2">Categories</h3>

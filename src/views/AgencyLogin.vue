@@ -9,7 +9,7 @@
         <InputText
           type="email"
           placeholder="Email address"
-          class="input"
+          class="input text-white"
           :class="errors.email.error && 'p-invalid'"
           v-model="email"
         />
@@ -20,7 +20,7 @@
         <InputText
           type="password"
           placeholder="Password"
-          class="input"
+          class="input text-white"
           :class="errors.password.error && 'p-invalid'"
           v-model="password"
         />

@@ -9,7 +9,7 @@
         <InputText
           type="name"
           placeholder="Company Name"
-          class="input"
+          class="input text-white"
           :class="errors.name.error && 'p-invalid'"
           v-model="name"
         />
@@ -20,7 +20,7 @@
         <InputText
           type="ruc"
           placeholder="Ruc"
-          class="input"
+          class="input text-white"
           :class="errors.ruc.error && 'p-invalid'"
           v-model="ruc"
         />
@@ -31,7 +31,7 @@
         <InputText
           type="email"
           placeholder="Email address"
-          class="input"
+          class="input text-white"
           :class="errors.email.error && 'p-invalid'"
           v-model="email"
         />
@@ -42,7 +42,7 @@
         <InputText
           type="password"
           placeholder="Password"
-          class="input"
+          class="input text-white"
           :class="errors.password.error && 'p-invalid'"
           v-model="password"
         />
@@ -53,7 +53,7 @@
         <InputText
           type="password"
           placeholder="Repeat Password"
-          class="input"
+          class="input text-white"
           :class="errors.confirmPassword.error && 'p-invalid'"
           v-model="confirmPassword"
         />
@@ -111,9 +111,10 @@ const handleRegister = async (e) => {
   )
     return;
 
-  const { data } = await travelAgencyService.isEmailRepeated(email.value);
+  // const { data } = await travelAgencyService.isEmailRepeated(email.value);
+  const { data } = await travelAgencyService.getAll();
 
-  if (Array.isArray(data) && data.length > 0) {
+  if (data.find((agency) => agency.email === email.value)) {
     errors.value.email.error = true;
     errors.value.email.message = "Email already exists";
     return;

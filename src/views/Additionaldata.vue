@@ -9,7 +9,7 @@
         <InputText
           type="name"
           placeholder="Name"
-          class="input"
+          class="input text-white"
           :class="errors.name.error && 'p-invalid'"
           v-model="name"
         />
@@ -20,7 +20,7 @@
         <InputText
           type="lastname"
           placeholder="Last name"
-          class="input"
+          class="input text-white"
           :class="errors.lastname.error && 'p-invalid'"
           v-model="lastname"
         />
@@ -31,7 +31,7 @@
         <InputText
           type="phone"
           placeholder="Phone"
-          class="input"
+          class="input text-white"
           :class="errors.phone.error && 'p-invalid'"
           v-model="phone"
         />
@@ -42,7 +42,7 @@
         <InputText
           type="dni"
           placeholder="DNI"
-          class="input"
+          class="input text-white"
           :class="errors.dni.error && 'p-invalid'"
           v-model="dni"
         />
@@ -73,9 +73,9 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { IAuthAdditionalDataRegisterErrors } from "../utils/authUtils";
-import {TravelerService} from "../services/Traveler.service";
+import { TravelerService } from "../services/Traveler.service";
 
-const travellerService = new TravelerService()
+const travellerService = new TravelerService();
 const router = useRouter();
 
 const handleAdditional = async (e) => {

@@ -141,7 +141,6 @@ const parseSelectedServices = (services) => {
 };
 
 const find = async () => {
-  // const travelAgencyId = localStorage.getItem("travelAgencyId");
   const locationId = localStorage.getItem("locationId");
   const response = await accommodationService.filterAccommodation(
     locationId,
@@ -200,11 +199,4 @@ label {
   background-color: #161d2f;
   border-radius: 8px;
 }
-
-/* .line-clamp {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-} */
 </style>
