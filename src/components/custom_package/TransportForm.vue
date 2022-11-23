@@ -150,16 +150,17 @@
         />
       </div>
     </form>
+    <pre>{{ JSON.stringify(formData, null, 4) }}</pre>
   </main>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { TransportService } from "../../services/Transport.service";
-import { PackageService } from "../../services/Package.service";
+import { ref } from 'vue';
+import { TransportService } from '../../services/Transport.service';
+import { PackageService } from '../../services/Package.service';
 
 // emits
-const emit = defineEmits(["nextPage"]);
+const emit = defineEmits(['nextPage']);
 
 // refs
 const resultTrips = ref([]);
@@ -167,43 +168,43 @@ const resultTrips = ref([]);
 const displayDialog = ref(false);
 
 const classes = ref([
-  { classT: "Express", value: "EXPRESS" },
-  { classT: "Normal", value: "NORMAL" },
-  { classT: "VIP", value: "VIP" },
+  { classT: 'Express', value: 'EXPRESS' },
+  { classT: 'Normal', value: 'NORMAL' },
+  { classT: 'VIP', value: 'VIP' },
 ]);
 const departments = ref([
-  { department: "Amazonas", value: "Amazonas" },
-  { department: "Ancash", value: "Ancash" },
-  { department: "Apurimac", value: "Apurimac" },
-  { department: "Arequipa", value: "Arequipa" },
-  { department: "Ayacucho", value: "Ayacucho" },
-  { department: "Cajamarca", value: "Cajamarca" },
-  { department: "Callao", value: "Callao" },
-  { department: "Cuzco", value: "Cuzco" },
-  { department: "Huancavelica", value: "Huancavelica" },
-  { department: "Huanuco", value: "Huanuco" },
-  { department: "Ica", value: "Ica" },
-  { department: "Junin", value: "Junin" },
-  { department: "La Libertad", value: "La Libertad" },
-  { department: "Lambayeque", value: "Lambayeque" },
-  { department: "Lima", value: "Lima" },
-  { department: "Loreto", value: "Loreto" },
-  { department: "Madre de Dios", value: "Madre de Dios" },
-  { department: "Moquegua", value: "Moquegua" },
-  { department: "Pasco", value: "Pasco" },
-  { department: "Piura", value: "Piura" },
-  { department: "Puno", value: "Puno" },
-  { department: "San Martin", value: "San Martin" },
-  { department: "Tacna", value: "Tacna" },
-  { department: "Tumbes", value: "Tumbes" },
-  { department: "Ucayali", value: "Ucayali" },
+  { department: 'Amazonas', value: 'Amazonas' },
+  { department: 'Ancash', value: 'Ancash' },
+  { department: 'Apurimac', value: 'Apurimac' },
+  { department: 'Arequipa', value: 'Arequipa' },
+  { department: 'Ayacucho', value: 'Ayacucho' },
+  { department: 'Cajamarca', value: 'Cajamarca' },
+  { department: 'Callao', value: 'Callao' },
+  { department: 'Cuzco', value: 'Cuzco' },
+  { department: 'Huancavelica', value: 'Huancavelica' },
+  { department: 'Huanuco', value: 'Huanuco' },
+  { department: 'Ica', value: 'Ica' },
+  { department: 'Junin', value: 'Junin' },
+  { department: 'La Libertad', value: 'La Libertad' },
+  { department: 'Lambayeque', value: 'Lambayeque' },
+  { department: 'Lima', value: 'Lima' },
+  { department: 'Loreto', value: 'Loreto' },
+  { department: 'Madre de Dios', value: 'Madre de Dios' },
+  { department: 'Moquegua', value: 'Moquegua' },
+  { department: 'Pasco', value: 'Pasco' },
+  { department: 'Piura', value: 'Piura' },
+  { department: 'Puno', value: 'Puno' },
+  { department: 'San Martin', value: 'San Martin' },
+  { department: 'Tacna', value: 'Tacna' },
+  { department: 'Tumbes', value: 'Tumbes' },
+  { department: 'Ucayali', value: 'Ucayali' },
 ]);
 const formData = ref({
-  transport: "",
-  classT: "",
-  typeOfTrip: "",
-  departFrom: "",
-  goingTo: "",
+  transport: '',
+  classT: '',
+  typeOfTrip: '',
+  departFrom: '',
+  goingTo: '',
   date: [],
 });
 // classes
@@ -211,19 +212,22 @@ const transportService = new TransportService();
 const packageService = new PackageService();
 
 // functions
-const nextPage = () => emit("nextPage", { pageIndex: 0 });
+const nextPage = () => emit('nextPage', { pageIndex: 0 });
 
 const openDialog = () => (displayDialog.value = true);
 
 const save = async (result) => {
   const response = await packageService.getById(result.packageId);
-  localStorage.setItem("locationId", JSON.stringify(response.data.locationId));
-  if (typeOfTrip.value === "One Way") {
-    localStorage.setItem("oneWayId", JSON.stringify(result.id));
+  localStorage.setItem('locationId', JSON.stringify(response.data.locationId));
+
+  const typeOfTrip = formData.value.typeOfTrip;
+
+  if (typeOfTrip === 'One Way') {
+    localStorage.setItem('oneWayId', JSON.stringify(result.id));
   } else {
-    localStorage.setItem("roundTripId", JSON.stringify(result.id));
+    localStorage.setItem('roundTripId', JSON.stringify(result.id));
   }
-  alert("Transport selected, you can go to the next section");
+  alert('Transport selected, you can go to the next section');
 };
 
 const getData = async (transportCard) => {
@@ -254,7 +258,7 @@ const find = async () => {
   returnDate = returnDate.substring(1, returnDate.length - 3);
   let response = null;
 
-  if (typeOfTrip.value === "One Way") {
+  if (typeOfTrip.value === 'One Way') {
     response = await transportService.getOneWayByFilters(
       goingTo,
       departureDate,
@@ -285,7 +289,7 @@ const find = async () => {
 
   const results = await Promise.all(promises);
   console.log(
-    "🚀 ~ file: TransportForm.vue ~ line 301 ~ find ~ results",
+    '🚀 ~ file: TransportForm.vue ~ line 301 ~ find ~ results',
     results
   );
 

@@ -3,6 +3,10 @@ import http from "./common";
 export class TourService {
   basePath = "/tours";
 
+	create(tourData) {
+		return http.post(this.basePath, tourData);
+	}
+
   getTours() {
     return http.get(this.basePath);
   }

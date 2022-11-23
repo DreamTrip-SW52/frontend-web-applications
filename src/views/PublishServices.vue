@@ -4,7 +4,7 @@
     <!-- <pre>{{ JSON.stringify(packageData, null, 4) }}</pre> -->
     <!-- <pre>{{ JSON.stringify(transport, null, 4) }}</pre> -->
     <!-- <pre>{{ JSON.stringify(trip, null, 4) }}</pre> -->
-    <pre>{{ JSON.stringify(transportData, null, 4) }}</pre>
+    <!-- <pre>{{ JSON.stringify(transportData, null, 4) }}</pre> -->
 
     <header class="text-center">
       <h1 class="text-white">Create Package</h1>
@@ -230,144 +230,198 @@
           </div>
         </div>
         <br />
-      </div>
-      <section id="accommodation">
-        <Fieldset
-          legend="Accommodation"
-          :toggleable="true"
-          style="background-color: #161d2f"
-          class="text-white"
-        >
-          <h2>{{ ACCOMMODATION }}</h2>
-          <div
-            v-for="field of accommodationFields"
-            class="flex gap-4 justify-content-between align-items-center"
-          >
-            <label :for="field.label">{{ field.title }}</label>
-            <InputText
-              :id="field.label"
-              v-if="field.type !== 'calendar'"
-              :required="field.requerid"
-              v-model="field.value"
-              :type="field.type"
-              v-mask="field.mask"
-            />
-            <div v-else>
-              <Calendar
-                v-if="!checkField(field)"
-                :id="field.label"
-                v-model="field.value"
-                selection-mode="single"
-                :min-date="TODAY_DATE"
-                :manual-input="false"
-                @date-select="checkInSelect"
-              />
-              <Calendar
-                v-else-if="checkField(field) && selectCheckIn"
-                :id="field.label"
-                v-model="field.value"
-                selection-mode="single"
-                :min-date="nextDate"
-                :disabled-dates="[nextDate]"
-                :manual-input="false"
-              />
-              <InputText v-else disabled />
+        <div class="complete-width text-center actions">
+          <div class="errors">
+            <div class="accommodation-error" v-for="error of errors">
+              <small> {{ error.message }} on {{ error.on }}</small>
             </div>
           </div>
-        </Fieldset>
-      </section>
-      <section id="tour">
-        <Fieldset
-          legend="Tour"
-          :toggleable="true"
-          style="background-color: #161d2f"
-          class="text-white"
-        >
-          <h2>{{ TOUR }}</h2>
-          <div
-            v-for="field of tourFields"
-            class="flex gap-4 justify-content-between align-items-center"
-          >
-            <label :for="field.label">{{ field.title }}</label>
-            <InputText
-              :id="field.label"
-              :required="field.requerid"
-              v-model="field.value"
-              :type="field.type"
-              v-mask="field.mask"
-            />
-          </div>
-        </Fieldset>
-      </section>
-      <section id="rent-car">
-        <Fieldset
-          legend="Rent Car"
-          :toggleable="true"
-          style="background-color: #161d2f"
-          class="text-white"
-        >
-          <h2>{{ RENT_CAR }}</h2>
-          <div
-            v-for="field of rentCarFields"
-            class="flex gap-4 justify-content-between align-items-center"
-          >
-            <label :for="field.label">{{ field.title }}</label>
-            <InputText
-              v-mask="field.mask"
-              v-if="field.type !== 'calendar'"
-              :id="field.label"
-              :required="field.requerid"
-              v-model="field.value"
-              :type="field.type"
-            />
-            <Calendar
-              v-else
-              :time-only="true"
-              hour-format="12"
-              :id="field.label"
-              v-model="field.value"
-            />
-          </div>
-        </Fieldset>
-      </section>
-    </main>
-    <div class="complete-width text-center actions">
-      <div class="errors">
-        <div class="accommodation-error" v-for="error of errors">
-          <small> {{ error.message }} on {{ error.on }}</small>
+          <Button @click="submit" label="Submit" />
         </div>
       </div>
-      <Button @click="submit" label="Submit" />
-    </div>
+      <Divider />
+      <div class="w-full">
+        <h2 class="mb-8 text-center text-6xl">ADD-ONS</h2>
+        <!-- <pre>{{ JSON.stringify(packageSelected) }}</pre> -->
+        <div class="flex flex-column gap-2">
+          <label for="packageSelected">Choose a package</label>
+          <MultiSelect
+            class="w-3"
+            id="packageSelected"
+            v-model="packageSelected"
+            display="chip"
+            :options="agencyPackages"
+            :optionLabel="(p) => p.name"
+            :optionValue="(p) => p.id"
+            placeholder="Packages"
+            dropdownIcon="pi pi-chevron-down"
+            :showToogleAll="false"
+            :selectionLimit="1"
+          />
+        </div>
+        <div v-if="packageSelected.length > 0">
+          <h2 class="mb-8 text-center">Package Add-ons</h2>
+          <div class="grid">
+            <section id="accommodation">
+              <Fieldset
+                legend="Accommodation"
+                :toggleable="true"
+                style="background-color: #161d2f"
+                class="text-white"
+              >
+                <h2>{{ ACCOMMODATION }}</h2>
+                <!-- <pre>{{
+                  JSON.stringify(getMappedFields(accommodationFields), null, 4)
+                }}</pre> -->
+                <div class="flex flex-column gap-3">
+                  <div
+                    v-for="field of accommodationFields"
+                    class="flex gap-4 justify-content-between align-items-center"
+                  >
+                    <label :for="field.label">{{ field.title }}</label>
+                    <div v-if="field.type !== 'calendar'">
+                      <InputText
+                        :id="field.label"
+                        :required="field.requerid"
+                        v-model="field.value"
+                        :type="field.type"
+                        v-mask="field.mask"
+                      />
+                    </div>
+                    <div v-else>
+                      <Calendar
+                        v-if="!checkField(field)"
+                        :id="field.label"
+                        v-model="field.value"
+                        selection-mode="single"
+                        :min-date="TODAY_DATE"
+                        :manual-input="false"
+                        @date-select="checkInSelect"
+                      />
+                      <Calendar
+                        v-else-if="checkField(field) && selectCheckIn"
+                        :id="field.label"
+                        v-model="field.value"
+                        selection-mode="single"
+                        :min-date="nextDate"
+                        :disabled-dates="[nextDate]"
+                        :manual-input="false"
+                      />
+                      <InputText v-else disabled />
+                    </div>
+                  </div>
+                </div>
+                <Button
+                  @click="addAccommodation"
+                  label="Add"
+                  class="mt-8 w-full"
+                />
+              </Fieldset>
+            </section>
+            <section id="tour">
+              <Fieldset
+                legend="Tour"
+                :toggleable="true"
+                style="background-color: #161d2f"
+                class="text-white"
+              >
+                <h2>{{ TOUR }}</h2>
+                <!-- <pre>{{
+                  JSON.stringify(getMappedFields(tourFields), null, 4)
+                }}</pre> -->
+                <div class="flex flex-column gap-3">
+                  <div
+                    v-for="field of tourFields"
+                    class="flex gap-4 justify-content-between align-items-center"
+                  >
+                    <label :for="field.label">{{ field.title }}</label>
+                    <InputText
+                      :id="field.label"
+                      :required="field.requerid"
+                      v-model="field.value"
+                      :type="field.type"
+                      v-mask="field.mask"
+                    />
+                  </div>
+                </div>
+                <Button @click="addTour" label="Add" class="mt-8 w-full" />
+              </Fieldset>
+            </section>
+            <section id="rent-car">
+              <Fieldset
+                legend="Rent Car"
+                :toggleable="true"
+                style="background-color: #161d2f"
+                class="text-white"
+              >
+                <h2>{{ RENT_CAR }}</h2>
+                <!-- <pre>{{
+                  JSON.stringify(getMappedFields(rentCarFields), null, 4)
+                }}</pre> -->
+                <div class="flex flex-column gap-3">
+                  <div
+                    v-for="field of rentCarFields"
+                    class="flex gap-4 justify-content-between align-items-center"
+                  >
+                    <label :for="field.label">{{ field.title }}</label>
+                    <InputText
+                      v-mask="field.mask"
+                      v-if="field.type !== 'calendar'"
+                      :id="field.label"
+                      :required="field.requerid"
+                      v-model="field.value"
+                      :type="field.type"
+                    />
+                    <Calendar
+                      v-else
+                      :time-only="true"
+                      hour-format="12"
+                      :id="field.label"
+                      v-model="field.value"
+                    />
+                  </div>
+                </div>
+                <Button @click="addCar" label="Add" class="mt-8 w-full" />
+              </Fieldset>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- <pre>{{ JSON.stringify(agencyPackages, null, 4) }}</pre> -->
   </div>
 </template>
 
 <script setup>
-import Navbar from "../components/Navbar.vue";
-import { ref } from "vue";
-import { FormFields } from "@/interfaces/FormField";
-import { Accommodation } from "@/interfaces/Accomodation";
-import { Tour } from "@/interfaces/Tour";
-import { RentCar } from "@/interfaces/RentCar";
-import { PackageService } from "../services/Package.service";
-import { AccommodationService } from "../services/Accommodation.service";
-import { TransportService } from "../services/Transport.service";
-import moment from "moment";
+import Navbar from '../components/Navbar.vue';
+import { ref, onMounted } from 'vue';
+import { FormFields } from '@/interfaces/FormField';
+import { Accommodation } from '@/interfaces/Accomodation';
+import { Tour } from '@/interfaces/Tour';
+import { RentCar } from '@/interfaces/RentCar';
+import { PackageService } from '../services/Package.service';
+import { AccommodationService } from '../services/Accommodation.service';
+import { TransportService } from '../services/Transport.service';
+import { CarService } from '../services/Car.service';
+import { TourService } from '../services/Tour.service';
+import moment from 'moment';
 
 // Services
 const packageService = new PackageService();
 const accommodationService = new AccommodationService();
+const tourService = new TourService();
 const transportService = new TransportService();
+const carService = new CarService();
 
 // const's
-const PRICE_MASK = ref("{{0000}}");
+const PRICE_MASK = ref('{{0000}}');
 const TEXT_MASK = allCharacterMask(600);
-const CAPACITY_MASK = "{{000}}";
+const CAPACITY_MASK = '{{000}}';
 const TODAY_DATE = new Date();
 const MINIMUM_CHECK_DAYS = 1;
-const ACCOMMODATION = "Accommodation";
-const TOUR = "Tour";
-const RENT_CAR = "Rent Car";
+const ACCOMMODATION = 'Accommodation';
+const TOUR = 'Tour';
+const RENT_CAR = 'Rent Car';
 
 //variables
 let accommodation = Accommodation;
@@ -377,60 +431,187 @@ let errors = ref([]);
 let selectCheckIn = ref(false);
 let nextDate = ref(TODAY_DATE);
 
+// para agregar add-ons al package
+const agencyPackages = ref([]);
+const packageSelected = ref([]);
+
+const getMappedFields = (fields) => {
+  console.log(
+    '🚀 ~ file: PublishServices.vue ~ line 435 ~ getMappedFields ~ fields',
+    fields
+  );
+  return fields.reduce((acc, curr) => {
+    return {
+      ...acc,
+      [curr.label]: curr.value,
+    };
+    console.log(arr);
+  }, {});
+};
+
+/*
+	1. Primero obtenemos los paquetes de la agencia con el id de la agencia que esta logeada
+	2. Esto para poder agregar los add-ons al paquete, comenzando con que tiene que seleccionar un paquete previo a agregarle los add-ons
+	3. Luego de seleccionar el paquete, se despliegan los add-ons que se pueden agregar al paquete
+	4. Se agregan los add-ons al paquete
+	5. Se guarda el paquete con los add-ons
+*/
+onMounted(() => {
+  // Paso 1
+  const userId = localStorage.getItem('currentUser');
+  packageService
+    .getByTravelAgencyId(userId)
+    .then((res) => {
+      agencyPackages.value = res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// create a function that displays a success message using VueSweetalert2
+const successMessage = (message) => {
+  Swal.fire({
+    icon: 'success',
+    title: message,
+    showConfirmButton: false,
+    timer: 1500,
+  });
+};
+
+const addAccommodation = () => {
+  const mappedAccommodationFields = accommodationFields.value.reduce(
+    (acc, curr) => {
+      return {
+        ...acc,
+        [curr.label]: curr.value,
+      };
+    },
+    {}
+  );
+  mappedAccommodationFields.packageId = packageSelected.value[0];
+  mappedAccommodationFields.price = Number(mappedAccommodationFields.price);
+
+  accommodationService
+    .create(mappedAccommodationFields)
+    .then((res) => {
+      console.log(res);
+      successMessage('Accommodation added');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const addTour = () => {
+  const mappedTourFields = tourFields.value.reduce((acc, curr) => {
+    return {
+      ...acc,
+      [curr.label]: curr.value,
+    };
+  }, {});
+  mappedTourFields.packageId = packageSelected.value[0];
+  mappedTourFields.price = Number(mappedTourFields.price);
+
+  tourService
+    .create(mappedTourFields)
+    .then((res) => {
+      console.log(res);
+      successMessage('Tour added');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const addCar = () => {
+  const mappedRentCarFields = rentCarFields.value.reduce((acc, curr) => {
+    return {
+      ...acc,
+      [curr.label]: curr.value,
+    };
+  }, {});
+  mappedRentCarFields.packageId = packageSelected.value[0];
+  mappedRentCarFields.price = Number(mappedRentCarFields.price);
+  mappedRentCarFields.capacity = Number(mappedRentCarFields.capacity);
+  console.log(
+    '🚀 ~ file: PublishServices.vue ~ line 538 ~ addCar ~ mappedRentCarFields',
+    mappedRentCarFields
+  );
+
+  carService
+    .create(mappedRentCarFields)
+    .then((res) => {
+      console.log(res);
+      successMessage('Car added');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 //for accommodation information
 let accommodationFields = ref(FormFields);
-const accommodationLabel = "accommodation-";
+const accommodationLabel = 'accommodation-';
 accommodationFields.value = [
   {
-    label: accommodationLabel + "details",
-    title: "Details",
-    value: "",
+    label: 'details',
+    title: 'Details',
+    value: '',
     requerid: true,
-    placeholder: "",
-    type: "text",
+    placeholder: '',
+    type: 'text',
     mask: TEXT_MASK,
   },
   {
-    label: accommodationLabel + "check-in",
-    title: "Check in",
-    value: "",
+    label: 'checkIn',
+    title: 'Check in',
+    value: '',
     requerid: true,
-    placeholder: "",
-    type: "calendar",
+    placeholder: '',
+    type: 'calendar',
   },
   {
-    label: accommodationLabel + "check-out",
-    title: "Check out",
-    value: "",
+    label: 'checkOut',
+    title: 'Check out',
+    value: '',
     requerid: true,
-    placeholder: "",
-    type: "calendar",
+    placeholder: '',
+    type: 'calendar',
   },
   {
-    label: accommodationLabel + "locationAddress",
-    title: "Location",
-    value: "",
+    label: 'location',
+    title: 'Location',
+    value: '',
     requerid: true,
-    placeholder: "",
-    type: "text",
+    placeholder: '',
+    type: 'text',
     mask: TEXT_MASK,
   },
   {
-    label: accommodationLabel + "price",
-    title: "Price",
-    value: "",
+    label: 'price',
+    title: 'Price',
+    value: '',
     requerid: true,
-    placeholder: "",
-    type: "text",
+    placeholder: '',
+    type: 'text',
     mask: PRICE_MASK,
   },
 ];
 
-function allCharacterMask(size) {
-  let mask = "{{";
-  for (let i = 0; i < size; ++i) mask += "*";
+function createAccomodation() {
+  accommodation.details = accommodationFields.value[0].value;
+  accommodation.checkIn = accommodationFields.value[1].value;
+  accommodation.checkOut = accommodationFields.value[2].value;
+  accommodation.location = accommodationFields.value[3].value;
+  accommodation.price = accommodationFields.value[4].value;
+}
 
-  mask += "}}";
+function allCharacterMask(size) {
+  let mask = '{{';
+  for (let i = 0; i < size; ++i) mask += '*';
+
+  mask += '}}';
   return mask;
 }
 
@@ -440,116 +621,125 @@ function checkInSelect(date) {
 }
 
 function checkField(field) {
-  return field.label === accommodationLabel + "check-out";
+  return field.label === accommodationLabel + 'check-out';
 }
 
 //for tour information
 let tourFields = ref(FormFields);
-const tourLabel = "tour-";
+const tourLabel = 'tour-';
 
 tourFields.value = [
   {
-    label: tourLabel + "details",
-    title: "Details",
-    value: "",
+    label: 'details',
+    title: 'Details',
+    value: '',
     requerid: true,
-    placeholder: "",
-    type: "text",
+    placeholder: '',
+    type: 'text',
     mask: TEXT_MASK,
   },
   {
-    label: tourLabel + "location",
-    title: "Location",
-    value: "",
+    label: 'location',
+    title: 'Location',
+    value: '',
     requerid: true,
-    placeholder: "",
-    type: "text",
+    placeholder: '',
+    type: 'text',
     mask: TEXT_MASK,
   },
   {
-    label: tourLabel + "meeting-point",
-    title: "Meeting point",
-    value: "",
+    label: 'meetingPoint',
+    title: 'Meeting point',
+    value: '',
     requerid: true,
-    placeholder: "",
-    type: "text",
+    placeholder: '',
+    type: 'text',
     mask: TEXT_MASK,
   },
   {
-    label: tourLabel + "price",
-    title: "Price",
-    value: "",
+    label: 'price',
+    title: 'Price',
+    value: '',
     requerid: true,
-    placeholder: "",
-    type: "text",
+    placeholder: '',
+    type: 'text',
     mask: PRICE_MASK,
   },
 ];
 
 //for rent car information
 let rentCarFields = ref(FormFields);
-const rentCarLabel = "rent-car-";
+const rentCarLabel = 'rent-car-';
 rentCarFields.value = [
   {
-    label: rentCarLabel + "name",
-    title: "Name",
-    value: "",
+    label: 'name',
+    title: 'Name',
+    value: '',
     requerid: true,
-    placeholder: "",
-    type: "text",
+    placeholder: '',
+    type: 'text',
     mask: TEXT_MASK,
   },
   {
-    label: rentCarLabel + "brand",
-    title: "Brand",
-    value: "",
+    label: 'brand',
+    title: 'Brand',
+    value: '',
     requerid: true,
-    placeholder: "",
-    type: "text",
+    placeholder: '',
+    type: 'text',
     mask: TEXT_MASK,
   },
   {
-    label: rentCarLabel + "address",
-    title: "Address",
-    value: "",
+    label: 'address',
+    title: 'Address',
+    value: '',
     requerid: true,
-    placeholder: "",
-    type: "text",
+    placeholder: '',
+    type: 'text',
     mask: TEXT_MASK,
   },
   {
-    label: rentCarLabel + "capacity",
-    title: "Capacity",
-    value: "1",
+    label: 'capacity',
+    title: 'Capacity',
+    value: '1',
     requerid: true,
-    placeholder: "",
-    type: "text",
+    placeholder: '',
+    type: 'text',
     mask: CAPACITY_MASK,
   },
   {
-    label: rentCarLabel + "price",
-    title: "Price",
-    value: "",
+    label: 'price',
+    title: 'Price',
+    value: '',
     requerid: true,
-    placeholder: "",
-    type: "text",
+    placeholder: '',
+    type: 'text',
     mask: PRICE_MASK,
   },
   {
-    label: rentCarLabel + "pick-up",
-    title: "Pick up hour",
-    value: "",
+    label: 'pickUpHour',
+    title: 'Pick up hour',
+    value: '',
     requerid: true,
-    placeholder: "",
-    type: "calendar",
+    placeholder: '',
+    type: 'calendar',
   },
   {
-    label: rentCarLabel + "drop-off",
-    title: "Drop off hour",
-    value: "",
+    label: 'dropOffHour',
+    title: 'Drop off hour',
+    value: '',
     requerid: true,
-    placeholder: "",
-    type: "calendar",
+    placeholder: '',
+    type: 'calendar',
+  },
+  {
+    label: 'photo',
+    title: 'Photo',
+    value: '',
+    requerid: true,
+    placeholder: 'Photo',
+    type: 'text',
+    mask: TEXT_MASK,
   },
 ];
 
@@ -566,8 +756,8 @@ function firstLetterUpper(string) {
 }
 
 function fromKebabToLowerCamelCase(kebabValue) {
-  let separator = String(kebabValue).split("-");
-  let property = "";
+  let separator = String(kebabValue).split('-');
+  let property = '';
   for (let i = 0; i < separator.length; ++i) {
     if (i > 0) property += firstLetterUpper(separator[i]);
     else property += separator[i];
@@ -583,18 +773,18 @@ function setStorableObject(
   formatDateValue
 ) {
   let separator = [];
-  let property = "";
+  let property = '';
   let object = {};
   for (let field of formFields) {
     separator = field.label.split(separatorLabel);
     property = separator.pop();
 
-    if (hasDateValues && field.type === "calendar" && field.value !== "") {
-      if (!formatDateValue) formatDateValue = "DD/MM/YYYY";
+    if (hasDateValues && field.type === 'calendar' && field.value !== '') {
+      if (!formatDateValue) formatDateValue = 'DD/MM/YYYY';
       field.value = formatDate(formatDateValue, field.value);
     }
 
-    if (property.includes("-")) property = fromKebabToLowerCamelCase(property);
+    if (property.includes('-')) property = fromKebabToLowerCamelCase(property);
 
     object[property] = field.value;
   }
@@ -608,12 +798,12 @@ function setStorableAccommodation() {
     accommodationLabel,
     true
   );
-  console.log("accommodation", accommodation);
+  console.log('accommodation', accommodation);
 }
 
 function setStorableTour() {
   tour = setStorableObject(tourFields.value, tourLabel);
-  console.log("tour", tour);
+  console.log('tour', tour);
 }
 
 function setStorableRentCar() {
@@ -621,18 +811,18 @@ function setStorableRentCar() {
     rentCarFields.value,
     rentCarLabel,
     true,
-    "h:mm A"
+    'h:mm A'
   );
-  console.log("rent car", rentCar);
+  console.log('rent car', rentCar);
 }
 
 //functions for validate data
 function validateFillFields(formFields, on) {
   for (let field of formFields) {
-    if (field.value === "") {
+    if (field.value === '') {
       errors.value.push({
-        type: "not-fill",
-        message: "Please, fill all fields",
+        type: 'not-fill',
+        message: 'Please, fill all fields',
         on: on,
       });
       return;
@@ -645,8 +835,8 @@ function validateAccommodationCheckDates() {
   let checkOut = accommodationFields.value[2].value;
   if (moment(checkIn).isSameOrAfter(checkOut))
     errors.value.push({
-      type: "value-error",
-      message: "Error with dates",
+      type: 'value-error',
+      message: 'Error with dates',
       on: ACCOMMODATION,
     });
 }
@@ -654,11 +844,11 @@ function validateAccommodationCheckDates() {
 function validateRentCarHours() {
   let pickUp = rentCarFields.value[6].value;
   let dropOff = rentCarFields.value[7].value;
-  if (pickUp !== "" && dropOff !== "") {
+  if (pickUp !== '' && dropOff !== '') {
     if (moment(pickUp).isSameOrAfter(dropOff))
       errors.value.push({
-        type: "value-error",
-        message: "Error with hors",
+        type: 'value-error',
+        message: 'Error with hors',
         on: RENT_CAR,
       });
   }
@@ -667,7 +857,7 @@ function validateRentCarHours() {
 //submit button
 async function submit() {
   /* PACKAGE */
-  packageData.value.agencyId = localStorage.getItem("currentUser");
+  packageData.value.agencyId = localStorage.getItem('currentUser');
   packageData.value.category = parseMultiSelectIntoValue(
     parseProxy(typePackage.value)
   )[0];
@@ -721,7 +911,7 @@ async function submit() {
   departureDate = departureDate.substring(1, departureDate.length - 3);
   returnDate = returnDate.substring(1, returnDate.length - 3);
 
-  if (tripSelected.value === "One way") {
+  if (tripSelected.value === 'One way') {
     /* ONE WAY */
     transportDataOneWay.value.departureDate = departureDate;
     transportDataOneWay.value.returnDate = returnDate;
@@ -769,20 +959,20 @@ async function submit() {
   // setStorableAccommodation();
   // setStorableTour();
   // setStorableRentCar();
-  alert("Package created successfully");
+  alert('Package created successfully');
 }
 
 // Data
 const packageData = ref({
-  name: "",
-  description: "",
-  locationAddress: "",
-  category: "",
+  name: '',
+  description: '',
+  locationAddress: '',
+  category: '',
   capacity: 0,
   duration: 1,
   price: 0,
   image:
-    "https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    'https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
   agencyId: 0,
   locationId: 0,
   views: 0,
@@ -790,8 +980,8 @@ const packageData = ref({
 });
 
 const transportDataOneWay = ref({
-  departureDate: "",
-  returnDate: "",
+  departureDate: '',
+  returnDate: '',
   price: 0,
   tripGoId: 0,
   transportClassId: 0,
@@ -800,8 +990,8 @@ const transportDataOneWay = ref({
 });
 
 const transportDataRoundTrip = ref({
-  departureDate: "",
-  returnDate: "",
+  departureDate: '',
+  returnDate: '',
   price: 0,
   tripGoId: 0,
   tripBackId: 0,
@@ -811,77 +1001,76 @@ const transportDataRoundTrip = ref({
 });
 
 const transportData = ref({
-  name: "",
-  type: "",
+  name: '',
+  type: '',
 });
 
 const locationToObject = ref({});
 const locationFromObject = ref({});
 const tripDate = ref([]);
 // inputs
-const transport = ref("");
-const trip = ref("");
-const tripSelected = ref("");
-const locationFrom = ref("");
-const locationTo = ref("");
-const typePackage = ref("");
+const transport = ref('');
+const trip = ref('');
+const tripSelected = ref('');
+const locationFrom = ref('');
+const locationTo = ref('');
+const typePackage = ref('');
 
 // Multiselect data
-
 const typeOfPackage = ref([
-  { type: "Standard", value: "STANDARD" },
-  { type: "Special", value: "SPECIAL" },
-  { type: "Itinerant trips", value: "ITINERANT TRIPS" },
-  { type: "Stay trips", value: "STAY TRIPS" },
-  { type: "General", value: "GENERAL" },
-  { type: "Specific", value: "SPECIFIC" },
-  { type: "Local programs", value: "LOCAL PROGRAMS" },
-  { type: "Regional programs", value: "REGIONAL PROGRAMS" },
+  { type: 'Standard', value: 'STANDARD' },
+  { type: 'Special', value: 'SPECIAL' },
+  { type: 'Itinerant trips', value: 'ITINERANT TRIPS' },
+  { type: 'Stay trips', value: 'STAY TRIPS' },
+  { type: 'General', value: 'GENERAL' },
+  { type: 'Specific', value: 'SPECIFIC' },
+  { type: 'Local programs', value: 'LOCAL PROGRAMS' },
+  { type: 'Regional programs', value: 'REGIONAL PROGRAMS' },
 ]);
 
 const transports = ref([
-  { transport: "Bus", value: "BUS" },
-  { transport: "Flight", value: "FLIGHT" },
-  { transport: "Train", value: "TRAIN" },
+  { transport: 'Bus', value: 'BUS' },
+  { transport: 'Flight', value: 'FLIGHT' },
+  { transport: 'Train', value: 'TRAIN' },
 ]);
 
 const typeOfTrip = ref([
-  { trip: "Round Trip", value: "Round trip" },
-  { trip: "One Way", value: "One way" },
+  { trip: 'Round Trip', value: 'Round trip' },
+  { trip: 'One Way', value: 'One way' },
 ]);
 
 const classes = ref([
-  { classT: "VIP", value: "1" },
-  { classT: "Express", value: "2" },
-  { classT: "Normal", value: "3" },
+  { classT: 'VIP', value: '1' },
+  { classT: 'Express', value: '2' },
+  { classT: 'Normal', value: '3' },
 ]);
 
 const departments = ref([
-  { department: "Amazonas", value: "Amazonas" },
-  { department: "Ancash", value: "Ancash" },
-  { department: "Apurimac", value: "Apurimac" },
-  { department: "Arequipa", value: "Arequipa" },
-  { department: "Ayacucho", value: "Ayacucho" },
-  { department: "Cajamarca", value: "Cajamarca" },
-  { department: "Callao", value: "Callao" },
-  { department: "Cuzco", value: "Cuzco" },
-  { department: "Huancavelica", value: "Huancavelica" },
-  { department: "Huanuco", value: "Huanuco" },
-  { department: "Ica", value: "Ica" },
-  { department: "Junin", value: "Junin" },
-  { department: "La Libertad", value: "La Libertad" },
-  { department: "Lambayeque", value: "Lambayeque" },
-  { department: "Lima", value: "Lima" },
-  { department: "Loreto", value: "Loreto" },
-  { department: "Madre de Dios", value: "Madre de Dios" },
-  { department: "Moquegua", value: "Moquegua" },
-  { department: "Pasco", value: "Pasco" },
-  { department: "Piura", value: "Piura" },
-  { department: "Puno", value: "Puno" },
-  { department: "San Martin", value: "San Martin" },
-  { department: "Tacna", value: "Tacna" },
-  { department: "Tumbes", value: "Tumbes" },
-  { department: "Ucayali", value: "Ucayali" },
+  { department: 'Amazonas', value: 'Amazonas' },
+  { department: 'Ancash', value: 'Ancash' },
+  { department: 'Apurimac', value: 'Apurimac' },
+  { department: 'Arequipa', value: 'Arequipa' },
+  { department: 'Ayacucho', value: 'Ayacucho' },
+  { department: 'Cajamarca', value: 'Cajamarca' },
+  { department: 'Callao', value: 'Callao' },
+  { department: 'Cuzco', value: 'Cuzco' },
+  { department: 'Huancavelica', value: 'Huancavelica' },
+  { department: 'Huanuco', value: 'Huanuco' },
+  { department: 'Ica', value: 'Ica' },
+  { department: 'Junin', value: 'Junin' },
+  { department: 'La Libertad', value: 'La Libertad' },
+  { department: 'Lambayeque', value: 'Lambayeque' },
+  { department: 'Lima', value: 'Lima' },
+  { department: 'Loreto', value: 'Loreto' },
+  { department: 'Madre de Dios', value: 'Madre de Dios' },
+  { department: 'Moquegua', value: 'Moquegua' },
+  { department: 'Pasco', value: 'Pasco' },
+  { department: 'Piura', value: 'Piura' },
+  { department: 'Puno', value: 'Puno' },
+  { department: 'San Martin', value: 'San Martin' },
+  { department: 'Tacna', value: 'Tacna' },
+  { department: 'Tumbes', value: 'Tumbes' },
+  { department: 'Ucayali', value: 'Ucayali' },
 ]);
 
 // Multiselect methods
@@ -900,8 +1089,6 @@ const selectTrip = (e) => {
   const ans = parseMultiSelectIntoValue(parseProxy(trip.value))[0];
   tripSelected.value = ans;
 };
-
-const save = () => {};
 </script>
 
 <style scoped>
@@ -922,16 +1109,20 @@ input {
   height: 6vh;
   color: black;
 }
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 
 .errors {
   color: red;
+}
+.p-divider {
+  background-color: #eee;
+  height: 1px;
 }
 </style>

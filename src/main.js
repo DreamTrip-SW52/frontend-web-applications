@@ -1,5 +1,7 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 // PrimeVue
 import PrimeVue from "primevue/config";
@@ -21,6 +23,8 @@ import ScrollTop from "primevue/scrolltop";
 import ScrollPanel from "primevue/scrollpanel";
 import Tooltip from "primevue/tooltip";
 import Fieldset from "primevue/fieldset";
+import Divider from 'primevue/divider';
+
 
 import App from "./App.vue";
 import router from "./router";
@@ -149,6 +153,8 @@ app.use(PrimeVue, {
     },
   },
 });
+app.use(VueSweetalert2);
+window.Swal =  app.config.globalProperties.$swal;
 //Components
 app.component("Button", Button);
 app.component("Carousel", Carousel);
@@ -167,6 +173,7 @@ app.component("Card", Card);
 app.component("ScrollTop", ScrollTop);
 app.component("ScrollPanel", ScrollPanel);
 app.component("Fieldset", Fieldset);
+app.component("Divider", Divider);
 
 app.directive("mask", VueRestrictedInputDirective);
 app.directive("tooltip", Tooltip);

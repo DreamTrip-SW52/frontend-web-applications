@@ -4,6 +4,10 @@ export class AccommodationService {
   basePath = "/accommodation";
   servicesPerAccommodationPath = "/servicesperaccommodations";
 
+	create(accommodationData) {
+		return http.post(this.basePath, accommodationData);
+	}
+
   getAccommodations() {
     return http.get(this.basePath);
   }
