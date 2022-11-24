@@ -1,11 +1,6 @@
 <template>
   <Navbar />
   <div>
-    <!-- <pre>{{ JSON.stringify(packageData, null, 4) }}</pre> -->
-    <!-- <pre>{{ JSON.stringify(transport, null, 4) }}</pre> -->
-    <!-- <pre>{{ JSON.stringify(trip, null, 4) }}</pre> -->
-    <!-- <pre>{{ JSON.stringify(transportData, null, 4) }}</pre> -->
-
     <header class="text-center">
       <h1 class="text-white">Create Package</h1>
     </header>
@@ -16,7 +11,7 @@
           <div class="col-4 flex-column gap-8 align-items-center">
             <label for="name" class="align-self-start">Name</label>
             <input
-              class="w-full"
+              class="w-full text-base"
               id="name"
               type="text"
               v-model="packageData.name"
@@ -28,7 +23,7 @@
               >Description</label
             >
             <input
-              class="w-full"
+              class="w-full text-base"
               id="description"
               type="text"
               v-model="packageData.description"
@@ -40,7 +35,7 @@
               >Location Address</label
             >
             <input
-              class="w-full"
+              class="w-full text-base"
               id="locationAddress"
               type="text"
               v-model="packageData.locationAddress"
@@ -52,7 +47,7 @@
           >
             <label for="capacity" class="align-self-start">Capacity</label>
             <input
-              class="w-full"
+              class="w-full text-right pr-3 text-base"
               id="capacity"
               type="number"
               v-model="packageData.capacity"
@@ -64,7 +59,7 @@
           >
             <label for="duration" class="align-self-start">Duration</label>
             <input
-              class="w-full"
+              class="w-full text-right pr-3 text-base"
               id="duration"
               type="number"
               v-model="packageData.duration"
@@ -95,7 +90,12 @@
             class="col-4 flex flex-column gap-2 justify-content-between align-items-center"
           >
             <label for="price">Price</label>
-            <input id="price" type="number" v-model="packageData.price" />
+            <input
+              class="text-right pr-3 text-base"
+              id="price"
+              type="number"
+              v-model="packageData.price"
+            />
           </div>
         </form>
         <h2>Transport Information</h2>
@@ -206,6 +206,7 @@
             <div class="flex justify-content-between align-items-center">
               <label for="transportGoName">Transport Name</label>
               <input
+                class="text-base"
                 id="transportGoName"
                 type="text"
                 v-model="transportData.name"
@@ -215,12 +216,14 @@
             <div class="flex justify-content-between align-items-center">
               <label for="price">Price</label>
               <input
+                class="text-right pr-3 text-base"
                 id="price"
                 type="text"
                 v-model="transportDataRoundTrip.price"
                 v-if="tripSelected === 'Round trip'"
               />
               <input
+                class="text-right pr-3 text-base"
                 id="price"
                 type="text"
                 v-model="transportDataOneWay.price"
@@ -242,7 +245,6 @@
       <Divider />
       <div class="w-full">
         <h2 class="mb-8 text-center text-6xl">ADD-ONS</h2>
-        <!-- <pre>{{ JSON.stringify(packageSelected) }}</pre> -->
         <div class="flex flex-column gap-2">
           <label for="packageSelected">Choose a package</label>
           <MultiSelect
@@ -270,9 +272,6 @@
                 class="text-white"
               >
                 <h2>{{ ACCOMMODATION }}</h2>
-                <!-- <pre>{{
-                  JSON.stringify(getMappedFields(accommodationFields), null, 4)
-                }}</pre> -->
                 <div class="flex flex-column gap-3">
                   <div
                     v-for="field of accommodationFields"
@@ -326,9 +325,6 @@
                 class="text-white"
               >
                 <h2>{{ TOUR }}</h2>
-                <!-- <pre>{{
-                  JSON.stringify(getMappedFields(tourFields), null, 4)
-                }}</pre> -->
                 <div class="flex flex-column gap-3">
                   <div
                     v-for="field of tourFields"
@@ -355,9 +351,6 @@
                 class="text-white"
               >
                 <h2>{{ RENT_CAR }}</h2>
-                <!-- <pre>{{
-                  JSON.stringify(getMappedFields(rentCarFields), null, 4)
-                }}</pre> -->
                 <div class="flex flex-column gap-3">
                   <div
                     v-for="field of rentCarFields"
@@ -388,23 +381,22 @@
         </div>
       </div>
     </main>
-    <!-- <pre>{{ JSON.stringify(agencyPackages, null, 4) }}</pre> -->
   </div>
 </template>
 
 <script setup>
-import Navbar from '../components/Navbar.vue';
-import { ref, onMounted } from 'vue';
-import { FormFields } from '@/interfaces/FormField';
-import { Accommodation } from '@/interfaces/Accomodation';
-import { Tour } from '@/interfaces/Tour';
-import { RentCar } from '@/interfaces/RentCar';
-import { PackageService } from '../services/Package.service';
-import { AccommodationService } from '../services/Accommodation.service';
-import { TransportService } from '../services/Transport.service';
-import { CarService } from '../services/Car.service';
-import { TourService } from '../services/Tour.service';
-import moment from 'moment';
+import Navbar from "../components/Navbar.vue";
+import { ref, onMounted } from "vue";
+import { FormFields } from "@/interfaces/FormField";
+import { Accommodation } from "@/interfaces/Accomodation";
+import { Tour } from "@/interfaces/Tour";
+import { RentCar } from "@/interfaces/RentCar";
+import { PackageService } from "../services/Package.service";
+import { AccommodationService } from "../services/Accommodation.service";
+import { TransportService } from "../services/Transport.service";
+import { CarService } from "../services/Car.service";
+import { TourService } from "../services/Tour.service";
+import moment from "moment";
 
 // Services
 const packageService = new PackageService();
@@ -414,14 +406,13 @@ const transportService = new TransportService();
 const carService = new CarService();
 
 // const's
-const PRICE_MASK = ref('{{0000}}');
+const PRICE_MASK = ref("{{0000}}");
 const TEXT_MASK = allCharacterMask(600);
-const CAPACITY_MASK = '{{000}}';
+const CAPACITY_MASK = "{{000}}";
 const TODAY_DATE = new Date();
-const MINIMUM_CHECK_DAYS = 1;
-const ACCOMMODATION = 'Accommodation';
-const TOUR = 'Tour';
-const RENT_CAR = 'Rent Car';
+const ACCOMMODATION = "Accommodation";
+const TOUR = "Tour";
+const RENT_CAR = "Rent Car";
 
 //variables
 let accommodation = Accommodation;
@@ -436,10 +427,6 @@ const agencyPackages = ref([]);
 const packageSelected = ref([]);
 
 const getMappedFields = (fields) => {
-  console.log(
-    '🚀 ~ file: PublishServices.vue ~ line 435 ~ getMappedFields ~ fields',
-    fields
-  );
   return fields.reduce((acc, curr) => {
     return {
       ...acc,
@@ -458,7 +445,7 @@ const getMappedFields = (fields) => {
 */
 onMounted(() => {
   // Paso 1
-  const userId = localStorage.getItem('currentUser');
+  const userId = localStorage.getItem("currentUser");
   packageService
     .getByTravelAgencyId(userId)
     .then((res) => {
@@ -472,7 +459,7 @@ onMounted(() => {
 // create a function that displays a success message using VueSweetalert2
 const successMessage = (message) => {
   Swal.fire({
-    icon: 'success',
+    icon: "success",
     title: message,
     showConfirmButton: false,
     timer: 1500,
@@ -491,12 +478,11 @@ const addAccommodation = () => {
   );
   mappedAccommodationFields.packageId = packageSelected.value[0];
   mappedAccommodationFields.price = Number(mappedAccommodationFields.price);
-
   accommodationService
     .create(mappedAccommodationFields)
     .then((res) => {
       console.log(res);
-      successMessage('Accommodation added');
+      successMessage("Accommodation added");
     })
     .catch((err) => {
       console.log(err);
@@ -517,7 +503,7 @@ const addTour = () => {
     .create(mappedTourFields)
     .then((res) => {
       console.log(res);
-      successMessage('Tour added');
+      successMessage("Tour added");
     })
     .catch((err) => {
       console.log(err);
@@ -534,16 +520,12 @@ const addCar = () => {
   mappedRentCarFields.packageId = packageSelected.value[0];
   mappedRentCarFields.price = Number(mappedRentCarFields.price);
   mappedRentCarFields.capacity = Number(mappedRentCarFields.capacity);
-  console.log(
-    '🚀 ~ file: PublishServices.vue ~ line 538 ~ addCar ~ mappedRentCarFields',
-    mappedRentCarFields
-  );
 
   carService
     .create(mappedRentCarFields)
     .then((res) => {
       console.log(res);
-      successMessage('Car added');
+      successMessage("Car added");
     })
     .catch((err) => {
       console.log(err);
@@ -552,66 +534,58 @@ const addCar = () => {
 
 //for accommodation information
 let accommodationFields = ref(FormFields);
-const accommodationLabel = 'accommodation-';
+const accommodationLabel = "accommodation-";
 accommodationFields.value = [
   {
-    label: 'details',
-    title: 'Details',
-    value: '',
+    label: "details",
+    title: "Details",
+    value: "",
     requerid: true,
-    placeholder: '',
-    type: 'text',
+    placeholder: "",
+    type: "text",
     mask: TEXT_MASK,
   },
   {
-    label: 'checkIn',
-    title: 'Check in',
-    value: '',
+    label: "checkIn",
+    title: "Check in",
+    value: "",
     requerid: true,
-    placeholder: '',
-    type: 'calendar',
+    placeholder: "",
+    type: "calendar",
   },
   {
-    label: 'checkOut',
-    title: 'Check out',
-    value: '',
+    label: "checkOut",
+    title: "Check out",
+    value: "",
     requerid: true,
-    placeholder: '',
-    type: 'calendar',
+    placeholder: "",
+    type: "calendar",
   },
   {
-    label: 'location',
-    title: 'Location',
-    value: '',
+    label: "location",
+    title: "Location",
+    value: "",
     requerid: true,
-    placeholder: '',
-    type: 'text',
+    placeholder: "",
+    type: "text",
     mask: TEXT_MASK,
   },
   {
-    label: 'price',
-    title: 'Price',
-    value: '',
+    label: "price",
+    title: "Price",
+    value: "",
     requerid: true,
-    placeholder: '',
-    type: 'text',
+    placeholder: "",
+    type: "text",
     mask: PRICE_MASK,
   },
 ];
 
-function createAccomodation() {
-  accommodation.details = accommodationFields.value[0].value;
-  accommodation.checkIn = accommodationFields.value[1].value;
-  accommodation.checkOut = accommodationFields.value[2].value;
-  accommodation.location = accommodationFields.value[3].value;
-  accommodation.price = accommodationFields.value[4].value;
-}
-
 function allCharacterMask(size) {
-  let mask = '{{';
-  for (let i = 0; i < size; ++i) mask += '*';
+  let mask = "{{";
+  for (let i = 0; i < size; ++i) mask += "*";
 
-  mask += '}}';
+  mask += "}}";
   return mask;
 }
 
@@ -621,124 +595,124 @@ function checkInSelect(date) {
 }
 
 function checkField(field) {
-  return field.label === accommodationLabel + 'check-out';
+  return field.label === accommodationLabel + "check-out";
 }
 
 //for tour information
 let tourFields = ref(FormFields);
-const tourLabel = 'tour-';
+const tourLabel = "tour-";
 
 tourFields.value = [
   {
-    label: 'details',
-    title: 'Details',
-    value: '',
+    label: "details",
+    title: "Details",
+    value: "",
     requerid: true,
-    placeholder: '',
-    type: 'text',
+    placeholder: "",
+    type: "text",
     mask: TEXT_MASK,
   },
   {
-    label: 'location',
-    title: 'Location',
-    value: '',
+    label: "location",
+    title: "Location",
+    value: "",
     requerid: true,
-    placeholder: '',
-    type: 'text',
+    placeholder: "",
+    type: "text",
     mask: TEXT_MASK,
   },
   {
-    label: 'meetingPoint',
-    title: 'Meeting point',
-    value: '',
+    label: "meetingPoint",
+    title: "Meeting point",
+    value: "",
     requerid: true,
-    placeholder: '',
-    type: 'text',
+    placeholder: "",
+    type: "text",
     mask: TEXT_MASK,
   },
   {
-    label: 'price',
-    title: 'Price',
-    value: '',
+    label: "price",
+    title: "Price",
+    value: "",
     requerid: true,
-    placeholder: '',
-    type: 'text',
+    placeholder: "",
+    type: "text",
     mask: PRICE_MASK,
   },
 ];
 
 //for rent car information
 let rentCarFields = ref(FormFields);
-const rentCarLabel = 'rent-car-';
+const rentCarLabel = "rent-car-";
 rentCarFields.value = [
   {
-    label: 'name',
-    title: 'Name',
-    value: '',
+    label: "name",
+    title: "Name",
+    value: "",
     requerid: true,
-    placeholder: '',
-    type: 'text',
+    placeholder: "",
+    type: "text",
     mask: TEXT_MASK,
   },
   {
-    label: 'brand',
-    title: 'Brand',
-    value: '',
+    label: "brand",
+    title: "Brand",
+    value: "",
     requerid: true,
-    placeholder: '',
-    type: 'text',
+    placeholder: "",
+    type: "text",
     mask: TEXT_MASK,
   },
   {
-    label: 'address',
-    title: 'Address',
-    value: '',
+    label: "address",
+    title: "Address",
+    value: "",
     requerid: true,
-    placeholder: '',
-    type: 'text',
+    placeholder: "",
+    type: "text",
     mask: TEXT_MASK,
   },
   {
-    label: 'capacity',
-    title: 'Capacity',
-    value: '1',
+    label: "capacity",
+    title: "Capacity",
+    value: "1",
     requerid: true,
-    placeholder: '',
-    type: 'text',
+    placeholder: "",
+    type: "text",
     mask: CAPACITY_MASK,
   },
   {
-    label: 'price',
-    title: 'Price',
-    value: '',
+    label: "price",
+    title: "Price",
+    value: "",
     requerid: true,
-    placeholder: '',
-    type: 'text',
+    placeholder: "",
+    type: "text",
     mask: PRICE_MASK,
   },
   {
-    label: 'pickUpHour',
-    title: 'Pick up hour',
-    value: '',
+    label: "pickUpHour",
+    title: "Pick up hour",
+    value: "",
     requerid: true,
-    placeholder: '',
-    type: 'calendar',
+    placeholder: "",
+    type: "calendar",
   },
   {
-    label: 'dropOffHour',
-    title: 'Drop off hour',
-    value: '',
+    label: "dropOffHour",
+    title: "Drop off hour",
+    value: "",
     requerid: true,
-    placeholder: '',
-    type: 'calendar',
+    placeholder: "",
+    type: "calendar",
   },
   {
-    label: 'photo',
-    title: 'Photo',
-    value: '',
+    label: "photo",
+    title: "Photo",
+    value: "",
     requerid: true,
-    placeholder: 'Photo',
-    type: 'text',
+    placeholder: "Photo",
+    type: "text",
     mask: TEXT_MASK,
   },
 ];
@@ -756,8 +730,8 @@ function firstLetterUpper(string) {
 }
 
 function fromKebabToLowerCamelCase(kebabValue) {
-  let separator = String(kebabValue).split('-');
-  let property = '';
+  let separator = String(kebabValue).split("-");
+  let property = "";
   for (let i = 0; i < separator.length; ++i) {
     if (i > 0) property += firstLetterUpper(separator[i]);
     else property += separator[i];
@@ -765,214 +739,123 @@ function fromKebabToLowerCamelCase(kebabValue) {
   return property;
 }
 
-//functions for set
-function setStorableObject(
-  formFields,
-  separatorLabel,
-  hasDateValues,
-  formatDateValue
-) {
-  let separator = [];
-  let property = '';
-  let object = {};
-  for (let field of formFields) {
-    separator = field.label.split(separatorLabel);
-    property = separator.pop();
-
-    if (hasDateValues && field.type === 'calendar' && field.value !== '') {
-      if (!formatDateValue) formatDateValue = 'DD/MM/YYYY';
-      field.value = formatDate(formatDateValue, field.value);
-    }
-
-    if (property.includes('-')) property = fromKebabToLowerCamelCase(property);
-
-    object[property] = field.value;
-  }
-
-  return object;
-}
-
-function setStorableAccommodation() {
-  accommodation = setStorableObject(
-    accommodationFields.value,
-    accommodationLabel,
-    true
-  );
-  console.log('accommodation', accommodation);
-}
-
-function setStorableTour() {
-  tour = setStorableObject(tourFields.value, tourLabel);
-  console.log('tour', tour);
-}
-
-function setStorableRentCar() {
-  rentCar = setStorableObject(
-    rentCarFields.value,
-    rentCarLabel,
-    true,
-    'h:mm A'
-  );
-  console.log('rent car', rentCar);
-}
-
-//functions for validate data
-function validateFillFields(formFields, on) {
-  for (let field of formFields) {
-    if (field.value === '') {
-      errors.value.push({
-        type: 'not-fill',
-        message: 'Please, fill all fields',
-        on: on,
-      });
-      return;
-    }
-  }
-}
-
-function validateAccommodationCheckDates() {
-  let checkIn = accommodationFields.value[1].value;
-  let checkOut = accommodationFields.value[2].value;
-  if (moment(checkIn).isSameOrAfter(checkOut))
-    errors.value.push({
-      type: 'value-error',
-      message: 'Error with dates',
-      on: ACCOMMODATION,
-    });
-}
-
-function validateRentCarHours() {
-  let pickUp = rentCarFields.value[6].value;
-  let dropOff = rentCarFields.value[7].value;
-  if (pickUp !== '' && dropOff !== '') {
-    if (moment(pickUp).isSameOrAfter(dropOff))
-      errors.value.push({
-        type: 'value-error',
-        message: 'Error with hors',
-        on: RENT_CAR,
-      });
-  }
-}
-
 //submit button
 async function submit() {
-  /* PACKAGE */
-  packageData.value.agencyId = localStorage.getItem('currentUser');
-  packageData.value.category = parseMultiSelectIntoValue(
-    parseProxy(typePackage.value)
-  )[0];
-
-  locationTo.value = parseMultiSelectIntoValue(parseProxy(locationTo.value));
-  locationFrom.value = parseMultiSelectIntoValue(
-    parseProxy(locationFrom.value)
-  );
-
-  const responseLocationTo = await transportService.getLocationByDepartment(
-    locationTo.value
-  );
-  locationToObject.value = responseLocationTo.data;
-
-  packageData.value.locationId = locationToObject.value.id;
-
-  const responseLocationFrom = await transportService.getLocationByDepartment(
-    locationFrom.value
-  );
-  locationFromObject.value = responseLocationFrom.data;
-
-  // create package
-  const responsePackage = await packageService.createPackage(packageData.value);
-
-  /* TRANSPORT */
-  transportData.value.type = parseMultiSelectIntoValue(
-    parseProxy(transport.value)
-  )[0];
-
-  // create transport
-  const responseTransport = await transportService.createTransport(
-    transportData.value
-  );
-
-  /* TRIPS GO */
-
-  const responseTripsGo = await transportService.createTripsGo({
-    locationId: locationToObject.value.id,
-  });
-
-  /* TRIPS BACK */
-
-  const responseTripsBack = await transportService.createTripsBack({
-    locationId: locationFromObject.value.id,
-  });
-
-  /* TRIP */
-
-  let departureDate = JSON.stringify(tripDate.value[0]);
-  let returnDate = JSON.stringify(tripDate.value[1]);
-  departureDate = departureDate.substring(1, departureDate.length - 3);
-  returnDate = returnDate.substring(1, returnDate.length - 3);
-
-  if (tripSelected.value === 'One way') {
-    /* ONE WAY */
-    transportDataOneWay.value.departureDate = departureDate;
-    transportDataOneWay.value.returnDate = returnDate;
-    transportDataOneWay.value.transportId = responseTransport.data.id;
-    transportDataOneWay.value.tripGoId = responseTripsGo.data.id;
-    transportDataOneWay.value.packageId = responsePackage.data.id;
-    transportDataOneWay.value.transportClassId = parseMultiSelectIntoValue(
-      parseProxy(transportDataOneWay.value.transportClassId)
+  try {
+    /* PACKAGE */
+    packageData.value.agencyId = localStorage.getItem("currentUser");
+    packageData.value.category = parseMultiSelectIntoValue(
+      parseProxy(typePackage.value)
     )[0];
 
-    const responseOneWay = await transportService.createOneWay(
-      transportDataOneWay.value
+    locationTo.value = parseMultiSelectIntoValue(parseProxy(locationTo.value));
+    locationFrom.value = parseMultiSelectIntoValue(
+      parseProxy(locationFrom.value)
     );
-  } else {
-    /* ROUND TRIP */
-    transportDataRoundTrip.value.departureDate = departureDate;
-    transportDataRoundTrip.value.returnDate = returnDate;
-    transportDataRoundTrip.value.transportId = responseTransport.data.id;
-    transportDataRoundTrip.value.tripGoId = responseTripsGo.data.id;
-    transportDataRoundTrip.value.tripBackId = responseTripsBack.data.id;
-    transportDataRoundTrip.value.packageId = responsePackage.data.id;
-    transportDataRoundTrip.value.transportClassId = parseMultiSelectIntoValue(
-      parseProxy(transportDataRoundTrip.value.transportClassId)
+
+    const responseLocationTo = await transportService.getLocationByDepartment(
+      locationTo.value
+    );
+    locationToObject.value = responseLocationTo.data;
+
+    packageData.value.locationId = locationToObject.value.id;
+
+    const responseLocationFrom = await transportService.getLocationByDepartment(
+      locationFrom.value
+    );
+    locationFromObject.value = responseLocationFrom.data;
+
+    // create package
+    const responsePackage = await packageService.createPackage(
+      packageData.value
+    );
+
+    /* TRANSPORT */
+    transportData.value.type = parseMultiSelectIntoValue(
+      parseProxy(transport.value)
     )[0];
 
-    const responseRoundTrip = await transportService.createRoundTrip(
-      transportDataRoundTrip.value
+    // create transport
+    const responseTransport = await transportService.createTransport(
+      transportData.value
     );
+
+    /* TRIPS GO */
+
+    const responseTripsGo = await transportService.createTripsGo({
+      locationId: locationToObject.value.id,
+    });
+
+    /* TRIPS BACK */
+
+    const responseTripsBack = await transportService.createTripsBack({
+      locationId: locationFromObject.value.id,
+    });
+
+    /* TRIP */
+
+    let departureDate = JSON.stringify(tripDate.value[0]);
+    let returnDate = JSON.stringify(tripDate.value[1]);
+    departureDate = departureDate.substring(1, departureDate.length - 3);
+    returnDate = returnDate.substring(1, returnDate.length - 3);
+
+    if (tripSelected.value === "One way") {
+      /* ONE WAY */
+      transportDataOneWay.value.departureDate = departureDate;
+      transportDataOneWay.value.returnDate = returnDate;
+      transportDataOneWay.value.transportId = responseTransport.data.id;
+      transportDataOneWay.value.tripGoId = responseTripsGo.data.id;
+      transportDataOneWay.value.packageId = responsePackage.data.id;
+      transportDataOneWay.value.transportClassId = parseMultiSelectIntoValue(
+        parseProxy(transportDataOneWay.value.transportClassId)
+      )[0];
+
+      const responseOneWay = await transportService.createOneWay(
+        transportDataOneWay.value
+      );
+    } else {
+      /* ROUND TRIP */
+      transportDataRoundTrip.value.departureDate = departureDate;
+      transportDataRoundTrip.value.returnDate = returnDate;
+      transportDataRoundTrip.value.transportId = responseTransport.data.id;
+      transportDataRoundTrip.value.tripGoId = responseTripsGo.data.id;
+      transportDataRoundTrip.value.tripBackId = responseTripsBack.data.id;
+      transportDataRoundTrip.value.packageId = responsePackage.data.id;
+      transportDataRoundTrip.value.transportClassId = parseMultiSelectIntoValue(
+        parseProxy(transportDataRoundTrip.value.transportClassId)
+      )[0];
+
+      const responseRoundTrip = await transportService.createRoundTrip(
+        transportDataRoundTrip.value
+      );
+    }
+    Swal.fire({
+      title: "Success!",
+      text: "Package created successfully",
+      icon: "success",
+      confirmButtonText: "Ok",
+    });
+  } catch (err) {
+    Swal.fire({
+      title: "Error!",
+      text: "Something went wrong",
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
   }
-
-  //reset errors
-  // errors.value = [];
-  //start validate
-  // validateFillFields(accommodationFields.value, ACCOMMODATION);
-  // validateFillFields(tourFields.value, TOUR);
-  // validateFillFields(rentCarFields.value, RENT_CAR);
-
-  // validateAccommodationCheckDates();
-  // validateRentCarHours();
-
-  //validate errors
-  // if (errors.value.length !== 0) return;
-
-  //start set objects
-  // setStorableAccommodation();
-  // setStorableTour();
-  // setStorableRentCar();
-  alert('Package created successfully');
 }
 
 // Data
 const packageData = ref({
-  name: '',
-  description: '',
-  locationAddress: '',
-  category: '',
+  name: "",
+  description: "",
+  locationAddress: "",
+  category: "",
   capacity: 0,
   duration: 1,
   price: 0,
   image:
-    'https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    "https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   agencyId: 0,
   locationId: 0,
   views: 0,
@@ -980,8 +863,8 @@ const packageData = ref({
 });
 
 const transportDataOneWay = ref({
-  departureDate: '',
-  returnDate: '',
+  departureDate: "",
+  returnDate: "",
   price: 0,
   tripGoId: 0,
   transportClassId: 0,
@@ -990,8 +873,8 @@ const transportDataOneWay = ref({
 });
 
 const transportDataRoundTrip = ref({
-  departureDate: '',
-  returnDate: '',
+  departureDate: "",
+  returnDate: "",
   price: 0,
   tripGoId: 0,
   tripBackId: 0,
@@ -1001,76 +884,76 @@ const transportDataRoundTrip = ref({
 });
 
 const transportData = ref({
-  name: '',
-  type: '',
+  name: "",
+  type: "",
 });
 
 const locationToObject = ref({});
 const locationFromObject = ref({});
 const tripDate = ref([]);
 // inputs
-const transport = ref('');
-const trip = ref('');
-const tripSelected = ref('');
-const locationFrom = ref('');
-const locationTo = ref('');
-const typePackage = ref('');
+const transport = ref("");
+const trip = ref("");
+const tripSelected = ref("");
+const locationFrom = ref("");
+const locationTo = ref("");
+const typePackage = ref("");
 
 // Multiselect data
 const typeOfPackage = ref([
-  { type: 'Standard', value: 'STANDARD' },
-  { type: 'Special', value: 'SPECIAL' },
-  { type: 'Itinerant trips', value: 'ITINERANT TRIPS' },
-  { type: 'Stay trips', value: 'STAY TRIPS' },
-  { type: 'General', value: 'GENERAL' },
-  { type: 'Specific', value: 'SPECIFIC' },
-  { type: 'Local programs', value: 'LOCAL PROGRAMS' },
-  { type: 'Regional programs', value: 'REGIONAL PROGRAMS' },
+  { type: "Standard", value: "STANDARD" },
+  { type: "Special", value: "SPECIAL" },
+  { type: "Itinerant trips", value: "ITINERANT TRIPS" },
+  { type: "Stay trips", value: "STAY TRIPS" },
+  { type: "General", value: "GENERAL" },
+  { type: "Specific", value: "SPECIFIC" },
+  { type: "Local programs", value: "LOCAL PROGRAMS" },
+  { type: "Regional programs", value: "REGIONAL PROGRAMS" },
 ]);
 
 const transports = ref([
-  { transport: 'Bus', value: 'BUS' },
-  { transport: 'Flight', value: 'FLIGHT' },
-  { transport: 'Train', value: 'TRAIN' },
+  { transport: "Bus", value: "BUS" },
+  { transport: "Flight", value: "FLIGHT" },
+  { transport: "Train", value: "TRAIN" },
 ]);
 
 const typeOfTrip = ref([
-  { trip: 'Round Trip', value: 'Round trip' },
-  { trip: 'One Way', value: 'One way' },
+  { trip: "Round Trip", value: "Round trip" },
+  { trip: "One Way", value: "One way" },
 ]);
 
 const classes = ref([
-  { classT: 'VIP', value: '1' },
-  { classT: 'Express', value: '2' },
-  { classT: 'Normal', value: '3' },
+  { classT: "VIP", value: "1" },
+  { classT: "Express", value: "2" },
+  { classT: "Normal", value: "3" },
 ]);
 
 const departments = ref([
-  { department: 'Amazonas', value: 'Amazonas' },
-  { department: 'Ancash', value: 'Ancash' },
-  { department: 'Apurimac', value: 'Apurimac' },
-  { department: 'Arequipa', value: 'Arequipa' },
-  { department: 'Ayacucho', value: 'Ayacucho' },
-  { department: 'Cajamarca', value: 'Cajamarca' },
-  { department: 'Callao', value: 'Callao' },
-  { department: 'Cuzco', value: 'Cuzco' },
-  { department: 'Huancavelica', value: 'Huancavelica' },
-  { department: 'Huanuco', value: 'Huanuco' },
-  { department: 'Ica', value: 'Ica' },
-  { department: 'Junin', value: 'Junin' },
-  { department: 'La Libertad', value: 'La Libertad' },
-  { department: 'Lambayeque', value: 'Lambayeque' },
-  { department: 'Lima', value: 'Lima' },
-  { department: 'Loreto', value: 'Loreto' },
-  { department: 'Madre de Dios', value: 'Madre de Dios' },
-  { department: 'Moquegua', value: 'Moquegua' },
-  { department: 'Pasco', value: 'Pasco' },
-  { department: 'Piura', value: 'Piura' },
-  { department: 'Puno', value: 'Puno' },
-  { department: 'San Martin', value: 'San Martin' },
-  { department: 'Tacna', value: 'Tacna' },
-  { department: 'Tumbes', value: 'Tumbes' },
-  { department: 'Ucayali', value: 'Ucayali' },
+  { department: "Amazonas", value: "Amazonas" },
+  { department: "Ancash", value: "Ancash" },
+  { department: "Apurimac", value: "Apurimac" },
+  { department: "Arequipa", value: "Arequipa" },
+  { department: "Ayacucho", value: "Ayacucho" },
+  { department: "Cajamarca", value: "Cajamarca" },
+  { department: "Callao", value: "Callao" },
+  { department: "Cuzco", value: "Cuzco" },
+  { department: "Huancavelica", value: "Huancavelica" },
+  { department: "Huanuco", value: "Huanuco" },
+  { department: "Ica", value: "Ica" },
+  { department: "Junin", value: "Junin" },
+  { department: "La Libertad", value: "La Libertad" },
+  { department: "Lambayeque", value: "Lambayeque" },
+  { department: "Lima", value: "Lima" },
+  { department: "Loreto", value: "Loreto" },
+  { department: "Madre de Dios", value: "Madre de Dios" },
+  { department: "Moquegua", value: "Moquegua" },
+  { department: "Pasco", value: "Pasco" },
+  { department: "Piura", value: "Piura" },
+  { department: "Puno", value: "Puno" },
+  { department: "San Martin", value: "San Martin" },
+  { department: "Tacna", value: "Tacna" },
+  { department: "Tumbes", value: "Tumbes" },
+  { department: "Ucayali", value: "Ucayali" },
 ]);
 
 // Multiselect methods
@@ -1109,12 +992,12 @@ input {
   height: 6vh;
   color: black;
 }
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 

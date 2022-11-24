@@ -41,10 +41,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { PackageService } from '../services/Package.service';
-import PayMethods from '@/components/pay/PayMethods.vue';
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { PackageService } from "../services/Package.service";
+import PayMethods from "@/components/pay/PayMethods.vue";
 
 const router = useRouter();
 const packageData = ref({});
@@ -70,31 +70,31 @@ const pay = async (packageSales, packageViews) => {
     );
     console.log(responsePackage);
 
-    // create purchased package
-    // const responsePurchasedPackage =
-    //   await packageService.createPurchasedPackage({
-    //     packageId: Number(params.id),
-    //     // customPackageId: null,
-    //     active: false,
-    //     travelerId: Number(localStorage.getItem('currentUser')),
-    //   });
-    // console.log(responsePurchasedPackage);
+    const responsePurchasedPackage =
+      await packageService.createPurchasedPackage({
+        packageId: Number(params.id),
+        active: false,
+        travelerId: Number(localStorage.getItem("currentUser")),
+      });
+
+    console.log(responsePurchasedPackage);
+
     Swal.fire({
-      title: 'Success!',
-      text: 'Your package has been purchased',
-      icon: 'success',
-      confirmButtonText: 'Ok',
+      title: "Success!",
+      text: "Your package has been purchased",
+      icon: "success",
+      confirmButtonText: "Ok",
     });
   } catch (err) {
     Swal.fire({
-      title: 'Error!',
-      text: 'Something went wrong',
-      icon: 'error',
-      confirmButtonText: 'Ok',
+      title: "Error!",
+      text: "Something went wrong",
+      icon: "error",
+      confirmButtonText: "Ok",
     });
   }
 
-  // router.replace('/home');
+  router.replace("/home");
 };
 </script>
 

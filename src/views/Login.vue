@@ -9,7 +9,7 @@
         <InputText
           type="email"
           placeholder="Email address"
-          class="input"
+          class="input text-white"
           :class="errors.email.error && 'p-invalid'"
           v-model="email"
         />
@@ -20,7 +20,7 @@
         <InputText
           type="password"
           placeholder="Password"
-          class="input"
+          class="input text-white"
           :class="errors.password.error && 'p-invalid'"
           v-model="password"
         />
@@ -78,10 +78,21 @@ const handleLogin = async (e) => {
     if (data) {
       console.log("data", data);
       localStorage.setItem("currentUser", JSON.stringify(data.id));
+      Swal.fire({
+        title: "Welcome!",
+        text: "Welcome to your account!",
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
       router.push("/home");
     } else {
       console.log("Traveler not found");
-      alert("Incorrect Data");
+      Swal.fire({
+        title: "Error!",
+        text: "Incorrect data!",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
     }
   }
 };

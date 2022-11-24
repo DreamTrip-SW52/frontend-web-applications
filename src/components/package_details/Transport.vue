@@ -1,10 +1,4 @@
 <template>
-  <!-- <pre>TransportData: {{ transportData }}</pre>
-  <pre>Details:{{ details }}</pre>
-  <pre>Transport {{ transport }}</pre>
-  <pre>TransportClass {{ transportClass }}</pre>
-  <prev>LocationGo {{ locationGo }}</prev>
-  <prev>LocationBack {{ locationBack }}</prev> -->
   <div class="flex flex-column gap-6 mt-4">
     <section id="about">
       <div class="text-center mb-4">
@@ -44,9 +38,9 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import FlightCard from './FlightCard.vue';
-import { TransportService } from '../../services/Transport.service';
+import { onMounted, ref } from "vue";
+import FlightCard from "./FlightCard.vue";
+import { TransportService } from "../../services/Transport.service";
 
 const transportService = new TransportService();
 const transportData = ref({});
@@ -94,11 +88,11 @@ onMounted(async () => {
   isRoundTrip.data
     ? (details.value = {
         ...isRoundTrip.data,
-        typeOfTrip: 'Round Trip',
+        typeOfTrip: "Round Trip",
       })
     : (details.value = {
         ...isOneWay.data,
-        typeOfTrip: 'One Way',
+        typeOfTrip: "One Way",
       });
 
   const transportD = await transportService.getTransportById(

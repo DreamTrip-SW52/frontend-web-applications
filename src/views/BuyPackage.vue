@@ -24,13 +24,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { PackageService } from '../services/Package.service';
-import { TravelerService } from '../services/Traveler.service';
-import { TransportService } from '../services/Transport.service';
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { PackageService } from "../services/Package.service";
+import { TravelerService } from "../services/Traveler.service";
+import { TransportService } from "../services/Transport.service";
 
-import PayMethods from '@/components/pay/PayMethods.vue';
+import PayMethods from "@/components/pay/PayMethods.vue";
 
 const router = useRouter();
 
@@ -46,75 +46,65 @@ onMounted(() => {});
 const createPackage = async () => {
   try {
     const responseTraveler = await travelerService.getById(
-      localStorage.getItem('currentUser')
+      localStorage.getItem("currentUser")
     );
     traveler.value = responseTraveler.data;
 
     const responseLocation = await transportService.getLocationById(
-      localStorage.getItem('locationId')
+      localStorage.getItem("locationId")
     );
     location.value = responseLocation.data;
 
-    const currentUserLS = localStorage.getItem('currentUser');
-    const locationIdLS = localStorage.getItem('locationId');
-    const rentCarLS = localStorage.getItem('rentCarId');
-    const accommodationLS = localStorage.getItem('accommodationId');
-    const tourIdLS = localStorage.getItem('tourId');
-    const roundTripIdLS = localStorage.getItem('roundTripId');
-    const oneWayIdLS = localStorage.getItem('oneWayId');
+    const currentUserLS = localStorage.getItem("currentUser");
+    const locationIdLS = localStorage.getItem("locationId");
+    const rentCarLS = localStorage.getItem("rentCarId");
+    const accommodationLS = localStorage.getItem("accommodationId");
+    const tourIdLS = localStorage.getItem("tourId");
+    const roundTripIdLS = localStorage.getItem("roundTripId");
+    const oneWayIdLS = localStorage.getItem("oneWayId");
 
     let customPackageData = {
-      name: 'Package of ' + traveler.value.name,
+      name: "Package of " + traveler.value.name,
       price: Math.random() * 100,
       travelerId: Number(currentUserLS),
       locationId: Number(locationIdLS),
       rentCarId: rentCarLS === null ? null : Number(rentCarLS),
-      accommodationId: Number(accommodationLS),
-      tourId: Number(tourIdLS),
+      accommodationId:
+        accommodationLS === null ? null : Number(accommodationLS),
+      tourId: tourIdLS === null ? null : Number(tourIdLS),
       roundTripId: roundTripIdLS === null ? null : Number(roundTripIdLS),
       oneWayId: oneWayIdLS === null ? null : Number(oneWayIdLS),
     };
 
-    // complete data for package
-    // console.log(
-    //   '🚀 ~ file: BuyPackage.vue ~ line 77 ~ createPackage ~ packageData.value',
-    //   packageData.value
-    // );
+    console.log(
+      "🚀 ~ file: BuyPackage.vue ~ line 77 ~ createPackage ~ packageData.value",
+      customPackageData
+    );
 
-    // const responsePackage = await packageService.createCustomPackage(
-    //   customPackageData
-    // );
+    const responsePackage = await packageService.createCustomPackage(
+      customPackageData
+    );
 
     Swal.fire({
-      title: 'Package created',
-      text: 'Your package has been created',
-      icon: 'success',
-      confirmButtonText: 'Ok',
+      title: "Package created",
+      text: "Your package has been created",
+      icon: "success",
+      confirmButtonText: "Ok",
     }).then((result) => {
       if (result.isConfirmed) {
-        router.push('/home');
+        router.push("/home");
       }
     });
   } catch (err) {
     Swal.fire({
-      title: 'Error',
+      title: "Error",
       text: err,
-      icon: 'error',
-      confirmButtonText: 'Ok',
+      icon: "error",
+      confirmButtonText: "Ok",
     });
   }
 
-  // const responsePurchasedPackage = await packageService.purchasedPackage({
-  //   packageId: null,
-  //   customPackageId: 1,
-  //   active: 0,
-  //   travelerId: traveler.value.id,
-  // });
-  // console.log('Purchase package added', responsePurchasedPackage);
-
-  // alert('Package purchased succesfully');
-
-  // router.push('/home');
+  // router.push("/home");
 };
 </script>
 

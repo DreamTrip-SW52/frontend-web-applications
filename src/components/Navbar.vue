@@ -62,6 +62,7 @@ const isAgencyFn = () => {
 
 const removeCredentials = () => {
   localStorage.removeItem("currentUser");
+  localStorage.removeItem("hasReview");
 };
 
 const isAgency = isAgencyFn();

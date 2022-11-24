@@ -34,11 +34,11 @@
         <ul class="flex flex-column gap-2">
           <li>
             Check in:
-            {{ moment(accommodationData?.checkIn).format('LL') }}
+            {{ moment(accommodationData?.checkIn).format("LL") }}
           </li>
           <li>
             Check out:
-            {{ moment(accommodationData?.checkOut).format('LL') }}
+            {{ moment(accommodationData?.checkOut).format("LL") }}
           </li>
         </ul>
       </div>
@@ -50,7 +50,7 @@
       </div>
       <div>
         <iframe
-          :src="accommodationData?.location"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3912.130064287063!2d-76.80698528519432!3d-11.325202791950533!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91063f2a1c794e93%3A0xef50cc8630d532e8!2sCOMPLEJO%20ARQUEOL%C3%93GICO%20DE%20RUPAC!5e0!3m2!1ses-419!2spe!4v1669271632010!5m2!1ses-419!2spe"
           width="100%"
           height="450"
           style="border: 0"
@@ -64,9 +64,9 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import { AccommodationService } from '../../services/Accommodation.service';
-import moment from 'moment';
+import { onMounted, ref } from "vue";
+import { AccommodationService } from "../../services/Accommodation.service";
+import moment from "moment";
 
 const accommodationService = new AccommodationService();
 const accommodationData = ref({});

@@ -10,10 +10,6 @@ export class TravelAgencyService {
     return http.get(this.agencyPath + `/${id}`);
   }
 
-  // isEmailRepeated(email) {
-  //   return http.get(`/travelAgency?email=${email}`);
-  // }
-
   loginWithEmailAndPassword(email, password) {
     return http.get(this.agencyPath + `/emailandpassword/${email}/${password}`);
   }

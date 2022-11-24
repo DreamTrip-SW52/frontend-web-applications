@@ -145,7 +145,7 @@
 
           <ul class="list-none flex flex-column gap-4">
             <li
-              v-for="review in reviews.slice(0, 3)"
+              v-for="(review, id) in reviews.slice(0, 3)"
               class="pr-6"
               :key="review.id"
             >
@@ -155,7 +155,7 @@
                 :cancel="false"
               />
               <br />
-              For {{ review.travelerName }} the {{ review.date }}
+              Review # {{ id + 1 }}
               <br />
               <span class="font-light">{{ review.comment }}</span>
             </li>
@@ -170,14 +170,14 @@
           </div>
           <Dialog v-model:visible="displayDialogSeeMore">
             <ul class="list-none flex flex-column gap-4">
-              <li v-for="review in reviews" class="pr-6" :key="review.id">
+              <li v-for="(review, id) in reviews" class="pr-6" :key="review.id">
                 <Rating
                   :modelValue="review.stars"
                   :readonly="true"
                   :cancel="false"
                 />
                 <br />
-                For {{ review.travelerName }} the {{ review.date }}
+                Review # {{ id + 1 }}
                 <br />
                 <span class="font-light">{{ review.comment }}</span>
               </li>
@@ -234,7 +234,6 @@ import Tour from "../components/package_details/Tour.vue";
 // Services
 import { PackageService } from "../services/Package.service";
 import { ReviewService } from "../services/Review.service";
-import { ImageService } from "../services/Image.service";
 import { TravelerService } from "../services/Traveler.service";
 
 /** Static **/
@@ -244,7 +243,6 @@ const router = useRouter();
 const { id } = router.currentRoute.value.params;
 
 const packageService = new PackageService();
-const imageService = new ImageService();
 
 const packageData = ref({});
 const imageData = ref({});
@@ -306,9 +304,6 @@ const getRating = () => {
 const reviewService = new ReviewService();
 const travelerService = new TravelerService();
 
-// variables
-let validation = null;
-
 // state
 const reviews = ref([]);
 const comment = ref("");
@@ -325,22 +320,16 @@ const checkUserHasReview = async () => {
     id,
     travelerId
   );
-  if (response.data) {
+
+  if (response.data.id >= 1) {
     comment.value = response.data.comment;
     rating.value = response.data.stars;
+    localStorage.setItem("hasReview", true);
     return true;
   } else return false;
 };
 
 const writeReview = () => {
-  const currentDate = new Date();
-  const strDate =
-    currentDate.getDate() +
-    "/" +
-    currentDate.getMonth() +
-    "/" +
-    currentDate.getFullYear();
-
   const params = router.currentRoute.value.params;
 
   const review = {
@@ -355,10 +344,8 @@ const writeReview = () => {
   review.comment = comment.value;
   review.travelerId = localStorage.getItem("currentUser");
 
-  console.log("Escribiendo el review con datos", review);
-
-  if (validation != null) {
-    reviewService.updateReview(validation.id, review);
+  if (localStorage.getItem("hasReview") === "true") {
+    reviewService.updateReview(review.travelerId, review);
   } else {
     reviewService.addReview(review);
   }
@@ -379,12 +366,19 @@ onMounted(async () => {
   packageData.value = responsePackage.data;
 
   const images = [];
-  for (let i = 0; i < 5; i++) {
-    images.push({
-      src: `https://images.unsplash.com/photo-1668400121008-6134fd5b104d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80`,
-      alt: "Random Image",
-    });
-  }
+
+  images.push({
+    src: `https://images.pexels.com/photos/1619317/pexels-photo-1619317.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`,
+    alt: "Landscape",
+  });
+  images.push({
+    src: `https://images.pexels.com/photos/18165/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`,
+    alt: "Landscape",
+  });
+  images.push({
+    src: `https://images.pexels.com/photos/353140/pexels-photo-353140.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`,
+    alt: "Landscape",
+  });
 
   imageData.value = images;
 

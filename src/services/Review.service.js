@@ -7,18 +7,6 @@ export class ReviewService {
     return http.get(this.basePath);
   }
 
-  // filterreview(comment_lte = null) {
-  //   let url = BASE_URL;
-
-  //   if (comment_lte) {
-  //     url = url + `&comment_lte=${comment_lte}`;
-  //   }
-
-  //   const encodedURL = encodeURI(url);
-  //   console.log(encodedURL);
-  //   return http.get(encodedURL);
-  // }
-
   getReviewById(id) {
     return http.get(this.basePath + `/${id}`);
   }
@@ -38,12 +26,6 @@ export class ReviewService {
   }
 
   updateReview(id, review) {
-    return http.patch(this.basePath + `/${id}`, review);
+    return http.put(this.basePath + `/${id}`, review);
   }
-
-  // getReviewByPackageIdAndTravellerId(packageId, travellerId) {
-  //   http: return http.get(
-  //     `/reviews?packageId=${packageId}&travellerId=${travellerId}`
-  //   );
-  // }
 }

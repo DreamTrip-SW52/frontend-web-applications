@@ -57,15 +57,4 @@ export class PackageService {
   //   console.log(encodedURL);
   //   return http.get(encodedURL);
   // }
-  // increaseViewsById(travelAgencyId, Nviews) {
-  //   return http.patch(`/package/${travelAgencyId}`, {
-  //     views: Nviews,
-  //   });
-  // }
-
-  // increaseSalesById(travelAgencyId, Nsales) {
-  //   return http.patch(`/package/${travelAgencyId}`, {
-  //     sales: Nsales,
-  //   });
-  // }
 }

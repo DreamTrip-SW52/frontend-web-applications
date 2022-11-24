@@ -36,33 +36,34 @@
             :modal="true"
             :style="{ width: '80vw' }"
           >
-            <div v-for="result in resultAccommodation">
-              <div
-                class="card-container text-white flex justify-content-between p-4 align-items-center"
-              >
-                <div>
-                  <ScrollPanel style="width: 350px; height: 150px">
-                    <p class="line-height-4">
-                      {{ result.details }}
-                    </p>
-                    <ScrollTop
-                      target="parent"
-                      :threshold="100"
-                      class="custom-scrolltop"
-                      icon="pi pi-arrow-up"
-                    />
-                  </ScrollPanel>
+            <div v-if="resultAccommodation.length === 0">
+              <p>No results</p>
+            </div>
+            <div v-else>
+              <div v-for="result in resultAccommodation">
+                <div
+                  class="card-container text-white flex justify-content-between p-4 align-items-center"
+                >
+                  <div>
+                    <ScrollPanel style="width: 350px; height: 150px">
+                      <p class="line-height-4">
+                        {{ result.details }}
+                      </p>
+                      <ScrollTop
+                        target="parent"
+                        :threshold="100"
+                        class="custom-scrolltop"
+                        icon="pi pi-arrow-up"
+                      />
+                    </ScrollPanel>
+                  </div>
+                  <div>
+                    <span class="text-xl font-medium"
+                      >S/.{{ result.price }}</span
+                    >
+                  </div>
+                  <Button label="Select" @click="save(result.id)" />
                 </div>
-                <!-- <div clas="flex flex-row">
-                  <span>Services</span>
-                  <ul v-for="service in result.services">
-                    <li>{{ service }}</li>
-                  </ul>
-                </div> -->
-                <div>
-                  <span class="text-xl font-medium">S/.{{ result.price }}</span>
-                </div>
-                <Button label="Select" @click="save(result.id)" />
               </div>
             </div>
           </Dialog>

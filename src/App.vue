@@ -1,16 +1,15 @@
 <script setup>
-import { RouterLink, RouterView, useRouter } from 'vue-router';
-import Navbar from './components/Navbar.vue';
+import { RouterLink, RouterView, useRouter } from "vue-router";
 
 const router = useRouter();
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
-    const user = localStorage.getItem('currentUser');
+    const user = localStorage.getItem("currentUser");
     if (user) {
       next();
     } else {
-      next('/login');
+      next("/login");
     }
   } else {
     next();

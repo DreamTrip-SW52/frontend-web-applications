@@ -1,28 +1,28 @@
 <template>
   <Navbar />
   <div class="mx-8 flex flex-column">
-    <Card class="card">
+    <Card class="card text-white">
       <template #title class="text-white"> Rating </template>
       <template #content>
         <Rating :model-value="stars" :cancel="false" :readonly="true" />
       </template>
     </Card>
     <br />
-    <Card class="card">
+    <Card class="card text-white">
       <template #title class="text-white"> Quantity of Reviews </template>
       <template #content>
         {{ reviewInfo.length }}
       </template>
     </Card>
     <br />
-    <Card class="card">
+    <Card class="card text-white">
       <template #title class="text-white"> Quantity of Views </template>
       <template #content>
         {{ views }}
       </template>
     </Card>
     <br />
-    <Card class="card">
+    <Card class="card text-white">
       <template #title class="text-white">
         Quantity of Purchased Tickets
       </template>
@@ -55,10 +55,11 @@ const getRating = (data) => {
   let total = 0;
 
   data.forEach((review) => {
-    total += review.rating;
+    total += review.stars;
   });
 
   stars.value = Math.floor(total / data.length);
+  console.log(stars.value);
 };
 
 onMounted(async () => {
@@ -67,11 +68,6 @@ onMounted(async () => {
   const responseReview = await reviewService.getReviewsByPackageId(params.id);
 
   reviewInfo.value = responseReview.data;
-
-  console.log(
-    "🚀 ~ file: Statistics.vue ~ line 68 ~ onMounted ~ reviewInfo.value",
-    JSON.stringify(reviewInfo.value)
-  );
 
   getRating(JSON.parse(JSON.stringify(reviewInfo.value)));
 
