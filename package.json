@@ -1,0 +1,27 @@
+{
+  "name": "dream-trip",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173",
+    "json-server": "json-server --watch server/db.json --routes server/routes.json --port 3000"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue-jsx": "^2.0.1",
+    "axios": "^0.27.2",
+    "moment": "^2.29.4",
+    "pinia": "^2.0.21",
+    "primeflex": "^3.2.1",
+    "primeicons": "^6.0.1",
+    "primevue": "^3.17.0",
+    "vue": "^3.2.38",
+    "vue-restricted-input": "^1.0.2",
+    "vue-router": "^4.1.5",
+    "vue-sweetalert2": "^5.0.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.0.3",
+    "vite": "^3.0.9"
+  }
+}

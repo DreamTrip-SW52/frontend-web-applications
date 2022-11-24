@@ -1,0 +1,703 @@
+{
+  "packages": [
+    {
+      "id": 1,
+      "travelAgencyId": 1,
+      "views": 88,
+      "transport": {
+        "type": "flights",
+        "id": 1
+      },
+      "accommodationId": 1,
+      "name": "Nature Adventure",
+      "tourId": 1,
+      "description": "Four hours from Lima is Rúpac, an archaeological complex in the heights, where at 5 a.m. there is a great show for the clouds that are clearing the coast. It is a unique landscape.",
+      "location": "Huaral",
+      "duration": 4,
+      "typeOfPackage": "Standar",
+      "typeOfTour": "In group",
+      "capacity": 30,
+      "disponibility": "24/7",
+      "total": 500,
+      "img": "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+      "security": {
+        "police_stations": [
+          {
+            "id": 1,
+            "name": "Comisaria PNP Huaral",
+            "direction": "Blvd. El Solar 11, Huaral 15201",
+            "phone_number": "(01) 2461024"
+          }
+        ],
+        "hospitals": [
+          {
+            "id": 1,
+            "name": "Hospital San Juan Bautista",
+            "direction": "FQWP+QP3, Huaral 15202",
+            "phone_number": "(01) 2462990"
+          },
+          {
+            "id": 2,
+            "name": "Seguro Integral de Salud",
+            "direction": "GQ3X+PX5, Huaral 15201",
+            "phone_number": "(01) 2460785"
+          },
+          {
+            "id": 3,
+            "name": "Centro De Salud Base Huaral",
+            "direction": "Chancay 279, Huaral 15202",
+            "phone_number": "(01) 3355976"
+          }
+        ],
+        "clinics": [
+          {
+            "id": 1,
+            "name": "Clínica San Andrés Huaral",
+            "direction": "María Auxiliadora, Huaral 15202",
+            "phone_number": "969 497 766"
+          },
+          {
+            "id": 2,
+            "name": "CLISOVA - Clinica de salud Ocupacional Villa de Arnedo",
+            "direction": "Las Orquídeas 237, Huaral 15202",
+            "phone_number": "900 468 138"
+          }
+        ]
+      },
+      "sales": 8
+    },
+    {
+      "id": 2,
+      "travelAgencyId": 2,
+      "views": 5,
+      "accommodationId": 2,
+      "transport": {
+        "type": "bus",
+        "id": 1
+      },
+      "name": "Playa Caballeros",
+      "description": "One of the most beautiful beaches in Punta Hermosa. A good place to sunbathe, swim in the sea and relax listening to the waves.",
+      "location": "Lima",
+      "duration": 7,
+      "typeOfPackage": "Special",
+      "typeOfTour": "Private",
+      "capacity": 20,
+      "disponibility": "24/7",
+      "total": 400,
+      "img": "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+      "security": {
+        "police_stations": [
+          {
+            "id": 1,
+            "name": "Comisaria De Punta Hermosa",
+            "direction": "M5Q7+35X, Distrito de Lima 15846",
+            "phone_number": "(01) 4006236"
+          }
+        ],
+        "hospitals": [
+          {
+            "id": 1,
+            "name": "SISOL Salud Punta Hermosa",
+            "direction": "Antigua Panamericana Sur 40, Punta Hermosa 15846",
+            "phone_number": "(01) 7260130"
+          }
+        ]
+      },
+      "sales": 1
+    }
+  ],
+  "travellers": [
+    {
+      "email": "patrick@hotmail.com",
+      "password": "123",
+      "name": "Patrick",
+      "lastname": "Perez",
+      "phone": "987312423",
+      "photo": "https://i.postimg.cc/tTFyyJjz/user.png",
+      "dni": "4124124",
+      "id": 1
+    },
+    {
+      "email": "rod@hotmail.com",
+      "password": "1234",
+      "name": "Rodrigo",
+      "lastname": "Rodriguez",
+      "phone": "933312323",
+      "photo": "https: //st2.depositphotos.com/2959013/12445/i/600/depositphotos_124459794-stock-photo-man-driving-a-truck.jpg",
+      "dni": "1234124",
+      "id": 2
+    },
+    {
+      "email": "jose@hotmail.com",
+      "password": "1234",
+      "name": "Jose",
+      "lastname": "Rodriguez",
+      "phone": "987312323",
+      "photo": "https://i.postimg.cc/jdT1LDZn/client.png",
+      "dni": "3123124",
+      "id": 3
+    },
+    {
+      "email": "jon@hotmail.com",
+      "password": "1234",
+      "name": "Jonatan",
+      "lastname": "Moran",
+      "phone": "84621442",
+      "photo": "",
+      "dni": "3214421",
+      "id": 4
+    },
+    {
+      "email": "jul@hotmail.com",
+      "password": "1234",
+      "name": "Julia",
+      "lastname": "Martell",
+      "phone": "68976524",
+      "photo": "",
+      "dni": "312412",
+      "id": 5
+    },
+    {
+      "email": "cokijlmf@gmail.com",
+      "password": "pizza",
+      "name": "Jorge",
+      "lastname": "Mercado",
+      "phone": "999888777",
+      "dni": "84759988",
+      "photo": "",
+      "id": 6
+    },
+    {
+      "email": "cokijlmf@outlook.com",
+      "password": "victor",
+      "name": "Jose",
+      "lastname": "Fassioli",
+      "phone": "915789320",
+      "dni": "45786233",
+      "photo": "",
+      "id": 7
+    },
+    {
+      "email": "test@gmail.com",
+      "password": "pass12345",
+      "name": "",
+      "lastname": "",
+      "phone": "",
+      "dni": "",
+      "photo": "",
+      "id": 8
+    },
+    {
+      "email": "testing@gmail.com",
+      "password": "pass123",
+      "name": "Sebastián",
+      "lastname": "Lévano",
+      "phone": "96346874",
+      "dni": "782122135",
+      "photo": "",
+      "id": 9
+    }
+  ],
+  "travelAgency": [
+    {
+      "name": "Trivago Travelling",
+      "ruc": "123",
+      "email": "despegar@hotmail.com",
+      "password": "123",
+      "id": 1
+    },
+    {
+      "name": "Empresa",
+      "ruc": "321",
+      "email": "fake@gmail.com",
+      "password": "123",
+      "id": 2
+    },
+    {
+      "name": "Fake",
+      "ruc": "123412412412",
+      "email": "testing@mail.com",
+      "password": "pass123",
+      "id": 3
+    }
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "packageId": 1,
+      "travellerId": 1,
+      "date": "23/09/2022",
+      "rating": 4,
+      "comment": "It is a good option if you want a trip out of the ordinary."
+    },
+    {
+      "id": 2,
+      "packageId": 1,
+      "travellerId": 2,
+      "date": "15/09/2022",
+      "rating": 4,
+      "comment": "The travel was very good, but the hotel can be better."
+    },
+    {
+      "id": 3,
+      "packageId": 1,
+      "travellerId": 3,
+      "date": "30/09/2022",
+      "rating": 5,
+      "comment": "This travel package it's amazing!"
+    },
+    {
+      "id": 4,
+      "packageId": 1,
+      "travellerId": 4,
+      "date": "16/09/22",
+      "rating": 4,
+      "comment": "Good"
+    },
+    {
+      "packageId": 1,
+      "date": "22/9/2022",
+      "rating": 4,
+      "comment": "Good travel with an interesting tour",
+      "travellerId": "1",
+      "id": 5
+    },
+    {
+      "packageId": 2,
+      "date": "10/10/2022",
+      "rating": 5,
+      "comment": "Good package",
+      "travellerId": "6",
+      "id": 7
+    },
+    {
+      "packageId": 1,
+      "date": "12/10/2022",
+      "rating": 5,
+      "comment": "Good package",
+      "travellerId": "6",
+      "id": 8
+    },
+    {
+      "packageId": 1,
+      "date": "14/10/2022",
+      "rating": 2,
+      "comment": "Good",
+      "travellerId": "8",
+      "id": 9
+    }
+  ],
+  "accommodations": [
+    {
+      "id": 1,
+      "travelAgencyId": 1,
+      "packageId": 1,
+      "details": "A unique experience to see the red sunset and a sunrise full of clouds.",
+      "services": [
+        "WiFi",
+        "Restaurant"
+      ],
+      "conditions": {
+        "schedule": {
+          "check-in": "10:00",
+          "check-out": "15:00"
+        }
+      },
+      "location": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d500752.6482146545!2d-77.36509933437503!3d-11.325202799999975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91063f2a1c794e93%3A0xef50cc8630d532e8!2sCOMPLEJO%20ARQUEOL%C3%93GICO%20DE%20RUPAC!5e0!3m2!1ses-419!2spe!4v1664149265135!5m2!1ses-419!2spe",
+      "price": 200,
+      "locationId": 8
+    },
+    {
+      "id": 2,
+      "travelAgencyId": 1,
+      "packageId": 1,
+      "details": "Playa Caballeros, presents some waves of the Reef-break type; In Caballeros it is possible to find some impressive waves that are characterized by being long and well formed, in addition to having a clear tubular section, which can reach up to 3 meters in height. It is known that, near the sea of Playa Caballeros, one of the most impressive waves of the Peruvian sea is formed, that one is known by the name of Pico Alto and they have the peculiarity of reaching 7 to 8 meters, on average. Playa Caballeros is also a recommended beach for those visitors who like fishing, which can be done from its rocks, which are located at both ends of the resort. The fertile sea of Caballeros allows the fishing of species such as the cheetah, among others.",
+      "services": [
+        "WiFi",
+        "Restaurant",
+        "Room Service",
+        "Bar"
+      ],
+      "conditions": {
+        "schedule": {
+          "check-in": "12:00",
+          "check-out": "17:00"
+        }
+      },
+      "location": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3897.783888405212!2d-76.83417318545537!3d-12.330327891278849!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105a29b88d2b815%3A0x1ca8f8d6a7df2b87!2sPlaya%20Caballeros!5e0!3m2!1ses-419!2spe!4v1664149502719!5m2!1ses-419!2spe",
+      "price": 150,
+      "locationId": 8
+    }
+  ],
+  "tours": [
+    {
+      "id": 1,
+      "packageId": 1,
+      "details": "Are you a nature lover and you like camping? Well, this service is perfect for you. Camp in the 'Ciudadela de Fuego': Rupac, a wonderful archaeological complex 145 km north of Lima. This place is also known as the 'Machu Picchu of Lima' since it is located at more than 3,400 meters above sea level. You will enjoy the trekking visiting the buildings made of stones but that are still intact.",
+      "oustanding": [
+        "Friendly guide",
+        "Good tour",
+        "Beatiful landscape"
+      ],
+      "it-includes": [],
+      "location": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62594.08102683181!2d-76.87483444179688!3d-11.325202799999989!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91063f2a1c794e93%3A0xef50cc8630d532e8!2sCOMPLEJO%20ARQUEOL%C3%93GICO%20DE%20RUPAC!5e0!3m2!1ses-419!2spe!4v1669271236549!5m2!1ses-419!2spe",
+      "meeting-point": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1259.2243251395607!2d-76.80517029852469!3d-11.325689129369632!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91063f4821150abf%3A0xad3be9e203e1ae6d!2sZona%20De%20Campamento%20-RupaC!5e0!3m2!1ses-419!2spe!4v1664149416280!5m2!1ses-419!2spe",
+      "price": 150,
+      "locationId": 8
+    }
+  ],
+  "current-travels": [
+    {
+      "id": 1,
+      "packageId": 1,
+      "travelerId": 1,
+      "new_bills": [
+        {
+          "name": "Car",
+          "amount": "50",
+          "id": 3
+        },
+        {
+          "name": "Tour",
+          "amount": "150",
+          "id": 4
+        },
+        {
+          "name": "More Food",
+          "amount": "100",
+          "id": 5
+        },
+        {
+          "name": "Hotel",
+          "amount": "204",
+          "id": 4
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "packageId": 2,
+      "travelerId": 2,
+      "new_bills": []
+    },
+    {
+      "id": 3,
+      "packageId": 1,
+      "travelerId": 3,
+      "new_bills": []
+    },
+    {
+      "id": 4,
+      "packageId": 2,
+      "travelerId": 4,
+      "new_bills": []
+    },
+    {
+      "id": 5,
+      "packageId": 1,
+      "travelerId": 5,
+      "new_bills": [
+        {
+          "name": "Preuba",
+          "amount": "200",
+          "id": 1
+        }
+      ]
+    }
+  ],
+  "images": [
+    {
+      "id": 1,
+      "packageId": 1,
+      "src": "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+      "alt": ""
+    },
+    {
+      "id": 2,
+      "packageId": 1,
+      "src": "https://images.unsplash.com/photo-1606054534744-a3b13e35c574?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8dHJpcHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+      "alt": ""
+    },
+    {
+      "id": 3,
+      "packageId": 2,
+      "src": "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+      "alt": ""
+    },
+    {
+      "id": 4,
+      "packageId": 2,
+      "src": "https://images.unsplash.com/photo-1553076446-829d6dba2f0b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fHRyaXB8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+      "alt": ""
+    }
+  ],
+  "bus": [
+    {
+      "id": 1,
+      "travelAgencyId": 1,
+      "typeOfTrip": "Round trip",
+      "passengers": 200,
+      "class": "express",
+      "departDate": "20/10/23",
+      "returnDate": "23/10/23",
+      "details": [
+        {
+          "type": "go",
+          "name": "Fast Bus",
+          "price": 50,
+          "from": {
+            "tag": "Lima",
+            "abbr": "LIM"
+          },
+          "to": {
+            "tag": "Cuzco",
+            "abbr": "CUZ"
+          }
+        },
+        {
+          "type": "back",
+          "name": "Fast Bus",
+          "price": 50,
+          "from": {
+            "tag": "Cuzco",
+            "abbr": "CUZ"
+          },
+          "to": {
+            "tag": "Lima",
+            "abbr": "LIM"
+          }
+        }
+      ],
+      "price": 100,
+      "locationId": 8
+    },
+    {
+      "id": 2,
+      "travelAgencyId": 2,
+      "typeOfTrip": "One way",
+      "passengers": 40,
+      "class": "vip",
+      "departDate": "24/10/23",
+      "returnDate": "30/10/23",
+      "details": [
+        {
+          "type": "go",
+          "name": "Fast Bus",
+          "price": 50,
+          "from": {
+            "tag": "Lima",
+            "abbr": "LIM"
+          },
+          "to": {
+            "tag": "Cuzco",
+            "abbr": "CUZ"
+          }
+        }
+      ],
+      "price": 80
+    }
+  ],
+  "trains": [
+    {
+      "travelAgencyId": 1,
+      "typeOfTrip": "round trip",
+      "passengers": 200,
+      "from": "Lima",
+      "to": "Cuzco",
+      "class": "express",
+      "departDate": "12/03/23",
+      "returnDate": "14/03/23",
+      "locationId": 8
+    }
+  ],
+  "flights": [
+    {
+      "id": 1,
+      "travelAgencyId": 1,
+      "typeOfTrip": "Round trip",
+      "passengers": 30,
+      "class": "express",
+      "departDate": "12/03/23",
+      "returnDate": "14/03/23",
+      "details": [
+        {
+          "type": "go",
+          "name": "Best Airline",
+          "price": 70,
+          "from": {
+            "tag": "Lima",
+            "abbr": "LIM"
+          },
+          "to": {
+            "tag": "Cuzco",
+            "abbr": "CUZ"
+          }
+        },
+        {
+          "type": "back",
+          "name": "Best Airline",
+          "price": 50,
+          "from": {
+            "tag": "Cuzco",
+            "abbr": "CUZ"
+          },
+          "to": {
+            "tag": "Lima",
+            "abbr": "LIM"
+          }
+        }
+      ],
+      "price": 120,
+      "locationId": 8
+    }
+  ],
+  "cars": [
+    {
+      "travelAgencyId": 1,
+      "packageId": 1,
+      "addres-pick-up": "Los Olivos",
+      "pick-up-hour": "9:00",
+      "drop-off-hour": "21:00",
+      "brand": "Toyota",
+      "capacity": "5",
+      "photo": "",
+      "price": 100
+    }
+  ],
+  "locations": [
+    {
+      "id": 1,
+      "name": "Amazonas"
+    },
+    {
+      "id": 2,
+      "name": "Ancash"
+    },
+    {
+      "id": 3,
+      "name": "Apurimac"
+    },
+    {
+      "id": 4,
+      "name": "Arequipa"
+    },
+    {
+      "id": 5,
+      "name": "Ayacucho"
+    },
+    {
+      "id": 6,
+      "name": "Cajamarca"
+    },
+    {
+      "id": 7,
+      "name": "Callao"
+    },
+    {
+      "id": 8,
+      "name": "Cusco"
+    },
+    {
+      "id": 9,
+      "name": "Huancavelica"
+    },
+    {
+      "id": 10,
+      "name": "Huanuco"
+    },
+    {
+      "id": 11,
+      "name": "Ica"
+    },
+    {
+      "id": 12,
+      "name": "Junin"
+    },
+    {
+      "id": 13,
+      "name": "La Libertad"
+    },
+    {
+      "id": 14,
+      "name": "Lambayeque"
+    },
+    {
+      "id": 15,
+      "name": "Lima"
+    },
+    {
+      "id": 16,
+      "name": "Loreto"
+    },
+    {
+      "id": 17,
+      "name": "Madre de Dios"
+    },
+    {
+      "id": 18,
+      "name": "Moquegua"
+    },
+    {
+      "id": 19,
+      "name": "Pasco"
+    },
+    {
+      "id": 20,
+      "name": "Piura"
+    },
+    {
+      "id": 21,
+      "name": "Puno"
+    },
+    {
+      "id": 22,
+      "name": "San MartIn"
+    },
+    {
+      "id": 23,
+      "name": "Tacna"
+    },
+    {
+      "id": 24,
+      "name": "Tumbes"
+    },
+    {
+      "id": 25,
+      "name": "Ucayali"
+    }
+  ],
+  "credit_cards": [
+    {
+      "id": 1,
+      "userId": 1,
+      "cardNumber": "1111 1111 1111 1111",
+      "expirationDate": "11/1111",
+      "securityCode": "111",
+      "userType": "traveller"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "cardNumber": "1111 1111 1111 1111",
+      "expirationDate": "11/1111",
+      "securityCode": "111",
+      "userType": "agency"
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "cardNumber": "1231 2312 3123 1231",
+      "expirationDate": "12/2025",
+      "securityCode": "123",
+      "userType": "traveller"
+    },
+    {
+      "id": 5,
+      "userId": 7,
+      "cardNumber": "1232 1312 3123 1231",
+      "expirationDate": "12/2025",
+      "securityCode": "232",
+      "userType": "traveller"
+    }
+  ]
+}
