@@ -13,9 +13,9 @@
       </div>
     </div>
 
-    <div class="card-action">
-      <div>Since:</div>
-      <div class="card-price">{{ price }}</div>
+    <div class="card-action px-4">
+      <div class="align-self-center">Since:</div>
+      <div class="card-price">S./ {{ price }}</div>
       <div v-if="type_of_button == 'see-details'">
         <router-link :to="`/package/${id}`">
           <button class="card-button">See Details</button>
@@ -56,6 +56,7 @@ defineProps({
 }
 
 .card-description {
+  flex: 1;
   padding: 10px;
   text-align: left;
 }
@@ -82,13 +83,13 @@ defineProps({
 }
 
 .card-action {
-  width: 500px;
+  width: max-content;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-size: 24px;
+  font-size: 20px;
   color: #ffffff;
 }
 

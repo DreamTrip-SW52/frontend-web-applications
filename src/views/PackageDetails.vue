@@ -48,9 +48,6 @@
           </template>
         </Carousel>
 
-        <!-- FinCarrousel -->
-        <pre>{{ breadcrumbView }}</pre>
-
         <div class="px-0 md:px-4">
           <Breadcrumb :model="items">
             <template #item="{ item }">
